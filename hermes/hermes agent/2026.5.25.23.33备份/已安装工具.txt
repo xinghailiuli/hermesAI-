@@ -1,5 +1,0 @@
-=== Mon May 25 11:33:13 PM CST 2026 ===
-lrwxrwxrwx 1 root  root   64 May 25 23:01 /usr/local/bin/claude -> /usr/lib/node_modules/@anthropic-ai/claude-code-linux-x64/claude
--rwx--x--x 1 root  root  18M May 25 22:30 /usr/local/bin/codewhale
--rwxrwxr-x 1 admin admin 48M May 25 23:29 /usr/local/bin/codewhale-tui
--rwxr-xr-x 1 root  root  11M May 25 21:52 /usr/local/bin/deepseek

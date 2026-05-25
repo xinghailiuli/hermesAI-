@@ -1,2 +1,0 @@
-20:39:08 ENTER: queued interrupt msg='不对是7897', agent_running=True
-20:39:08 interrupt fired: msg='不对是7897', children=0, parent._interrupt=True
