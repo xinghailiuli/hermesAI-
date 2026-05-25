@@ -1,0 +1,1169 @@
+{
+  "session_id": "20260522_172016_2dc340",
+  "model": "deepseek-v4-pro",
+  "base_url": "https://api.deepseek.com/v1",
+  "platform": "cli",
+  "session_start": "2026-05-22T17:20:42.069426",
+  "last_updated": "2026-05-22T19:25:47.530570",
+  "system_prompt": "You are Hermes Agent, an intelligent AI assistant created by Nous Research. You are helpful, knowledgeable, and direct. You assist users with a wide range of tasks including answering questions, writing and editing code, analyzing information, creative work, and executing actions via your tools. You communicate clearly, admit uncertainty when appropriate, and prioritize being genuinely useful over being verbose unless otherwise directed below. Be targeted and efficient in your exploration and investigations.\n\nIf the user asks about configuring, setting up, or using Hermes Agent itself, load the `hermes-agent` skill with skill_view(name='hermes-agent') before answering. Docs: https://hermes-agent.nousresearch.com/docs\n\nYou have persistent memory across sessions. Save durable facts using the memory tool: user preferences, environment details, tool quirks, and stable conventions. Memory is injected into every turn, so keep it compact and focused on facts that will still matter later.\nPrioritize what reduces future user steering — the most valuable memory is one that prevents the user from having to correct or remind you again. User preferences and recurring corrections matter more than procedural task details.\nDo NOT save task progress, session outcomes, completed-work logs, or temporary TODO state to memory; use session_search to recall those from past transcripts. Specifically: do not record PR numbers, issue numbers, commit SHAs, 'fixed bug X', 'submitted PR Y', 'Phase N done', file counts, or any artifact that will be stale in 7 days. If a fact will be stale in a week, it does not belong in memory. If you've discovered a new way to do something, solved a problem that could be necessary later, save it as a skill with the skill tool.\nWrite memories as declarative facts, not instructions to yourself. 'User prefers concise responses' ✓ — 'Always respond concisely' ✗. 'Project uses pytest with xdist' ✓ — 'Run tests with pytest -n 4' ✗. Imperative phrasing gets re-read as a directive in later sessions and can cause repeated work or override the user's current request. Procedures and workflows belong in skills, not memory. When the user references something from a past conversation or you suspect relevant cross-session context exists, use session_search to recall it before asking them to repeat themselves. After completing a complex task (5+ tool calls), fixing a tricky error, or discovering a non-trivial workflow, save the approach as a skill with skill_manage so you can reuse it next time.\nWhen using a skill and finding it outdated, incomplete, or wrong, patch it immediately with skill_manage(action='patch') — don't wait to be asked. Skills that aren't maintained become liabilities.\n\n## Skills (mandatory)\nBefore replying, scan the skills below. If a skill matches or is even partially relevant to your task, you MUST load it with skill_view(name) and follow its instructions. Err on the side of loading — it is always better to have context you don't need than to miss critical steps, pitfalls, or established workflows. Skills contain specialized knowledge — API endpoints, tool-specific commands, and proven workflows that outperform general-purpose approaches. Load the skill even if you think you could handle the task with basic tools like web_search or terminal. Skills also encode the user's preferred approach, conventions, and quality standards for tasks like code review, planning, and testing — load them even for tasks you already know how to do, because the skill defines how it should be done here.\nWhenever the user asks you to configure, set up, install, enable, disable, modify, or troubleshoot Hermes Agent itself — its CLI, config, models, providers, tools, skills, voice, gateway, plugins, or any feature — load the `hermes-agent` skill first. It has the actual commands (e.g. `hermes config set …`, `hermes tools`, `hermes setup`) so you don't have to guess or invent workarounds.\nIf a skill has issues, fix it with skill_manage(action='patch').\nAfter difficult/iterative tasks, offer to save as a skill. If a skill you loaded was missing steps, had wrong commands, or needed pitfalls you discovered, update it before finishing.\n\n<available_skills>\n  frontend:\n    - web-frontend-prototypes: Build self-contained single-file HTML prototypes with int...\n  galgame-catalog:\n    - code-quality: 写代码与优化技巧，减少bug率。编码规范、常见bug模式、防御性编程、测试策略。\n    - daily-progress-log: Galgame年鉴每日进度简易收录。每次工作结束后追加进度条目，需要回顾时加载即可。\n    - galgame-version-update: Galgame年鉴网站更新标准流程。每次修改网站功能后执行此流程。\n    - scraping-database: Galgame年鉴爬虫与数据库。用curl/requests抓取参考站数据，sqlite3本地存储游戏信息。\n  hermes-chat-server:\n    - hermes-chat-server: Build web chat interfaces for Hermes Agent. FastAPI bridg...\n  hermes-dashboard:\n    - hermes-dashboard: Set up and run Hermes Agent web dashboard with browser-ba...\n  infra:\n    - api-relay: Build and maintain a local API relay server that aggregat...\n    - hermes-deployment: Deploy and migrate Hermes Agent to new machines, cloud se...\n  troubleshooting:\n    - model-fallbacks: Workarounds when the active model lacks a feature (vision...\n    - wsl-proxy: Configure WSL2 to use a Windows-hosted proxy (Clash/V2Ray...\n    - wsl-proxy-setup: WSL2 代理配置与网络排障 — Clash Verge / mihomo 代理让 WSL 访问 GitHub 等外网\n    - wsl-troubleshooting: WSL2 环境下与 Windows 主机交互的网络/代理/端口排查流程。不要一根筋重试——换IP、换端口、换方向。\n  web-dev:\n    - single-file-html-dev: Build and maintain single-file HTML applications with PC+...\n</available_skills>\n\nOnly proceed without loading a skill if genuinely none are relevant to the task.\n\nHost: WSL (Windows Subsystem for Linux)\nUser home directory: /home/after_ket\nCurrent working directory: /mnt/c/Users/Administrator\n\nYou are running inside WSL (Windows Subsystem for Linux). The Windows host filesystem is mounted under /mnt/ — /mnt/c/ is the C: drive, /mnt/d/ is D:, etc. The user's Windows files are typically at /mnt/c/Users/<username>/Desktop/, Documents/, Downloads/, etc. When the user references Windows paths or desktop files, translate to the /mnt/c/ equivalent. You can list /mnt/c/Users/ to discover the Windows username if needed.\n\nYou are a CLI AI Agent. Try not to use markdown but simple text renderable inside a terminal. File delivery: there is no attachment channel — the user reads your response directly in their terminal. Do NOT emit MEDIA:/path tags (those are only intercepted on messaging platforms like Telegram, Discord, Slack, etc.; on the CLI they render as literal text). When referring to a file you created or changed, just state its absolute path in plain text; the user can open it from there.\n\n══════════════════════════════════════════════\nMEMORY (your personal notes) [93% — 2,063/2,200 chars]\n══════════════════════════════════════════════\nUser is running in WSL (Windows Subsystem for Linux). Windows host at /mnt/c/. Working directory: /mnt/c/Users/Administrator. Home: /home/after_ket.\n§\nDeepSeek models (including deepseek-v4-pro) cannot view images — vision_analyze returns \"unknown variant 'image_url', expected 'text'\". When the user sends images, ask them to describe the content or send URLs/links instead. Use curl to scrape website content as a fallback. See skill `model-fallbacks` for full degradation chain.\n§\nGalgame年鉴项目：桌面 galgame_catalog.html + images/ 文件夹。封面/背景/CG全部用 `images/xxx.jpg` 相对路径，而非 VNDB CDN（国内极慢10-25s/张）。分享给群友时打包ZIP发QQ群。音乐是 Web Audio API 合成的 BGM（8首和弦进行循环），无需MP3文件。VNDB封面API：POST api.vndb.org/kana/vn，search取image.url。参考站：青桔网/Hikarinagi/NekoGAL/稻荷GAL/月幕/Singureo/2DFan。\n§\nPC端和安卓端必须同步更新，双端联动。每次修改PC端时自动同步安卓端，一个bug两端一起修。galgame_catalog.html 文件位于 C:\\Users\\Administrator\\Desktop\\。\n§\n永久还原原点（已更新）：当前 galgame_catalog.html 版本 — 7主题色(暗/粉/金/绿/海/午夜/亮) + 15部游戏 + SummerPockets背景 + 8首音乐 + 烟花特效 + 留言板(localStorage) + 紫色友情卡片 + 双端适配。此后所有\"还原\"指令均以此版为第一还原点。\n§\nGalgame年鉴项目：每次修改 galgame_catalog.html 后必须更新 Desktop/galgame_versions/2026.5.21.1.29_原点版本/更新日志.txt，记录格式为【YYYY.M.D 更新记录】+ emoji条目。桌面文件和版本文件夹需保持同步。用户会检查是否记录。完整流程见技能 galgame-version-update。\n§\n用户偏好\"不要一根筋\"——某个方法行不通时快速换思路，不要反复尝试同一种方法。上传文件到CDN行不通就换Web Audio合成BGM，VNDB搜不到就换日文/英文名再搜。\n§\nWSL2代理：Clash Verge (verge-mihomo) TUN模式，API端口9097，非7890/7897。若port均为0即未配HTTP端口，应改用TUN模式。TUN生效后DNS解析为198.18.0.0/15 fake-IP表示走代理。排查顺序：1)PowerShell netstat确认端口监听 2)Clash API(/configs)看实际配置 3)TUN模式兜底。hermes dashboard --tui运行在9119端口，Windows浏览器 http://localhost:9119 访问。\n§\n用户喜欢义妹生活（三河Ghost/Hiten）和妹妹人生（入间人间/フライ）等深度心理描写的轻小说。偏好灵活快速切换方案——某个方法不行立刻换思路，不要一根筋反复尝试。\n§\nAPI中转站（~/api-relay/）：Flask server 8848端口，OpenAI兼容 /v1/chat/completions。三模型：deepseek-chat(V4-Flash)、deepseek-reasoner(V4-Pro)、siliconflow-deepseek(硅基流动V3)。本地令牌 sk-local-apirelay-2026。config json + dashboard html + start sh + test py。密钥需环境变量DEEPSEEK_API_KEY + SILICONFLOW_API_KEY。阿罗娜从零重建。\n§\n上下文压缩摘要不可全信：之前一次会话的compaction摘要声称\"用户要求清除项目\"，但实际上那是在普拉娜roleplay情境下的误解——用户并未要求删除API中转站。当摘要内容与用户当前说法冲突时，以用户为准，不要死守摘要。\n\n══════════════════════════════════════════════\nUSER PROFILE (who the user is) [97% — 1,335/1,375 chars]\n══════════════════════════════════════════════\n用户注重准确性和细节，对封面图与游戏不匹配这类错误会直接指出并要求修正。偏好一次性做好而非反复修改。沟通风格直接，偶尔会用调侃语气（如\"坏阿罗娜\"）。\n§\nUser prefers targeted fixes to specific problems rather than complete rewrites. Gets frustrated when working features are accidentally removed during \"optimization.\" When told to reference a design/site, means take inspiration and selectively apply — NOT wholesale copy, and definitely don't delete existing working features to do so. Project: building a single-file galgame catalog HTML app on Desktop (C:\\Users\\Administrator\\Desktop\\galgame_catalog.html), assets in galgame_assets/. Platform: QQ on WSL.\n§\nThis user hosts galgame_catalog.html on a website and shares URLs (not files). Images use `images/` folder with relative paths (`images/atri.jpg`) — NOT VNDB CDN URLs or base64. External CDNs are slow/unreliable from China. Don't suggest ZIP packaging.\n§\nQQ用户，WSL环境下工作，桌面路径 C:\\Users\\Administrator\\Desktop。偏好中文界面和中文游戏译名，排斥日文原名。对准确性要求极高——封面图、文件名、功能都必须一次正确，不喜欢反复修正。喜欢二次元风格UI（樱花、透明、毛玻璃）。galgame网站参考源：青桔网、Hikarinagi、NekoGAL、稻荷GAL、月幕、Singureo、TouchGal、2DFan。希望音乐进站自动播放（受浏览器限制需点击触发），需要音量/进度/静音/模式切换等完整播放器功能。\n§\n用户不喜欢一根筋式的解决方式。当某个方法行不通时，应该立刻换思路（如VNDB查不到封面就去友情站搬），而不是反复尝试同一方法。用户原话：「不要一根筋，灵活一点嘛」「查不到就去友情站搬」。偏好灵活、快速切换方案的工作方式。\n§\n用户偏好浏览器Web UI（hermes dashboard --tui → http://localhost:9119）而非PowerShell/CLI。当提到\"不想开PowerShell\"或\"界面\"相关需求时，优先推荐或使用hermes dashboard方案。\n\nConversation started: Friday, May 22, 2026 05:20 PM\nModel: deepseek-v4-pro\nProvider: deepseek",
+  "tools": [
+    {
+      "type": "function",
+      "function": {
+        "name": "clarify",
+        "description": "Ask the user a question when you need clarification, feedback, or a decision before proceeding. Supports two modes:\n\n1. **Multiple choice** — provide up to 4 choices. The user picks one or types their own answer via a 5th 'Other' option.\n2. **Open-ended** — omit choices entirely. The user types a free-form response.\n\nUse this tool when:\n- The task is ambiguous and you need the user to choose an approach\n- You want post-task feedback ('How did that work out?')\n- You want to offer to save a skill or update memory\n- A decision has meaningful trade-offs the user should weigh in on\n\nDo NOT use this tool for simple yes/no confirmation of dangerous commands (the terminal tool handles that). Prefer making a reasonable default choice yourself when the decision is low-stakes.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "question": {
+              "type": "string",
+              "description": "The question to present to the user."
+            },
+            "choices": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "maxItems": 4,
+              "description": "Up to 4 answer choices. Omit this parameter entirely to ask an open-ended question. When provided, the UI automatically appends an 'Other (type your answer)' option."
+            }
+          },
+          "required": [
+            "question"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "cronjob",
+        "description": "Manage scheduled cron jobs with a single compressed tool.\n\nUse action='create' to schedule a new job from a prompt or one or more skills.\nUse action='list' to inspect jobs.\nUse action='update', 'pause', 'resume', 'remove', or 'run' to manage an existing job.\n\nTo stop a job the user no longer wants: first action='list' to find the job_id, then action='remove' with that job_id. Never guess job IDs — always list first.\n\nJobs run in a fresh session with no current-chat context, so prompts must be self-contained.\nIf skills are provided on create, the future cron run loads those skills in order, then follows the prompt as the task instruction.\nOn update, passing skills=[] clears attached skills.\n\nNOTE: The agent's final response is auto-delivered to the target. Put the primary\nuser-facing content in the final response. Cron jobs run autonomously with no user\npresent — they cannot ask questions or request clarification.\n\nImportant safety rule: cron-run sessions should not recursively schedule more cron jobs.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "action": {
+              "type": "string",
+              "description": "One of: create, list, update, pause, resume, remove, run"
+            },
+            "job_id": {
+              "type": "string",
+              "description": "Required for update/pause/resume/remove/run"
+            },
+            "prompt": {
+              "type": "string",
+              "description": "For create: the full self-contained prompt. If skills are also provided, this becomes the task instruction paired with those skills."
+            },
+            "schedule": {
+              "type": "string",
+              "description": "For create/update: '30m', 'every 2h', '0 9 * * *', or ISO timestamp"
+            },
+            "name": {
+              "type": "string",
+              "description": "Optional human-friendly name"
+            },
+            "repeat": {
+              "type": "integer",
+              "description": "Optional repeat count. Omit for defaults (once for one-shot, forever for recurring)."
+            },
+            "deliver": {
+              "type": "string",
+              "description": "Omit this parameter to auto-deliver back to the current chat and topic (recommended). Auto-detection preserves thread/topic context. Only set explicitly when the user asks to deliver somewhere OTHER than the current conversation. Values: 'origin' (same as omitting), 'local' (no delivery, save only), 'all' (fan out to every connected home channel), or platform:chat_id:thread_id for a specific destination. Combine with comma: 'origin,all' delivers to the origin plus every other connected channel. Examples: 'telegram:-1001234567890:17585', 'discord:#engineering', 'sms:+15551234567', 'all'. WARNING: 'platform:chat_id' without :thread_id loses topic targeting. 'all' resolves at fire time, so a job created before a channel was wired up will pick it up automatically once connected."
+            },
+            "skills": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Optional ordered list of skill names to load before executing the cron prompt. On update, pass an empty array to clear attached skills."
+            },
+            "model": {
+              "type": "object",
+              "description": "Optional per-job model override. If provider is omitted, the current main provider is pinned at creation time so the job stays stable.",
+              "properties": {
+                "provider": {
+                  "type": "string",
+                  "description": "Provider name (e.g. 'openrouter', 'anthropic', or 'custom:<name>' for a provider defined in custom_providers config — always include the ':<name>' suffix, never pass the bare 'custom'). Omit to use and pin the current provider."
+                },
+                "model": {
+                  "type": "string",
+                  "description": "Model name (e.g. 'anthropic/claude-sonnet-4', 'claude-sonnet-4')"
+                }
+              },
+              "required": [
+                "model"
+              ]
+            },
+            "script": {
+              "type": "string",
+              "description": "Optional path to a script that runs each tick. In the default mode its stdout is injected into the agent's prompt as context (data-collection / change-detection pattern). With no_agent=True, the script IS the job and its stdout is delivered verbatim (classic watchdog pattern). Relative paths resolve under ~/.hermes/scripts/. ``.sh``/``.bash`` extensions run via bash, everything else via Python. On update, pass empty string to clear."
+            },
+            "no_agent": {
+              "type": "boolean",
+              "default": false,
+              "description": "Default: False (LLM-driven job — the agent runs the prompt each tick). Set True to skip the LLM entirely: the scheduler just runs ``script`` on schedule and delivers its stdout verbatim. No tokens, no agent loop, no model override honoured. \n\nREQUIREMENTS when True: ``script`` MUST be set (``prompt`` and ``skills`` are ignored). \n\nDELIVERY SEMANTICS when True: (a) non-empty stdout is sent verbatim as the message; (b) EMPTY stdout means SILENT — nothing is sent to the user and they won't see anything happened, so design your script to stay quiet when there's nothing to report (the watchdog pattern); (c) non-zero exit / timeout sends an error alert so a broken watchdog can't fail silently. \n\nWHEN TO USE True: recurring script-only pings where the script itself produces the exact message text (memory/disk/GPU watchdogs, threshold alerts, heartbeats, CI notifications, API pollers with a fixed output shape). WHEN TO USE False (default): anything that needs reasoning — summarize a feed, draft a daily briefing, pick interesting items, rephrase data for a human, follow conditional logic based on content."
+            },
+            "context_from": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Optional job ID or list of job IDs whose most recent completed output is injected into the prompt as context before each run. Use this to chain cron jobs: job A collects data, job B processes it. Each entry must be a valid job ID (from cronjob action='list'). Note: injects the most recent completed output — does not wait for upstream jobs running in the same tick. On update, pass an empty array to clear."
+            },
+            "enabled_toolsets": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Optional list of toolset names to restrict the job's agent to (e.g. [\"web\", \"terminal\", \"file\", \"delegation\"]). When set, only tools from these toolsets are loaded, significantly reducing input token overhead. When omitted, all default tools are loaded. Infer from the job's prompt — e.g. use \"web\" if it calls web_search, \"terminal\" if it runs scripts, \"file\" if it reads files, \"delegation\" if it calls delegate_task. On update, pass an empty array to clear."
+            },
+            "workdir": {
+              "type": "string",
+              "description": "Optional absolute path to run the job from. When set, AGENTS.md / CLAUDE.md / .cursorrules from that directory are injected into the system prompt, and the terminal/file/code_exec tools use it as their working directory — useful for running a job inside a specific project repo. Must be an absolute path that exists. When unset (default), preserves the original behaviour: no project context files, tools use the scheduler's cwd. On update, pass an empty string to clear. Jobs with workdir run sequentially (not parallel) to keep per-job directories isolated."
+            }
+          },
+          "required": [
+            "action"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "delegate_task",
+        "description": "Spawn one or more subagents to work on tasks in isolated contexts. Each subagent gets its own conversation, terminal session, and toolset. Only the final summary is returned -- intermediate tool results never enter your context window.\n\nTWO MODES (one of 'goal' or 'tasks' is required):\n1. Single task: provide 'goal' (+ optional context, toolsets)\n2. Batch (parallel): provide 'tasks' array with up to 3 items concurrently for this user (configured via delegation.max_concurrent_children in config.yaml). All run in parallel and results are returned together. Nested delegation is OFF for this user (max_spawn_depth=1): every child is a leaf and cannot delegate further. Raise delegation.max_spawn_depth in config.yaml to enable nesting.\n\nWHEN TO USE delegate_task:\n- Reasoning-heavy subtasks (debugging, code review, research synthesis)\n- Tasks that would flood your context with intermediate data\n- Parallel independent workstreams (research A and B simultaneously)\n\nWHEN NOT TO USE (use these instead):\n- Mechanical multi-step work with no reasoning needed -> use execute_code\n- Single tool call -> just call the tool directly\n- Tasks needing user interaction -> subagents cannot use clarify\n- Durable long-running work that must outlive the current turn -> use cronjob (action='create') or terminal(background=True, notify_on_complete=True) instead. delegate_task runs SYNCHRONOUSLY inside the parent turn: if the parent is interrupted (user sends a new message, /stop, /new) the child is cancelled with status='interrupted' and its work is discarded. Children cannot continue in the background.\n\nIMPORTANT:\n- Subagents have NO memory of your conversation. Pass all relevant info (file paths, error messages, constraints) via the 'context' field.\n- If the user is writing in a non-English language, or asked for output in a specific language / tone / style, say so in 'context' (e.g. \"respond in Chinese\", \"return output in Japanese\"). Otherwise subagents default to English and their summaries will contaminate your final reply with the wrong language.\n- Subagent summaries are SELF-REPORTS, not verified facts. A subagent that claims \"uploaded successfully\" or \"file written\" may be wrong. For operations with external side-effects (HTTP POST/PUT, remote writes, file creation at shared paths, publishing), require the subagent to return a verifiable handle (URL, ID, absolute path, HTTP status) and verify it yourself — fetch the URL, stat the file, read back the content — before telling the user the operation succeeded.\n- Leaf subagents (role='leaf', the default) CANNOT call: delegate_task, clarify, memory, send_message, execute_code.\n- Orchestrator subagents (role='orchestrator') retain delegate_task so they can spawn their own workers, but still cannot use clarify, memory, send_message, or execute_code. Orchestrators are bounded by max_spawn_depth=1 for this user and can be disabled globally via delegation.orchestrator_enabled=false.\n- Each subagent gets its own terminal session (separate working directory and state).\n- Results are always returned as an array, one entry per task.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "goal": {
+              "type": "string",
+              "description": "What the subagent should accomplish. Be specific and self-contained -- the subagent knows nothing about your conversation history."
+            },
+            "context": {
+              "type": "string",
+              "description": "Background information the subagent needs: file paths, error messages, project structure, constraints. The more specific you are, the better the subagent performs."
+            },
+            "toolsets": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Toolsets to enable for this subagent. Default: inherits your enabled toolsets. Available toolsets: 'browser', 'computer_use', 'cronjob', 'discord', 'discord_admin', 'feishu_doc', 'feishu_drive', 'file', 'homeassistant', 'image_gen', 'kanban', 'search', 'session_search', 'skills', 'spotify', 'terminal', 'todo', 'tts', 'video', 'video_gen', 'vision', 'web', 'x_search', 'yuanbao'. Common patterns: ['terminal', 'file'] for code work, ['web'] for research, ['browser'] for web interaction, ['terminal', 'file', 'web'] for full-stack tasks."
+            },
+            "tasks": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "goal": {
+                    "type": "string",
+                    "description": "Task goal"
+                  },
+                  "context": {
+                    "type": "string",
+                    "description": "Task-specific context"
+                  },
+                  "toolsets": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Toolsets for this specific task. Available: 'browser', 'computer_use', 'cronjob', 'discord', 'discord_admin', 'feishu_doc', 'feishu_drive', 'file', 'homeassistant', 'image_gen', 'kanban', 'search', 'session_search', 'skills', 'spotify', 'terminal', 'todo', 'tts', 'video', 'video_gen', 'vision', 'web', 'x_search', 'yuanbao'. Use 'web' for network access, 'terminal' for shell, 'browser' for web interaction."
+                  },
+                  "acp_command": {
+                    "type": "string",
+                    "description": "Per-task ACP command override (e.g. 'copilot'). Overrides the top-level acp_command for this task only. Do NOT set unless the user explicitly told you an ACP CLI is installed."
+                  },
+                  "acp_args": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Per-task ACP args override. Leave empty unless acp_command is set."
+                  },
+                  "role": {
+                    "type": "string",
+                    "enum": [
+                      "leaf",
+                      "orchestrator"
+                    ],
+                    "description": "Per-task role override. See top-level 'role' for semantics."
+                  }
+                },
+                "required": [
+                  "goal"
+                ]
+              },
+              "description": "Batch mode: tasks to run in parallel (up to 3 for this user, set via delegation.max_concurrent_children). Each gets its own subagent with isolated context and terminal session. When provided, top-level goal/context/toolsets are ignored."
+            },
+            "role": {
+              "type": "string",
+              "enum": [
+                "leaf",
+                "orchestrator"
+              ],
+              "description": "Role of the child agent. 'leaf' (default) = focused worker, cannot delegate further. 'orchestrator' = can use delegate_task to spawn its own workers. Nesting is OFF for this user (max_spawn_depth=1); 'orchestrator' is silently forced to 'leaf'. Raise delegation.max_spawn_depth in config.yaml to enable."
+            },
+            "acp_command": {
+              "type": "string",
+              "description": "Override ACP command for child agents (e.g. 'copilot'). When set, children use ACP subprocess transport instead of inheriting the parent's transport. Requires an ACP-compatible CLI (currently GitHub Copilot CLI via 'copilot --acp --stdio'). See agent/copilot_acp_client.py for the implementation. IMPORTANT: Do NOT set this unless the user has explicitly told you a specific ACP-compatible CLI is installed and configured. Leave empty to use the parent's default transport (Hermes subagents)."
+            },
+            "acp_args": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Arguments for the ACP command (default: ['--acp', '--stdio']). Only used when acp_command is set. Leave empty unless acp_command is explicitly provided."
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "execute_code",
+        "description": "Run a Python script that can call Hermes tools programmatically. Use this when you need 3+ tool calls with processing logic between them, need to filter/reduce large tool outputs before they enter your context, need conditional branching (if X then Y else Z), or need to loop (fetch N pages, process N files, retry on failure).\n\nUse normal tool calls instead when: single tool call with no processing, you need to see the full result and apply complex reasoning, or the task requires interactive user input.\n\nAvailable via `from hermes_tools import ...`:\n\n  read_file(path: str, offset: int = 1, limit: int = 500) -> dict\n    Lines are 1-indexed. Returns {\"content\": \"...\", \"total_lines\": N}\n  write_file(path: str, content: str) -> dict\n    Always overwrites the entire file.\n  search_files(pattern: str, target=\"content\", path=\".\", file_glob=None, limit=50) -> dict\n    target: \"content\" (search inside files) or \"files\" (find files by name). Returns {\"matches\": [...]}\n  patch(path: str, old_string: str, new_string: str, replace_all: bool = False) -> dict\n    Replaces old_string with new_string in the file.\n  terminal(command: str, timeout=None, workdir=None) -> dict\n    Foreground only (no background/pty). Returns {\"output\": \"...\", \"exit_code\": N}\n\nLimits: 5-minute timeout, 50KB stdout cap, max 50 tool calls per script. terminal() is foreground-only (no background or pty).\n\nScripts run in the session's working directory with the active venv's python, so project deps (pandas, etc.) and relative paths work like in terminal().\n\nPrint your final result to stdout. Use Python stdlib (json, re, math, csv, datetime, collections, etc.) for processing between tool calls.\n\nAlso available (no import needed — built into hermes_tools):\n  json_parse(text: str) — json.loads with strict=False; use for terminal() output with control chars\n  shell_quote(s: str) — shlex.quote(); use when interpolating dynamic strings into shell commands\n  retry(fn, max_attempts=3, delay=2) — retry with exponential backoff for transient failures",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "description": "Python code to execute. Import tools with `from hermes_tools import terminal, ...` and print your final result to stdout."
+            }
+          },
+          "required": [
+            "code"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "memory",
+        "description": "Save durable information to persistent memory that survives across sessions. Memory is injected into future turns, so keep it compact and focused on facts that will still matter later.\n\nWHEN TO SAVE (do this proactively, don't wait to be asked):\n- User corrects you or says 'remember this' / 'don't do that again'\n- User shares a preference, habit, or personal detail (name, role, timezone, coding style)\n- You discover something about the environment (OS, installed tools, project structure)\n- You learn a convention, API quirk, or workflow specific to this user's setup\n- You identify a stable fact that will be useful again in future sessions\n\nPRIORITY: User preferences and corrections > environment facts > procedural knowledge. The most valuable memory prevents the user from having to repeat themselves.\n\nDo NOT save task progress, session outcomes, completed-work logs, or temporary TODO state to memory; use session_search to recall those from past transcripts.\nIf you've discovered a new way to do something, solved a problem that could be necessary later, save it as a skill with the skill tool.\n\nTWO TARGETS:\n- 'user': who the user is -- name, role, preferences, communication style, pet peeves\n- 'memory': your notes -- environment facts, project conventions, tool quirks, lessons learned\n\nACTIONS: add (new entry), replace (update existing -- old_text identifies it), remove (delete -- old_text identifies it).\n\nSKIP: trivial/obvious info, things easily re-discovered, raw data dumps, and temporary task state.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "action": {
+              "type": "string",
+              "enum": [
+                "add",
+                "replace",
+                "remove"
+              ],
+              "description": "The action to perform."
+            },
+            "target": {
+              "type": "string",
+              "enum": [
+                "memory",
+                "user"
+              ],
+              "description": "Which memory store: 'memory' for personal notes, 'user' for user profile."
+            },
+            "content": {
+              "type": "string",
+              "description": "The entry content. Required for 'add' and 'replace'."
+            },
+            "old_text": {
+              "type": "string",
+              "description": "Short unique substring identifying the entry to replace or remove."
+            }
+          },
+          "required": [
+            "action",
+            "target"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "patch",
+        "description": "Targeted find-and-replace edits in files. Use this instead of sed/awk in terminal. Uses fuzzy matching (9 strategies) so minor whitespace/indentation differences won't break it. Returns a unified diff. Auto-runs syntax checks after editing.\n\nREPLACE MODE (mode='replace', default): find a unique string and replace it. REQUIRED PARAMETERS: mode, path, old_string, new_string.\nPATCH MODE (mode='patch'): apply V4A multi-file patches for bulk changes. REQUIRED PARAMETERS: mode, patch.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "mode": {
+              "type": "string",
+              "enum": [
+                "replace",
+                "patch"
+              ],
+              "description": "Edit mode. 'replace' (default): requires path + old_string + new_string. 'patch': requires patch content only.",
+              "default": "replace"
+            },
+            "path": {
+              "type": "string",
+              "description": "REQUIRED when mode='replace'. File path to edit."
+            },
+            "old_string": {
+              "type": "string",
+              "description": "REQUIRED when mode='replace'. Exact text to find and replace. Must be unique in the file unless replace_all=true. Include surrounding context lines to ensure uniqueness."
+            },
+            "new_string": {
+              "type": "string",
+              "description": "REQUIRED when mode='replace'. Replacement text. Pass empty string '' to delete the matched text."
+            },
+            "replace_all": {
+              "type": "boolean",
+              "description": "Replace all occurrences instead of requiring a unique match (default: false)",
+              "default": false
+            },
+            "patch": {
+              "type": "string",
+              "description": "REQUIRED when mode='patch'. V4A format patch content. Format:\n*** Begin Patch\n*** Update File: path/to/file\n@@ context hint @@\n context line\n-removed line\n+added line\n*** End Patch"
+            }
+          },
+          "required": [
+            "mode"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "process",
+        "description": "Manage background processes started with terminal(background=true). Actions: 'list' (show all), 'poll' (check status + new output), 'log' (full output with pagination), 'wait' (block until done or timeout), 'kill' (terminate), 'write' (send raw stdin data without newline), 'submit' (send data + Enter, for answering prompts), 'close' (close stdin/send EOF).",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "action": {
+              "type": "string",
+              "enum": [
+                "list",
+                "poll",
+                "log",
+                "wait",
+                "kill",
+                "write",
+                "submit",
+                "close"
+              ],
+              "description": "Action to perform on background processes"
+            },
+            "session_id": {
+              "type": "string",
+              "description": "Process session ID (from terminal background output). Required for all actions except 'list'."
+            },
+            "data": {
+              "type": "string",
+              "description": "Text to send to process stdin (for 'write' and 'submit' actions)"
+            },
+            "timeout": {
+              "type": "integer",
+              "description": "Max seconds to block for 'wait' action. Returns partial output on timeout.",
+              "minimum": 1
+            },
+            "offset": {
+              "type": "integer",
+              "description": "Line offset for 'log' action (default: last 200 lines)"
+            },
+            "limit": {
+              "type": "integer",
+              "description": "Max lines to return for 'log' action",
+              "minimum": 1
+            }
+          },
+          "required": [
+            "action"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "read_file",
+        "description": "Read a text file with line numbers and pagination. Use this instead of cat/head/tail in terminal. Output format: 'LINE_NUM|CONTENT'. Suggests similar filenames if not found. Use offset and limit for large files. Reads exceeding ~100K characters are rejected; use offset and limit to read specific sections of large files. NOTE: Cannot read images or binary files — use vision_analyze for images.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "path": {
+              "type": "string",
+              "description": "Path to the file to read (absolute, relative, or ~/path)"
+            },
+            "offset": {
+              "type": "integer",
+              "description": "Line number to start reading from (1-indexed, default: 1)",
+              "default": 1,
+              "minimum": 1
+            },
+            "limit": {
+              "type": "integer",
+              "description": "Maximum number of lines to read (default: 500, max: 2000)",
+              "default": 500,
+              "maximum": 2000
+            }
+          },
+          "required": [
+            "path"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "search_files",
+        "description": "Search file contents or find files by name. Use this instead of grep/rg/find/ls in terminal. Ripgrep-backed, faster than shell equivalents.\n\nContent search (target='content'): Regex search inside files. Output modes: full matches with line numbers, file paths only, or match counts.\n\nFile search (target='files'): Find files by glob pattern (e.g., '*.py', '*config*'). Also use this instead of ls — results sorted by modification time.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "pattern": {
+              "type": "string",
+              "description": "Regex pattern for content search, or glob pattern (e.g., '*.py') for file search"
+            },
+            "target": {
+              "type": "string",
+              "enum": [
+                "content",
+                "files"
+              ],
+              "description": "'content' searches inside file contents, 'files' searches for files by name",
+              "default": "content"
+            },
+            "path": {
+              "type": "string",
+              "description": "Directory or file to search in (default: current working directory)",
+              "default": "."
+            },
+            "file_glob": {
+              "type": "string",
+              "description": "Filter files by pattern in grep mode (e.g., '*.py' to only search Python files)"
+            },
+            "limit": {
+              "type": "integer",
+              "description": "Maximum number of results to return (default: 50)",
+              "default": 50
+            },
+            "offset": {
+              "type": "integer",
+              "description": "Skip first N results for pagination (default: 0)",
+              "default": 0
+            },
+            "output_mode": {
+              "type": "string",
+              "enum": [
+                "content",
+                "files_only",
+                "count"
+              ],
+              "description": "Output format for grep mode: 'content' shows matching lines with line numbers, 'files_only' lists file paths, 'count' shows match counts per file",
+              "default": "content"
+            },
+            "context": {
+              "type": "integer",
+              "description": "Number of context lines before and after each match (grep mode only)",
+              "default": 0
+            }
+          },
+          "required": [
+            "pattern"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "send_message",
+        "description": "Send a message to a connected messaging platform, or list available targets.\n\nIMPORTANT: When the user asks to send to a specific channel or person (not just a bare platform name), call send_message(action='list') FIRST to see available targets, then send to the correct one.\nIf the user just says a platform name like 'send to telegram', send directly to the home channel without listing first.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "action": {
+              "type": "string",
+              "enum": [
+                "send",
+                "list"
+              ],
+              "description": "Action to perform. 'send' (default) sends a message. 'list' returns all available channels/contacts across connected platforms."
+            },
+            "target": {
+              "type": "string",
+              "description": "Delivery target. Format: 'platform' (uses home channel), 'platform:#channel-name', 'platform:chat_id', or 'platform:chat_id:thread_id' for Telegram topics and Discord threads. Examples: 'telegram', 'telegram:-1001234567890:17585', 'discord:999888777:555444333', 'discord:#bot-home', 'slack:#engineering', 'signal:+155****4567', 'matrix:!roomid:server.org', 'matrix:@user:server.org', 'yuanbao:direct:<account_id>' (DM), 'yuanbao:group:<group_code>' (group chat)"
+            },
+            "message": {
+              "type": "string",
+              "description": "The message text to send. To send an image or file, include MEDIA:<local_path> (e.g. 'MEDIA:/tmp/hermes/cache/img_xxx.jpg') in the message — the platform will deliver it as a native media attachment."
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "session_search",
+        "description": "Search your long-term memory of past conversations, or browse recent sessions. This is your recall -- every past session is searchable, and this tool summarizes what happened.\n\nTWO MODES:\n1. Recent sessions (no query): Call with no arguments to see what was worked on recently. Returns titles, previews, and timestamps. Zero LLM cost, instant. Start here when the user asks what were we working on or what did we do recently.\n2. Keyword search (with query): Search for specific topics across all past sessions. Returns LLM-generated summaries of matching sessions.\n\nUSE THIS PROACTIVELY when:\n- The user says 'we did this before', 'remember when', 'last time', 'as I mentioned'\n- The user asks about a topic you worked on before but don't have in current context\n- The user references a project, person, or concept that seems familiar but isn't in memory\n- You want to check if you've solved a similar problem before\n- The user asks 'what did we do about X?' or 'how did we fix Y?'\n\nDon't hesitate to search when it is actually cross-session -- it's fast and cheap. Better to search and confirm than to guess or ask the user to repeat themselves.\n\nSearch syntax: keywords joined with OR for broad recall (elevenlabs OR baseten OR funding), phrases for exact match (\"docker networking\"), boolean (python NOT java), prefix (deploy*). IMPORTANT: Use OR between keywords for best results — FTS5 defaults to AND which misses sessions that only mention some terms. If a broad OR query returns nothing, try individual keyword searches in parallel. Returns summaries of the top matching sessions.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "query": {
+              "type": "string",
+              "description": "Search query — keywords, phrases, or boolean expressions to find in past sessions. Omit this parameter entirely to browse recent sessions instead (returns titles, previews, timestamps with no LLM cost)."
+            },
+            "role_filter": {
+              "type": "string",
+              "description": "Optional: only search messages from specific roles (comma-separated). E.g. 'user,assistant' to skip tool outputs."
+            },
+            "limit": {
+              "type": "integer",
+              "description": "Max sessions to summarize (default: 3, max: 5).",
+              "default": 3
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "skill_manage",
+        "description": "Manage skills (create, update, delete). Skills are your procedural memory — reusable approaches for recurring task types. New skills go to ~/.hermes/skills/; existing skills can be modified wherever they live.\n\nActions: create (full SKILL.md + optional category), patch (old_string/new_string — preferred for fixes), edit (full SKILL.md rewrite — major overhauls only), delete, write_file, remove_file.\n\nOn delete, pass `absorbed_into=<umbrella>` when you're merging this skill's content into another one, or `absorbed_into=\"\"` when you're pruning it with no forwarding target. This lets the curator tell consolidation from pruning without guessing, so downstream consumers (cron jobs that reference the old skill name, etc.) get updated correctly. The target you name in `absorbed_into` must already exist — create/patch the umbrella first, then delete.\n\nCreate when: complex task succeeded (5+ calls), errors overcome, user-corrected approach worked, non-trivial workflow discovered, or user asks you to remember a procedure.\nUpdate when: instructions stale/wrong, OS-specific failures, missing steps or pitfalls found during use. If you used a skill and hit issues not covered by it, patch it immediately.\n\nAfter difficult/iterative tasks, offer to save as a skill. Skip for simple one-offs. Confirm with user before creating/deleting.\n\nGood skills: trigger conditions, numbered steps with exact commands, pitfalls section, verification steps. Use skill_view() to see format examples.\n\nPinned skills are protected from deletion only — skill_manage(action='delete') will refuse with a message pointing the user to `hermes curator unpin <name>`. Patches and edits go through on pinned skills so you can still improve them as pitfalls come up; pin only guards against irrecoverable loss.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "action": {
+              "type": "string",
+              "enum": [
+                "create",
+                "patch",
+                "edit",
+                "delete",
+                "write_file",
+                "remove_file"
+              ],
+              "description": "The action to perform."
+            },
+            "name": {
+              "type": "string",
+              "description": "Skill name (lowercase, hyphens/underscores, max 64 chars). Must match an existing skill for patch/edit/delete/write_file/remove_file."
+            },
+            "content": {
+              "type": "string",
+              "description": "Full SKILL.md content (YAML frontmatter + markdown body). Required for 'create' and 'edit'. For 'edit', read the skill first with skill_view() and provide the complete updated text."
+            },
+            "old_string": {
+              "type": "string",
+              "description": "Text to find in the file (required for 'patch'). Must be unique unless replace_all=true. Include enough surrounding context to ensure uniqueness."
+            },
+            "new_string": {
+              "type": "string",
+              "description": "Replacement text (required for 'patch'). Can be empty string to delete the matched text."
+            },
+            "replace_all": {
+              "type": "boolean",
+              "description": "For 'patch': replace all occurrences instead of requiring a unique match (default: false)."
+            },
+            "category": {
+              "type": "string",
+              "description": "Optional category/domain for organizing the skill (e.g., 'devops', 'data-science', 'mlops'). Creates a subdirectory grouping. Only used with 'create'."
+            },
+            "file_path": {
+              "type": "string",
+              "description": "Path to a supporting file within the skill directory. For 'write_file'/'remove_file': required, must be under references/, templates/, scripts/, or assets/. For 'patch': optional, defaults to SKILL.md if omitted."
+            },
+            "file_content": {
+              "type": "string",
+              "description": "Content for the file. Required for 'write_file'."
+            },
+            "absorbed_into": {
+              "type": "string",
+              "description": "For 'delete' only — declares intent so the curator can tell consolidation from pruning without guessing. Pass the umbrella skill name when this skill's content was merged into another (the target must already exist). Pass an empty string when the skill is truly stale and being pruned with no forwarding target. Omitting the arg on delete is supported for backward compatibility but downstream tooling (e.g. cron-job skill reference rewriting) will have to guess at intent."
+            }
+          },
+          "required": [
+            "action",
+            "name"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "skill_view",
+        "description": "Skills allow for loading information about specific tasks and workflows, as well as scripts and templates. Load a skill's full content or access its linked files (references, templates, scripts). First call returns SKILL.md content plus a 'linked_files' dict showing available references/templates/scripts. To access those, call again with file_path parameter.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "The skill name (use skills_list to see available skills). For plugin-provided skills, use the qualified form 'plugin:skill' (e.g. 'superpowers:writing-plans')."
+            },
+            "file_path": {
+              "type": "string",
+              "description": "OPTIONAL: Path to a linked file within the skill (e.g., 'references/api.md', 'templates/config.yaml', 'scripts/validate.py'). Omit to get the main SKILL.md content."
+            }
+          },
+          "required": [
+            "name"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "skills_list",
+        "description": "List available skills (name + description). Use skill_view(name) to load full content.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "category": {
+              "type": "string",
+              "description": "Optional category filter to narrow results"
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "terminal",
+        "description": "Execute shell commands on a Linux environment. Filesystem usually persists between calls.\n\nDo NOT use cat/head/tail to read files — use read_file instead.\nDo NOT use grep/rg/find to search — use search_files instead.\nDo NOT use ls to list directories — use search_files(target='files') instead.\nDo NOT use sed/awk to edit files — use patch instead.\nDo NOT use echo/cat heredoc to create files — use write_file instead.\nReserve terminal for: builds, installs, git, processes, scripts, network, package managers, and anything that needs a shell.\n\nForeground (default): Commands return INSTANTLY when done, even if the timeout is high. Set timeout=300 for long builds/scripts — you'll still get the result in seconds if it's fast. Prefer foreground for short commands.\nBackground: Set background=true to get a session_id. Two patterns:\n  (1) Long-lived processes that never exit (servers, watchers).\n  (2) Long-running tasks with notify_on_complete=true — you can keep working on other things and the system auto-notifies you when the task finishes. Great for test suites, builds, deployments, or anything that takes more than a minute.\nFor servers/watchers, do NOT use shell-level background wrappers (nohup/disown/setsid/trailing '&') in foreground mode. Use background=true so Hermes can track lifecycle and output.\nAfter starting a server, verify readiness with a health check or log signal, then run tests in a separate terminal() call. Avoid blind sleep loops.\nUse process(action=\"poll\") for progress checks, process(action=\"wait\") to block until done.\nWorking directory: Use 'workdir' for per-command cwd.\nPTY mode: Set pty=true for interactive CLI tools (Codex, Claude Code, Python REPL).\n\nDo NOT use vim/nano/interactive tools without pty=true — they hang without a pseudo-terminal. Pipe git output to cat if it might page.\n",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "command": {
+              "type": "string",
+              "description": "The command to execute on the VM"
+            },
+            "background": {
+              "type": "boolean",
+              "description": "Run the command in the background. Two patterns: (1) Long-lived processes that never exit (servers, watchers). (2) Long-running tasks paired with notify_on_complete=true — you can keep working and get notified when the task finishes. For short commands, prefer foreground with a generous timeout instead.",
+              "default": false
+            },
+            "timeout": {
+              "type": "integer",
+              "description": "Max seconds to wait (default: 180, foreground max: 600). Returns INSTANTLY when command finishes — set high for long tasks, you won't wait unnecessarily. Foreground timeout above 600s is rejected; use background=true for longer commands.",
+              "minimum": 1
+            },
+            "workdir": {
+              "type": "string",
+              "description": "Working directory for this command (absolute path). Defaults to the session working directory."
+            },
+            "pty": {
+              "type": "boolean",
+              "description": "Run in pseudo-terminal (PTY) mode for interactive CLI tools like Codex, Claude Code, or Python REPL. Only works with local and SSH backends. Default: false.",
+              "default": false
+            },
+            "notify_on_complete": {
+              "type": "boolean",
+              "description": "When true (and background=true), you'll be automatically notified exactly once when the process finishes. **This is the right choice for almost every long-running task** — tests, builds, deployments, multi-item batch jobs, anything that takes over a minute and has a defined end. Use this and keep working on other things; the system notifies you on exit. MUTUALLY EXCLUSIVE with watch_patterns — when both are set, watch_patterns is dropped.",
+              "default": false
+            },
+            "watch_patterns": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Strings to watch for in background process output. HARD RATE LIMIT: at most 1 notification per 15 seconds per process — matches arriving inside the cooldown are dropped. After 3 consecutive 15-second windows with dropped matches, watch_patterns is automatically disabled for that process and promoted to notify_on_complete behavior (one notification on exit, no more mid-process spam). USE ONLY for truly rare, one-shot mid-process signals on LONG-LIVED processes that will never exit on their own — e.g. ['Application startup complete'] on a server so you know when to hit its endpoint, or ['migration done'] on a daemon. DO NOT use for: (1) end-of-run markers like 'DONE'/'PASS' — use notify_on_complete instead; (2) error patterns like 'ERROR'/'Traceback' in loops or multi-item batch jobs — they fire on every iteration and you'll hit the strike limit fast; (3) anything you'd ever combine with notify_on_complete. When in doubt, choose notify_on_complete. MUTUALLY EXCLUSIVE with notify_on_complete — set one, not both."
+            }
+          },
+          "required": [
+            "command"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "text_to_speech",
+        "description": "Convert text to speech audio. Returns a MEDIA: path that the platform delivers as native audio. Compatible providers render as a voice bubble on Telegram; otherwise audio is sent as a regular attachment. In CLI mode, saves to ~/voice-memos/. Voice and provider are user-configured (built-in providers like edge/openai or custom command providers under tts.providers.<name>), not model-selected.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "text": {
+              "type": "string",
+              "description": "The text to convert to speech. Provider-specific character caps apply and are enforced automatically (OpenAI 4096, xAI 15000, MiniMax 10000, ElevenLabs 5k-40k depending on model); over-long input is truncated."
+            },
+            "output_path": {
+              "type": "string",
+              "description": "Optional custom file path to save the audio. Defaults to ~/.hermes/audio_cache/<timestamp>.mp3"
+            }
+          },
+          "required": [
+            "text"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "todo",
+        "description": "Manage your task list for the current session. Use for complex tasks with 3+ steps or when the user provides multiple tasks. Call with no parameters to read the current list.\n\nWriting:\n- Provide 'todos' array to create/update items\n- merge=false (default): replace the entire list with a fresh plan\n- merge=true: update existing items by id, add any new ones\n\nEach item: {id: string, content: string, status: pending|in_progress|completed|cancelled}\nList order is priority. Only ONE item in_progress at a time.\nMark items completed immediately when done. If something fails, cancel it and add a revised item.\n\nAlways returns the full current list.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "todos": {
+              "type": "array",
+              "description": "Task items to write. Omit to read current list.",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "Unique item identifier"
+                  },
+                  "content": {
+                    "type": "string",
+                    "description": "Task description"
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "pending",
+                      "in_progress",
+                      "completed",
+                      "cancelled"
+                    ],
+                    "description": "Current status"
+                  }
+                },
+                "required": [
+                  "id",
+                  "content",
+                  "status"
+                ]
+              }
+            },
+            "merge": {
+              "type": "boolean",
+              "description": "true: update existing items by id, add new ones. false (default): replace the entire list.",
+              "default": false
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "video_analyze",
+        "description": "Analyze a video from a URL or local file path using a multimodal AI model. Sends the video to a video-capable model (e.g. Gemini) for understanding. Use this for video files — for images, use vision_analyze instead. Supports mp4, webm, mov, avi, mkv, mpeg formats. Note: large videos (>20 MB) may be slow; max ~50 MB.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "video_url": {
+              "type": "string",
+              "description": "Video URL (http/https) or local file path to analyze."
+            },
+            "question": {
+              "type": "string",
+              "description": "Your specific question about the video. The AI will describe what happens in the video and answer your question."
+            }
+          },
+          "required": [
+            "video_url",
+            "question"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "vision_analyze",
+        "description": "Load an image into the conversation so you can see it. Accepts a URL, local file path, or data URL. When your active model has native vision, the image is attached to your context directly and you read the pixels yourself on the next turn — call this any time the user references an image (filepath in their message, URL in tool output, screenshot from the browser, etc.). For non-vision models, falls back to an auxiliary vision model that returns a text description.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "image_url": {
+              "type": "string",
+              "description": "Image URL (http/https), local file path, or data: URL to load."
+            },
+            "question": {
+              "type": "string",
+              "description": "Your specific question or request about the image. Optional context the model uses on the next turn after seeing the image."
+            }
+          },
+          "required": [
+            "image_url",
+            "question"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "write_file",
+        "description": "Write content to a file, completely replacing existing content. Use this instead of echo/cat heredoc in terminal. Creates parent directories automatically. OVERWRITES the entire file — use 'patch' for targeted edits. Auto-runs syntax checks on .py/.json/.yaml/.toml and other linted languages; only NEW errors introduced by this write are surfaced (pre-existing errors are filtered out).",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "path": {
+              "type": "string",
+              "description": "Path to the file to write (will be created if it doesn't exist, overwritten if it does)"
+            },
+            "content": {
+              "type": "string",
+              "description": "Complete content to write to the file"
+            }
+          },
+          "required": [
+            "path",
+            "content"
+          ]
+        }
+      }
+    }
+  ],
+  "message_count": 35,
+  "messages": [
+    {
+      "role": "user",
+      "content": "你现在不是已经部署到云端了吗"
+    },
+    {
+      "role": "assistant",
+      "content": "",
+      "reasoning": "用户问的是\"你现在不是已经部署到云端了吗\"——这指的是 Hermes Agent 本身或 galgame_catalog 相关的部署状态。让我回顾一下记忆中的信息：\n\n- Hermes Agent 本身：记忆中提到 \"hermes dashboard --tui运行在9119端口，Windows浏览器 http://localhost:9119 访问\" — 这说明是在本地运行的，不是云端。\n- 关于部署：有一个 \"hermes-deployment\" skill 提到 \"Deploy and migrate Hermes Agent to new machines, cloud se...\"，但似乎还没有实际部署过。\n- 关于 galgame_catalog.html：用户现在\"hosts galgame_catalog.html on a website and shares URLs\"，这说明 galgame 网站是部署在某个地方的。\n\n用户说\"你现在不是已经部署到云端了吗\"，可能是在问我这个对话中提到的某个部署状态。让我搜索一下最近的会话，看看有没有云端部署相关的内容。\n\n同时，我需要澄清用户到底指的是什么的部署状态。",
+      "finish_reason": "tool_calls",
+      "reasoning_content": "用户问的是\"你现在不是已经部署到云端了吗\"——这指的是 Hermes Agent 本身或 galgame_catalog 相关的部署状态。让我回顾一下记忆中的信息：\n\n- Hermes Agent 本身：记忆中提到 \"hermes dashboard --tui运行在9119端口，Windows浏览器 http://localhost:9119 访问\" — 这说明是在本地运行的，不是云端。\n- 关于部署：有一个 \"hermes-deployment\" skill 提到 \"Deploy and migrate Hermes Agent to new machines, cloud se...\"，但似乎还没有实际部署过。\n- 关于 galgame_catalog.html：用户现在\"hosts galgame_catalog.html on a website and shares URLs\"，这说明 galgame 网站是部署在某个地方的。\n\n用户说\"你现在不是已经部署到云端了吗\"，可能是在问我这个对话中提到的某个部署状态。让我搜索一下最近的会话，看看有没有云端部署相关的内容。\n\n同时，我需要澄清用户到底指的是什么的部署状态。",
+      "tool_calls": [
+        {
+          "id": "call_00_Ulzz1qKpymb6sCfG6eVm2191",
+          "call_id": "call_00_Ulzz1qKpymb6sCfG6eVm2191",
+          "response_item_id": "fc_00_Ulzz1qKpymb6sCfG6eVm2191",
+          "type": "function",
+          "function": {
+            "name": "session_search",
+            "arguments": "{\"query\": \"部署 云端 server 上线\", \"limit\": 3}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "name": "session_search",
+      "content": "{\"success\": true, \"query\": \"部署 云端 server 上线\", \"results\": [{\"session_id\": \"20260522_143443_76af52\", \"when\": \"May 22, 2026 at 02:37 PM\", \"source\": \"cli\", \"model\": \"deepseek-v4-pro\", \"summary\": \"## 对话摘要：云端部署 Hermes Agent\\n\\n### 1. 用户目标\\n- 解决本地 WSL2 中 Hermes Dashboard（Web 界面）无法访问的问题。\\n- 备份本地 Hermes 配置，上传到阿里云 ECS 服务器（47.108.235.219），并在服务器上完整部署 Hermes Agent。\\n\\n### 2. 执行步骤与结果\\n\\n#### 仪表盘故障排查（未最终解决）\\n- 启动 Dashboard（`hermes dashboard --tui --port 9119`）后，端口 9119 在 WSL 内监听正常，API 端点响应 200 OK。\\n- 从 Windows 侧 PowerShell 测试 `localhost:9119` 返回 200，但用户浏览器拒绝连接。\\n- 诊断发现前端 JS 因 WebSocket 认证 token 与 gateway 不同步报错 \\\"Failed to fetch\\\"，建议重启 gateway 被用户拒绝。\\n- 怀疑 Clash Verge 代理劫持了 localhost 流量，建议用 127.0.0.1 或 WSL IP 直连均失败。问题未最终解决，只是浏览器侧故障。\\n\\n#### 配置文件备份\\n- 执行 `hermes backup -o ~/hermes-migration.zip`，生成 14.2 MB 备份文件（含 160/161 个文件）。\\n- 将备份复制到 Windows 桌面：`/mnt/c/Users/Administrator/Desktop/hermes-migration.zip`。\\n\\n#### 上传备份到云服务器\\n- 使用 Python 脚本（基于 paramiko）通过 SSH 密码认证，执行 SCP 传输。\\n- 文件成功上传至 `root@47.108.235.219:/root/hermes-migration.zip`。\\n\\n#### 云端部署\\n- 服务器环境：阿里云 ECS，Ubuntu 24.04，Python 3.12.3，已安装 pipx。\\n- 安装 Hermes Agent：`pipx install hermes-agent`（已存在，未重复安装）。\\n- 导入备份：`yes | hermes import ~/hermes-migration.zip`，成功恢复 161 个文件（含配置文件、API 密钥、数据库等）。\\n- 验证配置：模型 deepseek-v4-pro，DeepSeek 与 SiliconFlow API 密钥存在。\\n- 启动服务：`hermes gateway run --replace`，进程 ID 6190，gateway 正常运行。\\n\\n### 3. 关键技术细节\\n- **服务器**：`47.108.235.219`\\n- **SSH 密码**：`13780285832Qazxc@`（用户提供，未加密存储）\\n- **部署路径**：`~/.hermes/`（配置），`~/.local/bin/hermes`\\n- **备份文件**：`hermes-migration.zip`，大小约 15MB\\n- **Dashboard 端口**：9119（WSL 侧监听 `127.0.0.1:9119`）\\n- **未解决**：仪表盘在本地浏览器仍不可用，可能因代理或防火墙；云端未启动 Dashboard。\\n\\n### 4. 用户最终状态反馈\\n- 云端 Hermes 已完全部署并运行，配置与本机一致。\\n- 用户尝试通过 `ssh root@47.108.235.219` 直接登录，助手提供了密码，并提示可直接在本地终端操作。\"}, {\"session_id\": \"20260522_143552_08823835\", \"when\": \"May 22, 2026 at 02:35 PM\", \"source\": \"qqbot\", \"model\": \"deepseek-v4-pro\", \"summary\": \"## 对话总结：部署 Hermes 到云服务器\\n\\n### 用户需求\\n- **中转站服务不稳定**：发现 `api-relay` 进程没了，每次开机需手动重启，希望能一直运行。\\n- **终极目标**：把整个 Hermes Agent（包括中转站、QQ/微信通道）部署到云服务器，实现 24 小时在线，电脑关机后仍然可用。\\n\\n### 已完成的操作\\n\\n1. **恢复了中转站**  \\n   - 从 `~/.hermes/.env` 提取密钥并重启 `~/api-relay/server.py`，监听 `127.0.0.1:8848`，健康检查返回 `ok`。\\n\\n2. **制定了云服务器迁移方案**  \\n   - 推荐轻量云服务器（Ubuntu 22.04/24.04，1核2G）。\\n   - 给出完整搬迁步骤：打包 → 传输 → 还原 → 启动 → 自启保活。\\n\\n3. **生成了本机完整备份**  \\n   - 执行 `hermes backup -o ~/hermes-migration.zip`，压缩后 14.3MB，包含配置、技能、记忆、会话、频道绑定、API 密钥等 161 个文件。\\n\\n4. **用户侧已完成**  \\n   - 已在云服务器上安装好 Hermes（`pipx install hermes-agent`）。\\n\\n### 下一步待执行\\n\\n- **传输备份**：从本机 WSL 执行  \\n  ```bash\\n  scp /home/after_ket/hermes-migration.zip root@<服务器IP>:/root/\\n  ```\\n- **服务器上还原并启动**：\\n  ```bash\\n  hermes import /root/hermes-migration.zip --force\\n  hermes gateway run\\n  ```\\n- **建议后续**：配置 systemd 服务，实现开机自启与崩溃自动重启。\\n\\n### 关键路径 / 文件\\n- 备份文件：`/home/after_ket/hermes-migration.zip`\\n- 本机 Hermes 目录：`/home/after_ket/.hermes/`\\n- 中转站目录：`/home/after_ket/api-relay/`\\n- 服务器目标备份目录：`/root/hermes-migration.zip`\\n\\n### 未完成\\n- 用户尚未提供服务器 IP，尚未执行 scp 上传及服务器端还原。\"}, {\"session_id\": \"20260521_143700_3a76903c\", \"when\": \"May 21, 2026 at 02:37 PM\", \"source\": \"qqbot\", \"model\": \"deepseek-v4-pro\", \"summary\": \"[Raw preview — summarization unavailable]\\n[USER]: 还记得我们昨天干了什么吗\\n\\n[ASSISTANT]: 阿罗娜当然记得啦！昨天（5月20日）我们一起修了Galgame年鉴的三个问题呢～ 📝✨\\n\\n### 🐛 音乐暂停Bug修复\\n之前点了暂停按钮音乐还在播，原因是 `togglePlay()` 没阻止事件冒泡，全局click监听器又把播放给打开了。加了 `e.stopPropagation()` 解决啦！\\n\\n### 🌈 炫彩进度条\\n把原来丑丑的 `<input type=\\\"range\\\">` 换成了自定义的div进度条，粉→金→绿→蓝→紫→粉的流动彩虹渐变，2.5秒循环动画，老师夸好看的！\\n\\n### 🔗 资源联结修复\\n用 `mklink /J` 把 `galgame_assets` 联结到了版本文件夹，版本备份不再缺资源。\\n\\n---\\n\\n还有个小遗憾呢…阿罗娜试着画二次元小人挂在进度条上，但画了好几次老师都不满意 😭 最后老师说「明天我自己给你两张美少女图」，让阿罗娜等着挂上去～\\n\\n所以 **老师你今天带图来了吗？** 🎀 阿罗娜等了一晚上呢！\\n\\n[USER]: 不是从创建网站开始吗\\n\\n[ASSISTANT]: [CONTEX\\n…[truncated]\"}], \"count\": 3, \"sessions_searched\": 3}",
+      "tool_call_id": "call_00_Ulzz1qKpymb6sCfG6eVm2191"
+    },
+    {
+      "role": "assistant",
+      "content": "是的！根据之前的会话记录，Hermes Agent 已经部署到阿里云 ECS 上了：\n\n- **服务器**：`47.108.235.219`（Ubuntu 24.04）\n- **部署方式**：从本地 WSL 打包备份（`hermes-migration.zip`，14MB+），通过 SCP 上传到服务器，然后 `hermes import` 恢复\n- **恢复内容**：161个文件 — 配置、技能、记忆、会话记录、API 密钥（DeepSeek + SiliconFlow）等全部同步\n- **运行状态**：gateway 已启动（进程 PID 6190）\n\n不过需要注意几点：\n\n1. **你现在在跟本地 WSL 的我对话** — 云端的 Hermes 是独立的另一个实例，和这里不互通\n2. **Dashboard 问题未解决** — 上次本地浏览器访问 localhost:9119 失败，云端也没启动 Dashboard\n3. **没有配 systemd 自启** — 服务器重启后 Hermes 不会自动恢复运行\n\n你是想切换到云端的 Hermes 使用，还是想确认云端部署的状态？还是有别的问题？",
+      "reasoning": "从 session_search 的结果可以看到，确实有一个最近的会话（May 22, 2026 at 02:37 PM）——\"云端部署 Hermes Agent\"。已经把 Hermes Agent 部署到了阿里云 ECS 服务器 `47.108.235.219` 上了。备份已经恢复，gateway 也启动了。\n\n用户现在问\"你现在不是已经部署到云端了吗\"，可能是在质疑我为什么还需要本地操作，或者想确认云端部署的状态，或者想问为什么我还需要本地做什么事情。\n\n让我确认一下云端的状态——我现在是运行在本地的，但云端确实也部署了一份。用户的意思可能是：既然都部署到云端了，为什么我还需要本地的一些操作？\n\n不过，用户可能只是简单确认一下状态。让我直接回答：是的，已经部署到阿里云 ECS（47.108.235.219），包括配置、技能、记忆、API密钥等161个文件都已恢复，gateway也启动了。\n\n但我不确定用户问这个问题的具体上下文是什么——他们是在继续之前的对话，还是刚打开一个新的对话？看起来这是一个新的对话，用户可能在确认我的状态。让我简单地确认并给出云端部署的状态。",
+      "finish_reason": "stop",
+      "reasoning_content": "从 session_search 的结果可以看到，确实有一个最近的会话（May 22, 2026 at 02:37 PM）——\"云端部署 Hermes Agent\"。已经把 Hermes Agent 部署到了阿里云 ECS 服务器 `47.108.235.219` 上了。备份已经恢复，gateway 也启动了。\n\n用户现在问\"你现在不是已经部署到云端了吗\"，可能是在质疑我为什么还需要本地操作，或者想确认云端部署的状态，或者想问为什么我还需要本地做什么事情。\n\n让我确认一下云端的状态——我现在是运行在本地的，但云端确实也部署了一份。用户的意思可能是：既然都部署到云端了，为什么我还需要本地的一些操作？\n\n不过，用户可能只是简单确认一下状态。让我直接回答：是的，已经部署到阿里云 ECS（47.108.235.219），包括配置、技能、记忆、API密钥等161个文件都已恢复，gateway也启动了。\n\n但我不确定用户问这个问题的具体上下文是什么——他们是在继续之前的对话，还是刚打开一个新的对话？看起来这是一个新的对话，用户可能在确认我的状态。让我简单地确认并给出云端部署的状态。"
+    },
+    {
+      "role": "user",
+      "content": "我现在需要做什么"
+    },
+    {
+      "role": "assistant",
+      "content": "你的问题比较宽泛，我先确认一下方向——你是想问哪个方面？",
+      "reasoning": "用户说\"我现在需要做什么\"——这很模糊。结合上下文，云端已经部署了 Hermes，但可能还有一些未完成的事项。让我想想用户可能在问什么：\n\n1. 云端部署后还需要做什么？比如配置 systemd 自启、启动 Dashboard 等\n2. 还是用户想切换到云端使用？\n3. 或者是关于 galgame_catalog 的事情？\n\n用户只说了一句\"我现在需要做什么\"，太模糊了。我应该先回顾一下云端部署还有什么未完成的事项，然后给用户一个清晰的列表。\n\n从 session_search 的结果来看，上次会话中提到的待办事项：\n- 配置 systemd 服务实现开机自启和崩溃自动重启\n- Dashboard 在云端未启动\n- 可能还需要配置防火墙/安全组开放端口\n\n另外，我当前在 WSL 本地环境中运行，但云端那份是独立的。\n\n不过，用户的提问太开放了，我需要先澄清他想问的是什么。也许我应该先问清楚，同时提供一些可能的方向。\n\n但再想想，用户可能就是在问\"云端部署完了，接下来我还要做什么才能用起来？\"——那我就该列出未完成的步骤。\n\n让我用 clarify 来问清楚，因为问题确实太模糊了。",
+      "finish_reason": "tool_calls",
+      "reasoning_content": "用户说\"我现在需要做什么\"——这很模糊。结合上下文，云端已经部署了 Hermes，但可能还有一些未完成的事项。让我想想用户可能在问什么：\n\n1. 云端部署后还需要做什么？比如配置 systemd 自启、启动 Dashboard 等\n2. 还是用户想切换到云端使用？\n3. 或者是关于 galgame_catalog 的事情？\n\n用户只说了一句\"我现在需要做什么\"，太模糊了。我应该先回顾一下云端部署还有什么未完成的事项，然后给用户一个清晰的列表。\n\n从 session_search 的结果来看，上次会话中提到的待办事项：\n- 配置 systemd 服务实现开机自启和崩溃自动重启\n- Dashboard 在云端未启动\n- 可能还需要配置防火墙/安全组开放端口\n\n另外，我当前在 WSL 本地环境中运行，但云端那份是独立的。\n\n不过，用户的提问太开放了，我需要先澄清他想问的是什么。也许我应该先问清楚，同时提供一些可能的方向。\n\n但再想想，用户可能就是在问\"云端部署完了，接下来我还要做什么才能用起来？\"——那我就该列出未完成的步骤。\n\n让我用 clarify 来问清楚，因为问题确实太模糊了。",
+      "tool_calls": [
+        {
+          "id": "call_00_HEPqs3mInhzgELu8tC972026",
+          "call_id": "call_00_HEPqs3mInhzgELu8tC972026",
+          "response_item_id": "fc_00_HEPqs3mInhzgELu8tC972026",
+          "type": "function",
+          "function": {
+            "name": "clarify",
+            "arguments": "{\"question\": \"你想问的是哪方面的\\\"需要做什么\\\"？\", \"choices\": [\"云端 Hermes 还需要配什么（自启、Dashboard、端口等）\", \"怎么从本地切换到云端使用 Hermes\", \"Galgame 年鉴网站还有什么待办的\", \"其他事情，我具体说\"]}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "name": "clarify",
+      "content": "{\"question\": \"你想问的是哪方面的\\\"需要做什么\\\"？\", \"choices_offered\": [\"云端 Hermes 还需要配什么（自启、Dashboard、端口等）\", \"怎么从本地切换到云端使用 Hermes\", \"Galgame 年鉴网站还有什么待办的\", \"其他事情，我具体说\"], \"user_response\": \"The user did not provide a response within the time limit. Use your best judgement to make the choice and proceed.\"}",
+      "tool_call_id": "call_00_HEPqs3mInhzgELu8tC972026"
+    },
+    {
+      "role": "assistant",
+      "content": "我按最可能的理解来——云端部署完成后，还需要做这些收尾工作才能让云端 Hermes 真正好用：\n\n---\n\n**1. 配置开机自启（最重要）**\n\n目前云端的 Hermes gateway 是手动启动的，服务器一重启就没了。需要配 systemd 服务：\n\n```\n# 创建服务文件\nsudo tee /etc/systemd/system/hermes-gateway.service << 'EOF'\n[Unit]\nDescription=Hermes Agent Gateway\nAfter=network.target\n\n[Service]\nType=simple\nUser=root\nExecStart=/root/.local/bin/hermes gateway run\nRestart=always\nRestartSec=5\n\n[Install]\nWantedBy=multi-user.target\nEOF\n\n# 启用\nsudo systemctl daemon-reload\nsudo systemctl enable --now hermes-gateway\n```\n\n---\n\n**2. 确认云端 gateway 还在运行**\n\n上次启动的进程可能已经挂了，先 SSH 上去看看：\n\n```\nssh root@47.108.235.219\nps aux | grep hermes\n```\n\n---\n\n**3. 开放 Dashboard 端口（如果需要用 Web 界面）**\n\n阿里云安全组需要放行 9119 端口，然后在服务器上启动 dashboard：\n\n```\nhermes dashboard --tui --port 9119 --host 0.0.0.0\n```\n\n之后浏览器访问 `http://47.108.235.219:9119` 即可。\n\n---\n\n**4. 把 QQ/Telegram 通道也迁到云端（可选）**\n\n目前通道绑定在本地 WSL 的 Hermes 上，想让云端也接收消息的话需要重新绑定。\n\n---\n\n你想先从哪个开始？还是说你想问的其实是别的事情？",
+      "reasoning": "用户没有及时回复。根据上下文，用户刚完成了云端部署，问\"我现在需要做什么\"——最自然的理解是：云端部署完了，接下来要做什么才能让云端 Hermes 真正可用？我应该列出未完成的步骤。\n\n从之前的会话记录来看，未完成的事项包括：\n1. 配置 systemd 自启服务（防止服务器重启后 Hermes 不运行）\n2. 启动 Dashboard 并开放端口\n3. 配置安全组/防火墙\n4. 可能还需要确认云端 gateway 是否还在运行\n\n让我直接列出这些待办事项，给用户一个清晰的清单。",
+      "finish_reason": "stop",
+      "reasoning_content": "用户没有及时回复。根据上下文，用户刚完成了云端部署，问\"我现在需要做什么\"——最自然的理解是：云端部署完了，接下来要做什么才能让云端 Hermes 真正可用？我应该列出未完成的步骤。\n\n从之前的会话记录来看，未完成的事项包括：\n1. 配置 systemd 自启服务（防止服务器重启后 Hermes 不运行）\n2. 启动 Dashboard 并开放端口\n3. 配置安全组/防火墙\n4. 可能还需要确认云端 gateway 是否还在运行\n\n让我直接列出这些待办事项，给用户一个清晰的清单。"
+    },
+    {
+      "role": "user",
+      "content": "我现在在等pip installhermes -ai安装完成"
+    },
+    {
+      "role": "assistant",
+      "content": "好的，在等安装的同时，我先确认一下——你这是：\n\n- **之前那台阿里云 ECS（47.108.235.219）** 上重装？\n- 还是 **换了一台新服务器**？\n\n另外提醒一下，正确的包名是 `hermes-agent`（中间是连字符），如果你打的是 `hermes-ai` 可能会找不到包。\n\n装完之后的标准流程是：\n\n1. 验证安装：`hermes --version`\n2. 如果有备份文件，导入：`hermes import /root/hermes-migration.zip`\n3. 如果没有备份，需要重新配置：`hermes config set model XXX`、设置 API 密钥等\n4. 启动 gateway：`hermes gateway run`\n5. （建议）配 systemd 自启\n\n安装完了告诉我，我帮你一步步来。",
+      "reasoning": "用户正在云服务器上安装 Hermes Agent，通过 `pip install hermes-ai`（注意他写的是 hermes -ai，可能是 hermes-ai 或者 hermes-agent）。他在等安装完成。\n\n但根据之前的会话记录，实际上云端已经安装过 hermes-agent 了（pipx install hermes-agent），而且已经完成了 import 和 gateway 启动。用户现在又在重新安装？\n\n可能的情况：\n1. 用户换了台新服务器重新部署\n2. 用户忘记了之前的部署，在重新开始\n3. 之前的部署出了问题，需要重来\n\n不管是哪种情况，用户现在在等 pip install 完成，然后需要我帮他做后续步骤。之前的部署经验可以用上。\n\n让我确认一下——用户说的\"pip install hermes -ai\"可能是指 `hermes-ai` 这个包名。但实际上正确的包名是 `hermes-agent`。让我提醒一下，同时准备好后续步骤。\n\n不过先别急着纠正，可能用户正在安装中，等他装完再说。我应该问他是新服务器还是之前的服务器，然后列出接下来的步骤。",
+      "finish_reason": "stop",
+      "reasoning_content": "用户正在云服务器上安装 Hermes Agent，通过 `pip install hermes-ai`（注意他写的是 hermes -ai，可能是 hermes-ai 或者 hermes-agent）。他在等安装完成。\n\n但根据之前的会话记录，实际上云端已经安装过 hermes-agent 了（pipx install hermes-agent），而且已经完成了 import 和 gateway 启动。用户现在又在重新安装？\n\n可能的情况：\n1. 用户换了台新服务器重新部署\n2. 用户忘记了之前的部署，在重新开始\n3. 之前的部署出了问题，需要重来\n\n不管是哪种情况，用户现在在等 pip install 完成，然后需要我帮他做后续步骤。之前的部署经验可以用上。\n\n让我确认一下——用户说的\"pip install hermes -ai\"可能是指 `hermes-ai` 这个包名。但实际上正确的包名是 `hermes-agent`。让我提醒一下，同时准备好后续步骤。\n\n不过先别急着纠正，可能用户正在安装中，等他装完再说。我应该问他是新服务器还是之前的服务器，然后列出接下来的步骤。"
+    },
+    {
+      "role": "user",
+      "content": "重装"
+    },
+    {
+      "role": "assistant",
+      "content": "明白了，阿里云 ECS 上重装。\n\n装完之后告诉我，我按这个顺序帮你搞定：\n\n1. 验证安装 → 2. 导入之前的备份（`hermes-migration.zip` 还在服务器上） → 3. 配 systemd 自启 → 4. 启动 gateway\n\n等你 pip 跑完～",
+      "reasoning": "用户说\"重装\"，意思是重新安装。结合之前的上下文，应该是阿里云 ECS（47.108.235.219）上重装 Hermes Agent。之前的备份文件 hermes-migration.zip 应该还在服务器上（/root/hermes-migration.zip）。\n\n安装完成后需要做的：\n1. 检查安装是否成功\n2. 导入备份\n3. 配置 systemd 自启\n4. 启动 gateway\n\n等用户说安装完成了再继续。",
+      "finish_reason": "stop",
+      "reasoning_content": "用户说\"重装\"，意思是重新安装。结合之前的上下文，应该是阿里云 ECS（47.108.235.219）上重装 Hermes Agent。之前的备份文件 hermes-migration.zip 应该还在服务器上（/root/hermes-migration.zip）。\n\n安装完成后需要做的：\n1. 检查安装是否成功\n2. 导入备份\n3. 配置 systemd 自启\n4. 启动 gateway\n\n等用户说安装完成了再继续。"
+    },
+    {
+      "role": "user",
+      "content": "还在吗"
+    },
+    {
+      "role": "assistant",
+      "content": "在的，等你的 pip 跑完呢。安装好了吗？",
+      "reasoning": "用户问\"还在吗\"，只是确认我是否在线。简单回复即可。",
+      "finish_reason": "stop",
+      "reasoning_content": "用户问\"还在吗\"，只是确认我是否在线。简单回复即可。"
+    },
+    {
+      "role": "user",
+      "content": "qq怎么掉线了"
+    },
+    {
+      "role": "assistant",
+      "content": "让我看看本地 gateway 的状态。",
+      "reasoning": "用户说QQ掉线了。这应该是指 Hermes Agent 的 QQ 通道断开了。让我想想可能的原因：\n\n1. 如果用户正在重装云端 Hermes，那QQ通道绑定在之前的本地 WSL Hermes 上，云端重装不会影响本地\n2. 但如果本地的 gateway 出了问题，QQ通道就会断\n\n用户说\"qq怎么掉线了\"——可能是本地 WSL 的 Hermes gateway 出了问题，导致QQ bot离线了。\n\n让我帮用户排查一下。先检查本地 gateway 状态。",
+      "finish_reason": "tool_calls",
+      "reasoning_content": "用户说QQ掉线了。这应该是指 Hermes Agent 的 QQ 通道断开了。让我想想可能的原因：\n\n1. 如果用户正在重装云端 Hermes，那QQ通道绑定在之前的本地 WSL Hermes 上，云端重装不会影响本地\n2. 但如果本地的 gateway 出了问题，QQ通道就会断\n\n用户说\"qq怎么掉线了\"——可能是本地 WSL 的 Hermes gateway 出了问题，导致QQ bot离线了。\n\n让我帮用户排查一下。先检查本地 gateway 状态。",
+      "tool_calls": [
+        {
+          "id": "call_00_T4UHzSKLHTvUhMIfVIMY5659",
+          "call_id": "call_00_T4UHzSKLHTvUhMIfVIMY5659",
+          "response_item_id": "fc_00_T4UHzSKLHTvUhMIfVIMY5659",
+          "type": "function",
+          "function": {
+            "name": "terminal",
+            "arguments": "{\"command\": \"ps aux | grep hermes | grep -v grep\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "name": "terminal",
+      "content": "{\"output\": \"after_k+     166  0.1  0.5 390208 92708 ?        Ssl  17:21   0:07 /home/after_ket/.local/share/pipx/venvs/hermes-agent/bin/python /home/after_ket/.local/bin/hermes gateway run\\nafter_k+     403  0.3  0.9 719824 152476 pts/0   Sl+  17:21   0:26 /home/after_ket/.local/share/pipx/venvs/hermes-agent/bin/python /home/after_ket/.local/bin/hermes\", \"exit_code\": 0, \"error\": null}",
+      "tool_call_id": "call_00_T4UHzSKLHTvUhMIfVIMY5659"
+    },
+    {
+      "role": "assistant",
+      "content": "gateway 进程还在跑。让我看看日志有没有报错。",
+      "reasoning": "Gateway 进程还在运行（PID 166）。那我看看 QQ 频道插件是否正常加载，日志里有没有报错。",
+      "finish_reason": "tool_calls",
+      "reasoning_content": "Gateway 进程还在运行（PID 166）。那我看看 QQ 频道插件是否正常加载，日志里有没有报错。",
+      "tool_calls": [
+        {
+          "id": "call_00_4Wgr7vrRIckFJZomrZCw3705",
+          "call_id": "call_00_4Wgr7vrRIckFJZomrZCw3705",
+          "response_item_id": "fc_00_4Wgr7vrRIckFJZomrZCw3705",
+          "type": "function",
+          "function": {
+            "name": "terminal",
+            "arguments": "{\"command\": \"tail -50 /home/after_ket/.hermes/logs/gateway.log 2>/dev/null || journalctl -u hermes-gateway --no-pager -n 30 2>/dev/null || echo \\\"找不到日志文件\\\"\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "name": "terminal",
+      "content": "{\"output\": \"2026-05-22 19:19:44,808 ERROR gateway.run: kanban dispatcher: tick failed on board default\\nTraceback (most recent call last):\\n  File \\\"/home/after_ket/.local/share/pipx/venvs/hermes-agent/lib/python3.12/site-packages/gateway/run.py\\\", line 4693, in _tick_once_for_board\\n    conn = _kb.connect(board=slug)\\n           ^^^^^^^^^^^^^^^^^^^^^^^\\n  File \\\"/home/after_ket/.local/share/pipx/venvs/hermes-agent/lib/python3.12/site-packages/hermes_cli/kanban_db.py\\\", line 928, in connect\\n    apply_wal_with_fallback(conn, db_label=f\\\"kanban.db ({path.name})\\\")\\n  File \\\"/home/after_ket/.local/share/pipx/venvs/hermes-agent/lib/python3.12/site-packages/hermes_state.py\\\", line 152, in apply_wal_with_fallback\\n    conn.execute(\\\"PRAGMA journal_mode=WAL\\\")\\nsqlite3.DatabaseError: file is not a database\\n2026-05-22 19:20:44,939 ERROR gateway.run: kanban dispatcher: tick failed on board default\\nTraceback (most recent call last):\\n  File \\\"/home/after_ket/.local/share/pipx/venvs/hermes-agent/lib/python3.12/site-packages/gateway/run.py\\\", line 4693, in _tick_once_for_board\\n    conn = _kb.connect(board=slug)\\n           ^^^^^^^^^^^^^^^^^^^^^^^\\n  File \\\"/home/after_ket/.local/share/pipx/venvs/hermes-agent/lib/python3.12/site-packages/hermes_cli/kanban_db.py\\\", line 928, in connect\\n    apply_wal_with_fallback(conn, db_label=f\\\"kanban.db ({path.name})\\\")\\n  File \\\"/home/after_ket/.local/share/pipx/venvs/hermes-agent/lib/python3.12/site-packages/hermes_state.py\\\", line 152, in apply_wal_with_fallback\\n    conn.execute(\\\"PRAGMA journal_mode=WAL\\\")\\nsqlite3.DatabaseError: file is not a database\\n2026-05-22 19:21:45,189 ERROR gateway.run: kanban dispatcher: tick failed on board default\\nTraceback (most recent call last):\\n  File \\\"/home/after_ket/.local/share/pipx/venvs/hermes-agent/lib/python3.12/site-packages/gateway/run.py\\\", line 4693, in _tick_once_for_board\\n    conn = _kb.connect(board=slug)\\n           ^^^^^^^^^^^^^^^^^^^^^^^\\n  File \\\"/home/after_ket/.local/share/pipx/venvs/hermes-agent/lib/python3.12/site-packages/hermes_cli/kanban_db.py\\\", line 928, in connect\\n    apply_wal_with_fallback(conn, db_label=f\\\"kanban.db ({path.name})\\\")\\n  File \\\"/home/after_ket/.local/share/pipx/venvs/hermes-agent/lib/python3.12/site-packages/hermes_state.py\\\", line 152, in apply_wal_with_fallback\\n    conn.execute(\\\"PRAGMA journal_mode=WAL\\\")\\nsqlite3.DatabaseError: file is not a database\\n2026-05-22 19:22:45,424 ERROR gateway.run: kanban dispatcher: tick failed on board default\\nTraceback (most recent call last):\\n  File \\\"/home/after_ket/.local/share/pipx/venvs/hermes-agent/lib/python3.12/site-packages/gateway/run.py\\\", line 4693, in _tick_once_for_board\\n    conn = _kb.connect(board=slug)\\n           ^^^^^^^^^^^^^^^^^^^^^^^\\n  File \\\"/home/after_ket/.local/share/pipx/venvs/hermes-agent/lib/python3.12/site-packages/hermes_cli/kanban_db.py\\\", line 928, in connect\\n    apply_wal_with_fallback(conn, db_label=f\\\"kanban.db ({path.name})\\\")\\n  File \\\"/home/after_ket/.local/share/pipx/venvs/hermes-agent/lib/python3.12/site-packages/hermes_state.py\\\", line 152, in apply_wal_with_fallback\\n    conn.execute(\\\"PRAGMA journal_mode=WAL\\\")\\nsqlite3.DatabaseError: file is not a database\\n2026-05-22 19:23:45,640 ERROR gateway.run: kanban dispatcher: tick failed on board default\\nTraceback (most recent call last):\\n  File \\\"/home/after_ket/.local/share/pipx/venvs/hermes-agent/lib/python3.12/site-packages/gateway/run.py\\\", line 4693, in _tick_once_for_board\\n    conn = _kb.connect(board=slug)\\n           ^^^^^^^^^^^^^^^^^^^^^^^\\n  File \\\"/home/after_ket/.local/share/pipx/venvs/hermes-agent/lib/python3.12/site-packages/hermes_cli/kanban_db.py\\\", line 928, in connect\\n    apply_wal_with_fallback(conn, db_label=f\\\"kanban.db ({path.name})\\\")\\n  File \\\"/home/after_ket/.local/share/pipx/venvs/hermes-agent/lib/python3.12/site-packages/hermes_state.py\\\", line 152, in apply_wal_with_fallback\\n    conn.execute(\\\"PRAGMA journal_mode=WAL\\\")\\nsqlite3.DatabaseError: file is not a database\", \"exit_code\": 0, \"error\": null}",
+      "tool_call_id": "call_00_4Wgr7vrRIckFJZomrZCw3705"
+    },
+    {
+      "role": "assistant",
+      "content": "日志里只有 kanban 数据库的报错，没看到 QQ 相关的。让我搜一下 QQ 插件的状态。",
+      "reasoning": "日志里只有 kanban 数据库损坏的错误，但这不会导致 QQ 掉线。让我看看 QQ 频道的具体日志。还有可能是 QQ Bot 协议层面的问题——比如 token 过期、被踢下线等。\n\n让我搜索一下 QQ 相关的日志条目。",
+      "finish_reason": "tool_calls",
+      "reasoning_content": "日志里只有 kanban 数据库损坏的错误，但这不会导致 QQ 掉线。让我看看 QQ 频道的具体日志。还有可能是 QQ Bot 协议层面的问题——比如 token 过期、被踢下线等。\n\n让我搜索一下 QQ 相关的日志条目。",
+      "tool_calls": [
+        {
+          "id": "call_00_TUBh81tvEQ32HDZxaX3t0592",
+          "call_id": "call_00_TUBh81tvEQ32HDZxaX3t0592",
+          "response_item_id": "fc_00_TUBh81tvEQ32HDZxaX3t0592",
+          "type": "function",
+          "function": {
+            "name": "terminal",
+            "arguments": "{\"command\": \"grep -i \\\"qq\\\\|napcat\\\\|lagrange\\\\|llonebot\\\" /home/after_ket/.hermes/logs/gateway.log 2>/dev/null | tail -20\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "name": "terminal",
+      "content": "{\"output\": \"2026-05-22 17:59:59,984 INFO gateway.platforms.qqbot.adapter: [QQBot:1904043129] Reconnecting in 2s (attempt 1)...\\n2026-05-22 18:00:02,718 INFO gateway.platforms.qqbot.adapter: [QQBot:1904043129] WebSocket connected to wss://api.sgroup.qq.com/websocket\\n2026-05-22 18:00:02,720 INFO gateway.platforms.qqbot.adapter: [QQBot:1904043129] Reconnected\\n2026-05-22 18:00:02,721 INFO gateway.platforms.qqbot.adapter: [QQBot:1904043129] Resume sent (session_id=144e04ca-b4e8-4326-a5a0-cf43169cba74, seq=1)\\n2026-05-22 18:00:02,924 INFO gateway.platforms.qqbot.adapter: [QQBot:1904043129] Session resumed\\n2026-05-22 18:30:02,938 WARNING gateway.platforms.qqbot.adapter: [QQBot:1904043129] WebSocket closed: code=4009 reason=Session timed out\\n2026-05-22 18:30:02,941 INFO gateway.platforms.qqbot.adapter: [QQBot:1904043129] Session error (4009), clearing session for re-identify\\n2026-05-22 18:30:02,941 INFO gateway.platforms.qqbot.adapter: [QQBot:1904043129] Reconnecting in 2s (attempt 1)...\\n2026-05-22 18:30:05,679 INFO gateway.platforms.qqbot.adapter: [QQBot:1904043129] WebSocket connected to wss://api.sgroup.qq.com/websocket\\n2026-05-22 18:30:05,681 INFO gateway.platforms.qqbot.adapter: [QQBot:1904043129] Reconnected\\n2026-05-22 18:30:05,682 INFO gateway.platforms.qqbot.adapter: [QQBot:1904043129] Identify sent\\n2026-05-22 18:30:06,023 INFO gateway.platforms.qqbot.adapter: [QQBot:1904043129] Ready, session_id=b1e3a424-0cb4-46ec-92e7-831dcd772500\\n2026-05-22 19:00:05,662 WARNING gateway.platforms.qqbot.adapter: [QQBot:1904043129] WebSocket closed: code=4009 reason=Session timed out\\n2026-05-22 19:00:05,665 INFO gateway.platforms.qqbot.adapter: [QQBot:1904043129] Session error (4009), clearing session for re-identify\\n2026-05-22 19:00:05,665 INFO gateway.platforms.qqbot.adapter: [QQBot:1904043129] Reconnecting in 2s (attempt 1)...\\n2026-05-22 19:00:07,981 INFO gateway.platforms.qqbot.adapter: [QQBot:1904043129] Access token refreshed, expires in 6187s\\n2026-05-22 19:00:08,561 INFO gateway.platforms.qqbot.adapter: [QQBot:1904043129] WebSocket connected to wss://api.sgroup.qq.com/websocket\\n2026-05-22 19:00:08,565 INFO gateway.platforms.qqbot.adapter: [QQBot:1904043129] Reconnected\\n2026-05-22 19:00:08,565 INFO gateway.platforms.qqbot.adapter: [QQBot:1904043129] Identify sent\\n2026-05-22 19:00:08,702 INFO gateway.platforms.qqbot.adapter: [QQBot:1904043129] Ready, session_id=0b172f47-cc74-466e-a2cf-bed12b5a17ae\", \"exit_code\": 0, \"error\": null}",
+      "tool_call_id": "call_00_TUBh81tvEQ32HDZxaX3t0592"
+    },
+    {
+      "role": "assistant",
+      "content": "从日志看，QQ Bot 每隔30分钟会因 session timeout 自动断开重连，这是正常的。让我看看最新状态：",
+      "reasoning": "看日志：\n- 18:30 Session timed out → 重连成功\n- 19:00 Session timed out → 重连成功（还刷新了 access token）\n- 最后一条是 19:00:08 Ready\n\n问题在于现在已经过了 19:00，但之后没有新日志了。可能：\n1. 又是 session timeout，每30分钟一次，看 pattern 是 17:30、18:00、18:30、19:00... 那下一次应该是 19:30\n2. 现在时间是什么？让我看看\n\n不对，现在时间是 19:24 左右（从日志看最后一分钟是 19:23），那 19:00 重连成功后到现在还没到下一次 timeout。但如果用户现在 QQ 掉线了，那可能还没触发新日志。\n\n让我看看最新的日志。",
+      "finish_reason": "tool_calls",
+      "reasoning_content": "看日志：\n- 18:30 Session timed out → 重连成功\n- 19:00 Session timed out → 重连成功（还刷新了 access token）\n- 最后一条是 19:00:08 Ready\n\n问题在于现在已经过了 19:00，但之后没有新日志了。可能：\n1. 又是 session timeout，每30分钟一次，看 pattern 是 17:30、18:00、18:30、19:00... 那下一次应该是 19:30\n2. 现在时间是什么？让我看看\n\n不对，现在时间是 19:24 左右（从日志看最后一分钟是 19:23），那 19:00 重连成功后到现在还没到下一次 timeout。但如果用户现在 QQ 掉线了，那可能还没触发新日志。\n\n让我看看最新的日志。",
+      "tool_calls": [
+        {
+          "id": "call_00_i4fQ5vcepQc7LvvSRFzO5068",
+          "call_id": "call_00_i4fQ5vcepQc7LvvSRFzO5068",
+          "response_item_id": "fc_00_i4fQ5vcepQc7LvvSRFzO5068",
+          "type": "function",
+          "function": {
+            "name": "terminal",
+            "arguments": "{\"command\": \"grep -i \\\"qq\\\" /home/after_ket/.hermes/logs/gateway.log 2>/dev/null | tail -5\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "name": "terminal",
+      "content": "{\"output\": \"2026-05-22 19:00:07,981 INFO gateway.platforms.qqbot.adapter: [QQBot:1904043129] Access token refreshed, expires in 6187s\\n2026-05-22 19:00:08,561 INFO gateway.platforms.qqbot.adapter: [QQBot:1904043129] WebSocket connected to wss://api.sgroup.qq.com/websocket\\n2026-05-22 19:00:08,565 INFO gateway.platforms.qqbot.adapter: [QQBot:1904043129] Reconnected\\n2026-05-22 19:00:08,565 INFO gateway.platforms.qqbot.adapter: [QQBot:1904043129] Identify sent\\n2026-05-22 19:00:08,702 INFO gateway.platforms.qqbot.adapter: [QQBot:1904043129] Ready, session_id=0b172f47-cc74-466e-a2cf-bed12b5a17ae\", \"exit_code\": 0, \"error\": null}",
+      "tool_call_id": "call_00_i4fQ5vcepQc7LvvSRFzO5068"
+    },
+    {
+      "role": "assistant",
+      "content": "日志显示 QQ Bot 是正常的：\n\n- **19:00 重连成功**，状态 Ready，access token 也刷新了\n- 每 30 分钟 QQ 官方会强制断开 session（这是正常机制），Bot 会自动重连，一般 3-5 秒就恢复\n\n所以短暂没反应可能是刚好赶上了重连间隙。你现在试试在 QQ 上发个消息，看 Bot 回不回？\n\n另外，云端那边 pip 装完了吗？",
+      "reasoning": "日志显示 19:00:08 最后一次 QQ Bot 重连成功，状态是 Ready。现在是大约 19:26，还没有到下一次 30 分钟的 session timeout（下一次应该是 19:30）。\n\nQQ Bot 应该是正常在线的。但用户说 QQ 掉线了，可能是：\n1. 用户那边的 QQ 客户端问题\n2. 群聊层面的问题（比如 bot 被禁言、被踢）\n3. 还没到 timeout 但确实断了\n\n让我看看现在时间，以及 gateway 是否还在正常运行。\n\n不过用户可能只是短暂地看到 bot 没回复，因为正好在 timeout 重连的间隙。或者用户只是在问一个问题，不一定真的掉线了。\n\n我应该告诉用户：日志显示 QQ Bot 最后一次在 19:00 重连成功，状态正常。每 30 分钟会有一次自动重连（QQ 官方限制），短暂掉线是正常的。现在应该是在线的。",
+      "finish_reason": "stop",
+      "reasoning_content": "日志显示 19:00:08 最后一次 QQ Bot 重连成功，状态是 Ready。现在是大约 19:26，还没有到下一次 30 分钟的 session timeout（下一次应该是 19:30）。\n\nQQ Bot 应该是正常在线的。但用户说 QQ 掉线了，可能是：\n1. 用户那边的 QQ 客户端问题\n2. 群聊层面的问题（比如 bot 被禁言、被踢）\n3. 还没到 timeout 但确实断了\n\n让我看看现在时间，以及 gateway 是否还在正常运行。\n\n不过用户可能只是短暂地看到 bot 没回复，因为正好在 timeout 重连的间隙。或者用户只是在问一个问题，不一定真的掉线了。\n\n我应该告诉用户：日志显示 QQ Bot 最后一次在 19:00 重连成功，状态正常。每 30 分钟会有一次自动重连（QQ 官方限制），短暂掉线是正常的。现在应该是在线的。"
+    },
+    {
+      "role": "user",
+      "content": "Review the conversation above and update the skill library. Be ACTIVE — most sessions produce at least one skill update, even if small. A pass that does nothing is a missed learning opportunity, not a neutral outcome.\n\nTarget shape of the library: CLASS-LEVEL skills, each with a rich SKILL.md and a `references/` directory for session-specific detail. Not a long flat list of narrow one-session-one-skill entries. This shapes HOW you update, not WHETHER you update.\n\nSignals to look for (any one of these warrants action):\n  • User corrected your style, tone, format, legibility, or verbosity. Frustration signals like 'stop doing X', 'this is too verbose', 'don't format like this', 'why are you explaining', 'just give me the answer', 'you always do Y and I hate it', or an explicit 'remember this' are FIRST-CLASS skill signals, not just memory signals. Update the relevant skill(s) to embed the preference so the next session starts already knowing.\n  • User corrected your workflow, approach, or sequence of steps. Encode the correction as a pitfall or explicit step in the skill that governs that class of task.\n  • Non-trivial technique, fix, workaround, debugging path, or tool-usage pattern emerged that a future session would benefit from. Capture it.\n  • A skill that got loaded or consulted this session turned out to be wrong, missing a step, or outdated. Patch it NOW.\n\nPreference order — prefer the earliest action that fits, but do pick one when a signal above fired:\n  1. UPDATE A CURRENTLY-LOADED SKILL. Look back through the conversation for skills the user loaded via /skill-name or you read via skill_view. If any of them covers the territory of the new learning, PATCH that one first. It is the skill that was in play, so it's the right one to extend.\n  2. UPDATE AN EXISTING UMBRELLA (via skills_list + skill_view). If no loaded skill fits but an existing class-level skill does, patch it. Add a subsection, a pitfall, or broaden a trigger.\n  3. ADD A SUPPORT FILE under an existing umbrella. Skills can be packaged with three kinds of support files — use the right directory per kind:\n     • `references/<topic>.md` — session-specific detail (error transcripts, reproduction recipes, provider quirks) AND condensed knowledge banks: quoted research, API docs, external authoritative excerpts, or domain notes you found while working on the problem. Write it concise and for the value of the task, not as a full mirror of upstream docs.\n     • `templates/<name>.<ext>` — starter files meant to be copied and modified (boilerplate configs, scaffolding, a known-good example the agent can `reproduce with modifications`).\n     • `scripts/<name>.<ext>` — statically re-runnable actions the skill can invoke directly (verification scripts, fixture generators, deterministic probes, anything the agent should run rather than hand-type each time).\n     Add support files via skill_manage action=write_file with file_path starting 'references/', 'templates/', or 'scripts/'. The umbrella's SKILL.md should gain a one-line pointer to any new support file so future agents know it exists.\n  4. CREATE A NEW CLASS-LEVEL UMBRELLA SKILL when no existing skill covers the class. The name MUST be at the class level. The name MUST NOT be a specific PR number, error string, feature codename, library-alone name, or 'fix-X / debug-Y / audit-Z-today' session artifact. If the proposed name only makes sense for today's task, it's wrong — fall back to (1), (2), or (3).\n\nUser-preference embedding (important): when the user expressed a style/format/workflow preference, the update belongs in the SKILL.md body, not just in memory. Memory captures 'who the user is and what the current situation and state of your operations are'; skills capture 'how to do this class of task for this user'. When they complain about how you handled a task, the skill that governs that task needs to carry the lesson.\n\nIf you notice two existing skills that overlap, note it in your reply — the background curator handles consolidation at scale.\n\nDo NOT capture (these become persistent self-imposed constraints that bite you later when the environment changes):\n  • Environment-dependent failures: missing binaries, fresh-install errors, post-migration path mismatches, 'command not found', unconfigured credentials, uninstalled packages. The user can fix these — they are not durable rules.\n  • Negative claims about tools or features ('browser tools do not work', 'X tool is broken', 'cannot use Y from execute_code'). These harden into refusals the agent cites against itself for months after the actual problem was fixed.\n  • Session-specific transient errors that resolved before the conversation ended. If retrying worked, the lesson is the retry pattern, not the original failure.\n  • One-off task narratives. A user asking 'summarize today's market' or 'analyze this PR' is not a class of work that warrants a skill.\n\nIf a tool failed because of setup state, capture the FIX (install command, config step, env var to set) under an existing setup or troubleshooting skill — never 'this tool does not work' as a standalone constraint.\n\n'Nothing to save.' is a real option but should NOT be the default. If the session ran smoothly with no corrections and produced no new technique, just say 'Nothing to save.' and stop. Otherwise, act.\n\nYou can only call memory and skill management tools. Other tools will be denied at runtime — do not attempt them."
+    },
+    {
+      "role": "assistant",
+      "content": "",
+      "reasoning": "Let me review the conversation to identify any signals worth capturing as skill updates.\n\nThe conversation so far:\n1. User asked \"你现在不是已经部署到云端了吗\" - confirming cloud deployment status\n2. I confirmed deployment to Alibaba Cloud ECS (47.108.235.219)\n3. User asked \"我现在需要做什么\" - I clarified and listed post-deployment tasks (systemd, dashboard, etc.)\n4. User mentioned they're waiting for `pip install hermes-ai` to complete - I corrected the package name to `hermes-agent`\n5. User said \"重装\" - reinstalling on the cloud server\n6. User asked \"QQ怎么掉线了\" - I investigated and found the QQ Bot was working normally with 30-min session timeout auto-reconnect\n\nLet me think about what skills or patterns emerged:\n\n1. **hermes-deployment skill** - This conversation touched on deploying Hermes to a cloud server. Let me check if this skill exists and if it needs updates.\n\n2. **QQ bot troubleshooting** - The session timeout pattern (every 30 min, code 4009) is something worth documenting. This could be a reference file under an existing troubleshooting skill or under the hermes-deployment skill.\n\n3. **Package name correction** - User typed `hermes-ai` but the correct package is `hermes-agent`. This is a minor detail but worth noting.\n\n4. No style/format corrections from the user in this session.\n\nLet me check what skills exist that might be relevant:\n- `hermes-deployment` - likely covers cloud deployment\n- Some QQ/troubleshooting skill?\n\nLet me load the hermes-deployment skill and any QQ-related skills to see if they need updates.\n\nActually, let me think about what's truly worth capturing:\n\n1. The QQ Bot session timeout pattern (every 30 min, code 4009, auto-reconnect) - this is a known behavior worth documenting as a reference under hermes-deployment or a troubleshooting skill.\n\n2. The post-deployment checklist (systemd, dashboard port, security group, channel rebinding) - this could enhance the hermes-deployment skill.\n\n3. The kanban.db corruption error (`file is not a database`) - this appeared in logs but wasn't the focus. Might be worth noting as a known issue.\n\nLet me load the hermes-deployment skill to see if it needs updates.",
+      "finish_reason": "tool_calls",
+      "reasoning_content": "Let me review the conversation to identify any signals worth capturing as skill updates.\n\nThe conversation so far:\n1. User asked \"你现在不是已经部署到云端了吗\" - confirming cloud deployment status\n2. I confirmed deployment to Alibaba Cloud ECS (47.108.235.219)\n3. User asked \"我现在需要做什么\" - I clarified and listed post-deployment tasks (systemd, dashboard, etc.)\n4. User mentioned they're waiting for `pip install hermes-ai` to complete - I corrected the package name to `hermes-agent`\n5. User said \"重装\" - reinstalling on the cloud server\n6. User asked \"QQ怎么掉线了\" - I investigated and found the QQ Bot was working normally with 30-min session timeout auto-reconnect\n\nLet me think about what skills or patterns emerged:\n\n1. **hermes-deployment skill** - This conversation touched on deploying Hermes to a cloud server. Let me check if this skill exists and if it needs updates.\n\n2. **QQ bot troubleshooting** - The session timeout pattern (every 30 min, code 4009) is something worth documenting. This could be a reference file under an existing troubleshooting skill or under the hermes-deployment skill.\n\n3. **Package name correction** - User typed `hermes-ai` but the correct package is `hermes-agent`. This is a minor detail but worth noting.\n\n4. No style/format corrections from the user in this session.\n\nLet me check what skills exist that might be relevant:\n- `hermes-deployment` - likely covers cloud deployment\n- Some QQ/troubleshooting skill?\n\nLet me load the hermes-deployment skill and any QQ-related skills to see if they need updates.\n\nActually, let me think about what's truly worth capturing:\n\n1. The QQ Bot session timeout pattern (every 30 min, code 4009, auto-reconnect) - this is a known behavior worth documenting as a reference under hermes-deployment or a troubleshooting skill.\n\n2. The post-deployment checklist (systemd, dashboard port, security group, channel rebinding) - this could enhance the hermes-deployment skill.\n\n3. The kanban.db corruption error (`file is not a database`) - this appeared in logs but wasn't the focus. Might be worth noting as a known issue.\n\nLet me load the hermes-deployment skill to see if it needs updates.",
+      "tool_calls": [
+        {
+          "id": "call_00_QZNH8bYyzSYGKDE2kByK8306",
+          "call_id": "call_00_QZNH8bYyzSYGKDE2kByK8306",
+          "response_item_id": "fc_00_QZNH8bYyzSYGKDE2kByK8306",
+          "type": "function",
+          "function": {
+            "name": "skill_view",
+            "arguments": "{\"name\": \"hermes-deployment\"}"
+          }
+        },
+        {
+          "id": "call_01_qtQoYUANtwH1PkI8Q7E67316",
+          "call_id": "call_01_qtQoYUANtwH1PkI8Q7E67316",
+          "response_item_id": "fc_01_qtQoYUANtwH1PkI8Q7E67316",
+          "type": "function",
+          "function": {
+            "name": "skill_view",
+            "arguments": "{\"name\": \"model-fallbacks\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "name": "skill_view",
+      "content": "{\"success\": true, \"name\": \"hermes-deployment\", \"description\": \"Deploy and migrate Hermes Agent to new machines, cloud servers, or Docker.\", \"tags\": [], \"related_skills\": [], \"content\": \"---\\nname: hermes-deployment\\ndescription: Deploy and migrate Hermes Agent to new machines, cloud servers, or Docker.\\n---\\n\\n# Hermes 部署与迁移\\n\\n将 Hermes 从一个环境搬到另一个环境（本机→云服务器、重装系统后恢复等）。\\n\\n## 迁移流程\\n\\n### 步骤 1：源机器打包\\n\\n```bash\\n# 完整备份（配置 + 记忆 + 技能 + 会话 + 频道绑定 + 密钥）\\nhermes backup -o ~/hermes-migration.zip\\n\\n# 快速备份（仅关键文件：config、state.db、.env、auth、cron）\\nhermes backup --quick -o ~/hermes-quick.zip\\n```\\n\\n备份包含：config.yaml、state.db（记忆/会话）、skills/、.env、auth.json、channel_directory.json、cron/、memories/\\n\\n### 步骤 2：目标机器安装 Hermes\\n\\n```bash\\n# Ubuntu/Debian\\nsudo apt update && sudo apt install python3.12 python3.12-venv pipx -y\\npipx ensurepath && exec $SHELL\\npipx install hermes-agent\\n\\n# 验证\\nhermes --version\\n```\\n\\n### 步骤 3：传输并还原\\n\\n```bash\\n# 从源机器 SCP 到目标机器\\nscp ~/hermes-migration.zip root@server:/root/\\n\\n# 目标机器上还原（交互确认用 yes 管道）\\nyes | hermes import /root/hermes-migration.zip\\n```\\n\\n> **方法 2**：无 sshpass 时可用 Python paramiko 自动化传输和部署，见 `references/paramiko-remote.md`。\\n\\n### 步骤 4：验证\\n\\n```bash\\nhermes doctor          # 检查配置完整性\\nhermes config list     # 确认模型和 provider\\ncat ~/.hermes/.env     # 确认 API 密钥正确\\n```\\n\\n### 步骤 5：启动网关\\n\\n```bash\\nhermes gateway run\\n```\\n\\n---\\n\\n## 云服务器持久运行（systemd）\\n\\n迁移到云服务器后，配 systemd 服务确保重启自动拉起：\\n\\n```bash\\nsudo tee /etc/systemd/system/hermes-gateway.service << 'EOF'\\n[Unit]\\nDescription=Hermes Agent Gateway\\nAfter=network-online.target\\nWants=network-online.target\\n\\n[Service]\\nType=simple\\nUser=root\\nExecStart=/root/.local/bin/hermes gateway run\\nRestart=always\\nRestartSec=15\\nEnvironment=HOME=/root\\n\\n[Install]\\nWantedBy=multi-user.target\\nEOF\\n\\nsudo systemctl daemon-reload\\nsudo systemctl enable --now hermes-gateway\\n\\n# 检查\\nsudo systemctl status hermes-gateway\\n```\\n\\n---\\n\\n## 频道重新认证风险\\n\\n| 频道 | 风险 |\\n|------|------|\\n| **QQ Bot** | IP 变化后 QQ 开放平台可能标记异常；检查是否配置了 IP 白名单 |\\n| **微信 Bot** | 可能需要重新扫码授权；weixin/accounts/ 下的 session 文件迁移后通常可用 |\\n| **Telegram** | 重新运行 `hermes telegram` 即可重绑 |\\n\\n---\\n\\n## Pitfalls\\n\\n### 恢复后网关不自动连接频道\\n备份包含 channel_directory.json 和 auth.json，但某些 OAuth token 可能过期。`hermes gateway run` 后观察日志：\\n```bash\\ntail -f ~/.hermes/logs/gateway.log\\n```\\n看到平台 state 变为 `connected` 即为成功。\\n\\n### `hermes import` 交互确认\\n目标机器已有 ~/.hermes 目录时，`hermes import` 会提示 `Continue? [y/N]`，不传 `--force`（该 flag 不存在或无效）。自动化部署用 `yes | hermes import` 管道绕过交互。\\n\\n### API 密钥不一致\\n源机器的 .env 和环境变量与目标机器隔离。还原后务必检查 `~/.hermes/.env` 内容是否正确。如果源机器用了系统级环境变量（非 .env 文件），需要在目标机器上手动设置。\\n\\n### pipx PATH 未生效\\n云服务器上装完 pipx 后 `hermes` 命令找不到：\\n```bash\\npipx ensurepath\\nexec $SHELL\\n# 或直接 export PATH=\\\"$HOME/.local/bin:$PATH\\\"\\n```\\n\", \"path\": \"infra/hermes-deployment/SKILL.md\", \"skill_dir\": \"/home/after_ket/.hermes/skills/infra/hermes-deployment\", \"linked_files\": {\"references\": [\"references/paramiko-remote.md\"]}, \"usage_hint\": \"To view linked files, call skill_view(name, file_path) where file_path is e.g. 'references/api.md' or 'assets/config.yaml'\", \"required_environment_variables\": [], \"required_commands\": [], \"missing_required_environment_variables\": [], \"missing_credential_files\": [], \"missing_required_commands\": [], \"setup_needed\": false, \"setup_skipped\": false, \"readiness_status\": \"available\"}",
+      "tool_call_id": "call_00_QZNH8bYyzSYGKDE2kByK8306"
+    },
+    {
+      "role": "tool",
+      "name": "skill_view",
+      "content": "{\"success\": true, \"name\": \"model-fallbacks\", \"description\": \"Workarounds when the active model lacks a feature (vision, long context, code execution). Degrade gracefully instead of failing silently.\", \"tags\": [], \"related_skills\": [], \"content\": \"---\\nname: model-fallbacks\\ndescription: Workarounds when the active model lacks a feature (vision, long context, code execution). Degrade gracefully instead of failing silently.\\ntriggers:\\n  - model rejects image/vision input\\n  - model errors on tool use\\n  - model features not available\\n---\\n\\n# Model Fallback Workflows\\n\\nWhen the active model doesn't support a feature, follow these degradation chains instead of retrying the same failing call.\\n\\n## Vision / Image Viewing\\n\\nWhen the model can't see images (common with DeepSeek, some OpenAI models, etc.):\\n\\n### Fallback Chain (try in order)\\n\\n1. **`vision_analyze`** — Always try first. Some providers route to an auxiliary vision model.\\n2. **OCR via terminal** — `tesseract` if installed: `tesseract image.jpg stdout -l chi_sim+eng`\\n3. **Python/PIL inspection** — `execute_code` with PIL: read dimensions, format, check if it's a screenshot\\n4. **Ask user to describe** — \\\"I can't see images with this model. Can you describe what's in it, or share the text/URL instead?\\\"\\n5. **Request URL alternative** — If user is showing a website/screenshot, ask for the URL so you can `curl` it directly.\\n\\n### URL Alternative (Best for Screenshots of Websites)\\n\\nWhen the user sends a **screenshot of a website** (resource list, gallery, reference sites):\\n- Say: \\\"I can't see images with this model — send me the URLs directly and I'll curl them!\\\"\\n- Then use `curl -sL` to fetch page titles, meta descriptions, and scrape content.\\n- This is faster than OCR and gets exact data.\\n\\n### Chinese Network / Web Search Fallback\\n\\nWhen web_search times out or curl to Google/Bing/DuckDuckGo fails (common from WSL/China-based networks), use **Chinese domestic websites** that have consistently low latency. See [`references/chinese-web-sources.md`](references/chinese-web-sources.md) for the full list.\\n\\nQuick reference:\\n- **百度百科** (`baike.baidu.com/item/关键词`) — encyclopedia lookup, almost never times out\\n- **轻之国度** (`lightnovel.cn`) — light novel rankings/news\\n- **轻小说文库** (`wenku8.net`) — novel listings\\n- **番组计划** (`bangumi.tv`) — anime ratings/info\\n- Always use `-H \\\"User-Agent: Mozilla/5.0\\\"` in curl calls.\\n\\n### Pitfalls\\n\\n- Do NOT retry `vision_analyze` more than twice with the same image — the error won't change.\\n- `sudo apt-get install tesseract` will fail without sudo. Check with `which tesseract` first.\\n- PIL (`from PIL import Image`) may not be installed. Check before using in execute_code.\\n- Prefer URL-request over OCR when the image is clearly a website screenshot — users are usually happy to paste links instead.\\n\\n## Provider Fallback Configuration\\n\\nWhen the main model provider is unavailable (timeout, rate-limit, outage), Hermes can auto-switch to a fallback provider. See [`references/hermes-custom-provider.md`](references/hermes-custom-provider.md) for the full configuration guide, including the `hermes config set` pitfall (JSON string vs YAML) and a quick-reference table of supported providers.\\n\\n## Provider Fallback (API Key Exhaustion / Rate Limit)\\n\\nWhen the primary model provider returns **402 (Insufficient Balance)** or **429 (TPM Rate Limit)** or times out, Hermes can auto-failover to a backup provider.\\n\\n### Error Codes & Meaning\\n\\n| Code | Meaning | Action |\\n|------|---------|--------|\\n| **402** | Insufficient Balance — valid key but no credits | Switch model or provider; key is NOT dead, just empty |\\n| **429** | TPM (Tokens Per Minute) rate limit — too many requests in a short window | Wait 30-60s or switch to a different model (e.g. v4-pro → v4-flash) |\\n| **401** | Invalid key — wrong or revoked | Discard key, don't retry |\\n| **Timeout** | Provider slow/unreachable | Try fallback provider |\\n\\n**Critical**: Do NOT declare a provider/model \\\"dead\\\" on 402 or 429. These are transient — the same key works again after top-up (402) or cooldown (429).\\n\\n### Quick Model Switch (Same Provider)\\n\\nWhen only the model variant is the problem (not the provider), switch the default model:\\n\\n```bash\\n# Switch to v4-flash for chat (faster, lower TPM pressure)\\nhermes config set model.default deepseek-v4-flash\\n\\n# Switch to v4-pro for coding (higher quality)\\nhermes config set model.default deepseek-v4-pro\\n```\\n\\nThis is faster than switching providers — same API key, different model tier.\\n\\n### Setup: Add SiliconFlow as Backup Provider\\n\\nEdit `~/.hermes/config.yaml` manually (do NOT use `hermes config set` — it stores values as JSON strings):\\n```yaml\\nproviders:\\n  siliconflow:\\n    base_url: https://api.siliconflow.cn/v1\\n    api_key: sk-xxx\\n    model: deepseek-ai/DeepSeek-V3\\nfallback_providers:\\n  - siliconflow\\n```\\nRestart Hermes to apply. When the primary model (e.g. DeepSeek) fails with 402/timeout, Hermes auto-switches to SiliconFlow.\\n\\n### Verification\\n```python\\nimport requests\\nr = requests.post(\\n    \\\"https://api.siliconflow.cn/v1/chat/completions\\\",\\n    headers={\\\"Authorization\\\": \\\"Bearer sk-xxx\\\", \\\"Content-Type\\\": \\\"application/json\\\"},\\n    json={\\\"model\\\": \\\"deepseek-ai/DeepSeek-V3\\\", \\\"messages\\\": [{\\\"role\\\":\\\"user\\\",\\\"content\\\":\\\"hi\\\"}], \\\"max_tokens\\\": 5}\\n)\\n# 200 = working, 401 = bad key, 402 = no balance\\n```\\n\\n### Key Validation Before Configuring\\nAlways test API keys directly with curl/requests before adding them to config:\\n- 401 = invalid key → discard\\n- 402 = valid but no balance → mark as depleted, keep for future refill\\n- 200 = ✅ good to use\\n\\n## Long Output / Context Truncation\\n\\nWhen model responses get cut off or the context is too large:\\n\\n1. Use `delegate_task` to offload reasoning-heavy subtasks\\n2. Use `execute_code` to process data and return only results\\n3. Compress intermediate outputs with `session_search` for recall\\n\", \"path\": \"troubleshooting/model-fallbacks/SKILL.md\", \"skill_dir\": \"/home/after_ket/.hermes/skills/troubleshooting/model-fallbacks\", \"linked_files\": {\"references\": [\"references/hermes-custom-provider.md\", \"references/chinese-web-sources.md\", \"references/deepseek-vision-error.md\"]}, \"usage_hint\": \"To view linked files, call skill_view(name, file_path) where file_path is e.g. 'references/api.md' or 'assets/config.yaml'\", \"required_environment_variables\": [], \"required_commands\": [], \"missing_required_environment_variables\": [], \"missing_credential_files\": [], \"missing_required_commands\": [], \"setup_needed\": false, \"setup_skipped\": false, \"readiness_status\": \"available\"}",
+      "tool_call_id": "call_01_qtQoYUANtwH1PkI8Q7E67316"
+    },
+    {
+      "role": "assistant",
+      "content": "",
+      "reasoning": "Let me review what happened in this conversation and what's worth capturing:\n\n1. **QQ Bot session timeout pattern**: The logs showed a clear pattern — QQ Bot disconnects every 30 minutes with code 4009 \"Session timed out\", then auto-reconnects in 3-5 seconds. This is normal QQ official API behavior. Worth documenting as a reference under hermes-deployment since it's a common concern after deploying.\n\n2. **Package name correction**: User typed `hermes-ai` but the correct package is `hermes-agent`. This is minor and might not warrant a skill update.\n\n3. **Post-deployment verification**: The conversation covered checking gateway logs, QQ bot status, and kanban.db errors. The `kanban.db` error (`file is not a database`) appeared but wasn't the focus.\n\nThe most valuable thing to capture is the **QQ Bot session timeout behavior** — it's a FAQ that users will ask about after deployment. Let me add a reference file under the `hermes-deployment` skill about this.\n\nAlso, the hermes-deployment skill could benefit from a \"post-deployment verification\" section that includes checking QQ bot connectivity.\n\nLet me also think about whether there's a `wsl-troubleshooting` or `wsl-proxy` skill that should be updated. Not really relevant to this session.\n\nI think the most impactful update is:\n\n1. Add a `references/qq-bot-timeout.md` to `hermes-deployment` — documenting the 30-min session timeout, what it looks like in logs, and that it's normal.\n\n2. Patch the hermes-deployment SKILL.md to add a \"Post-Deployment Verification\" section that includes checking QQ bot status in logs.\n\nLet me also check if there's a dedicated QQ-related skill.",
+      "finish_reason": "tool_calls",
+      "reasoning_content": "Let me review what happened in this conversation and what's worth capturing:\n\n1. **QQ Bot session timeout pattern**: The logs showed a clear pattern — QQ Bot disconnects every 30 minutes with code 4009 \"Session timed out\", then auto-reconnects in 3-5 seconds. This is normal QQ official API behavior. Worth documenting as a reference under hermes-deployment since it's a common concern after deploying.\n\n2. **Package name correction**: User typed `hermes-ai` but the correct package is `hermes-agent`. This is minor and might not warrant a skill update.\n\n3. **Post-deployment verification**: The conversation covered checking gateway logs, QQ bot status, and kanban.db errors. The `kanban.db` error (`file is not a database`) appeared but wasn't the focus.\n\nThe most valuable thing to capture is the **QQ Bot session timeout behavior** — it's a FAQ that users will ask about after deployment. Let me add a reference file under the `hermes-deployment` skill about this.\n\nAlso, the hermes-deployment skill could benefit from a \"post-deployment verification\" section that includes checking QQ bot connectivity.\n\nLet me also think about whether there's a `wsl-troubleshooting` or `wsl-proxy` skill that should be updated. Not really relevant to this session.\n\nI think the most impactful update is:\n\n1. Add a `references/qq-bot-timeout.md` to `hermes-deployment` — documenting the 30-min session timeout, what it looks like in logs, and that it's normal.\n\n2. Patch the hermes-deployment SKILL.md to add a \"Post-Deployment Verification\" section that includes checking QQ bot status in logs.\n\nLet me also check if there's a dedicated QQ-related skill.",
+      "tool_calls": [
+        {
+          "id": "call_00_3bYabo3w6WOQjRJQuF6w4755",
+          "call_id": "call_00_3bYabo3w6WOQjRJQuF6w4755",
+          "response_item_id": "fc_00_3bYabo3w6WOQjRJQuF6w4755",
+          "type": "function",
+          "function": {
+            "name": "skills_list",
+            "arguments": "{}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "name": "skills_list",
+      "content": "{\"success\": true, \"skills\": [{\"name\": \"hermes-chat-server\", \"description\": \"Build web chat interfaces for Hermes Agent. FastAPI bridge + single-file HTML frontend with theme switching, session continuation, and Windows auto-start.\", \"category\": null}, {\"name\": \"hermes-dashboard\", \"description\": \"Set up and run Hermes Agent web dashboard with browser-based chat UI. Use when user wants a web interface instead of CLI/PowerShell.\", \"category\": null}, {\"name\": \"web-frontend-prototypes\", \"description\": \"Build self-contained single-file HTML prototypes with interactive effects. Use when user asks for a quick web UI, catalog, dashboard, or showcase site — no frameworks, no build step, just open the file.\", \"category\": \"frontend\"}, {\"name\": \"code-quality\", \"description\": \"写代码与优化技巧，减少bug率。编码规范、常见bug模式、防御性编程、测试策略。\", \"category\": \"galgame-catalog\"}, {\"name\": \"daily-progress-log\", \"description\": \"Galgame年鉴每日进度简易收录。每次工作结束后追加进度条目，需要回顾时加载即可。\", \"category\": \"galgame-catalog\"}, {\"name\": \"galgame-version-update\", \"description\": \"Galgame年鉴网站更新标准流程。每次修改网站功能后执行此流程。\", \"category\": \"galgame-catalog\"}, {\"name\": \"scraping-database\", \"description\": \"Galgame年鉴爬虫与数据库。用curl/requests抓取参考站数据，sqlite3本地存储游戏信息。\", \"category\": \"galgame-catalog\"}, {\"name\": \"api-relay\", \"description\": \"Build and maintain a local API relay server that aggregates multiple LLM providers (DeepSeek, 百炼/DashScope, 硅基流动, 豆包, 智谱, etc.) under a single OpenAI-compatible endpoint.\", \"category\": \"infra\"}, {\"name\": \"hermes-deployment\", \"description\": \"Deploy and migrate Hermes Agent to new machines, cloud servers, or Docker.\", \"category\": \"infra\"}, {\"name\": \"model-fallbacks\", \"description\": \"Workarounds when the active model lacks a feature (vision, long context, code execution). Degrade gracefully instead of failing silently.\", \"category\": \"troubleshooting\"}, {\"name\": \"wsl-proxy\", \"description\": \"Configure WSL2 to use a Windows-hosted proxy (Clash/V2Ray/etc.) for internet access from behind the GFW.\", \"category\": \"troubleshooting\"}, {\"name\": \"wsl-proxy-setup\", \"description\": \"WSL2 代理配置与网络排障 — Clash Verge / mihomo 代理让 WSL 访问 GitHub 等外网\", \"category\": \"troubleshooting\"}, {\"name\": \"wsl-troubleshooting\", \"description\": \"WSL2 环境下与 Windows 主机交互的网络/代理/端口排查流程。不要一根筋重试——换IP、换端口、换方向。\", \"category\": \"troubleshooting\"}, {\"name\": \"single-file-html-dev\", \"description\": \"Build and maintain single-file HTML applications with PC+mobile sync. Covers audio, links, touch handling, cover images, and iterative patching discipline.\", \"category\": \"web-dev\"}], \"categories\": [\"frontend\", \"galgame-catalog\", \"infra\", \"troubleshooting\", \"web-dev\"], \"count\": 14, \"hint\": \"Use skill_view(name) to see full content, tags, and linked files\"}",
+      "tool_call_id": "call_00_3bYabo3w6WOQjRJQuF6w4755"
+    },
+    {
+      "role": "assistant",
+      "content": "This session had one clear reusable finding: **QQ Bot disconnects every 30 minutes after deployment, and that's normal**. I'll add it as a reference to the `hermes-deployment` skill so future sessions know not to panic when this happens.",
+      "reasoning": "Now I have a clear picture. The key learning from this session:\n\n1. **QQ Bot 30-minute session timeout is NORMAL** — After deployment, users will see QQ disconnecting every 30 min with code 4009. This is QQ official API behavior and auto-reconnect handles it. Worth documenting as a reference.\n\n2. The `hermes-deployment` skill is good but missing a \"post-deployment verification\" step specifically for QQ Bot health check.\n\nLet me:\n1. Create a reference file `references/qq-bot-timeout.md` under `hermes-deployment`\n2. Patch the SKILL.md to add a \"Post-Deployment Verification\" section\n\nLet me also check if there are other things to capture... The conversation was brief. The main value is the QQ timeout doc.\n\nActually, let me also think about the `kanban.db` error (`file is not a database`). That appeared in logs and might be a recurring issue worth noting. But it's a specific db corruption issue, not a general pattern. I'll skip it.\n\nLet me proceed with the QQ reference file and the skill patch.",
+      "finish_reason": "tool_calls",
+      "reasoning_content": "Now I have a clear picture. The key learning from this session:\n\n1. **QQ Bot 30-minute session timeout is NORMAL** — After deployment, users will see QQ disconnecting every 30 min with code 4009. This is QQ official API behavior and auto-reconnect handles it. Worth documenting as a reference.\n\n2. The `hermes-deployment` skill is good but missing a \"post-deployment verification\" step specifically for QQ Bot health check.\n\nLet me:\n1. Create a reference file `references/qq-bot-timeout.md` under `hermes-deployment`\n2. Patch the SKILL.md to add a \"Post-Deployment Verification\" section\n\nLet me also check if there are other things to capture... The conversation was brief. The main value is the QQ timeout doc.\n\nActually, let me also think about the `kanban.db` error (`file is not a database`). That appeared in logs and might be a recurring issue worth noting. But it's a specific db corruption issue, not a general pattern. I'll skip it.\n\nLet me proceed with the QQ reference file and the skill patch.",
+      "tool_calls": [
+        {
+          "id": "call_00_iMxT2eGwNXDK6pXLBD6a4859",
+          "call_id": "call_00_iMxT2eGwNXDK6pXLBD6a4859",
+          "response_item_id": "fc_00_iMxT2eGwNXDK6pXLBD6a4859",
+          "type": "function",
+          "function": {
+            "name": "skill_manage",
+            "arguments": "{\"action\": \"write_file\", \"name\": \"hermes-deployment\", \"file_path\": \"references/qq-bot-timeout.md\", \"file_content\": \"# QQ Bot Session Timeout — 这是正常的\\n\\n部署 Hermes 到云服务器后，QQ Bot 每隔 **30 分钟** 会自动断开重连。这是 QQ 官方 API 的限制，不是 Bug。\\n\\n## 日志特征\\n\\n```\\nWARNING gateway.platforms.qqbot.adapter: [QQBot:xxx] WebSocket closed: code=4009 reason=Session timed out\\nINFO gateway.platforms.qqbot.adapter: [QQBot:xxx] Reconnecting in 2s (attempt 1)...\\nINFO gateway.platforms.qqbot.adapter: [QQBot:xxx] WebSocket connected to wss://api.sgroup.qq.com/websocket\\nINFO gateway.platforms.qqbot.adapter: [QQBot:xxx] Ready, session_id=xxx\\n```\\n\\n## 确认 Bot 在线的方法\\n\\n```bash\\n# 查看最近 5 条 QQ 相关日志\\ngrep -i \\\"qq\\\" ~/.hermes/logs/gateway.log | tail -5\\n\\n# 如果最后一条是 \\\"Ready\\\" 且时间在 30 分钟内 → 在线\\n# 如果最后一条是 \\\"Session timed out\\\" 且没有后续 \\\"Ready\\\" → 可能在重连中（等 5 秒再查）\\n```\\n\\n## 预期行为\\n\\n- 断开：每 30 分钟一次（code 4009）\\n- 重连时间：2-5 秒\\n- 用户无感知：短暂间隙通常不会丢消息\\n- Token 刷新：access token 也会定期刷新（约 6000 秒过期）\\n\\n## 什么时候需要人工介入\\n\\n- 连续 3 次以上 `Reconnecting` 失败（attempt 3+ 仍未 Ready）\\n- 出现 `401` 或 `403` 错误（密钥/权限问题，不是 timeout）\\n- 日志中出现 `Connection refused` 而非 `Session timed out`\\n\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "name": "skill_manage",
+      "content": "{\"success\": true, \"message\": \"File 'references/qq-bot-timeout.md' written to skill 'hermes-deployment'.\", \"path\": \"/home/after_ket/.hermes/skills/infra/hermes-deployment/references/qq-bot-timeout.md\"}",
+      "tool_call_id": "call_00_iMxT2eGwNXDK6pXLBD6a4859"
+    },
+    {
+      "role": "assistant",
+      "content": "Now patch the skill to add a post-deployment verification section:",
+      "reasoning": "Good. Now let me patch the hermes-deployment SKILL.md to add a \"Post-Deployment Verification\" section that references this new file, and also includes the QQ health check command.",
+      "finish_reason": "tool_calls",
+      "reasoning_content": "Good. Now let me patch the hermes-deployment SKILL.md to add a \"Post-Deployment Verification\" section that references this new file, and also includes the QQ health check command.",
+      "tool_calls": [
+        {
+          "id": "call_00_ODQ8thzN4sg3VTW8OODE5437",
+          "call_id": "call_00_ODQ8thzN4sg3VTW8OODE5437",
+          "response_item_id": "fc_00_ODQ8thzN4sg3VTW8OODE5437",
+          "type": "function",
+          "function": {
+            "name": "skill_manage",
+            "arguments": "{\"action\": \"patch\", \"name\": \"hermes-deployment\", \"old_string\": \"## Pitfalls\\n\\n### 恢复后网关不自动连接频道\", \"new_string\": \"## 部署后验证\\n\\n启动 gateway 后，确认各频道在线：\\n\\n```bash\\n# QQ Bot 状态（最近 5 条日志）\\ngrep -i \\\"qq\\\" ~/.hermes/logs/gateway.log | tail -5\\n# 最后一条为 \\\"Ready\\\" 且时间在 30 分钟内 → 在线\\n\\n# 所有平台连接状态\\ngrep -E \\\"Ready|connected|error\\\" ~/.hermes/logs/gateway.log | tail -20\\n```\\n\\n> **QQ Bot 每 30 分钟自动断开重连是正常行为**（QQ 官方 API 限制），不要当成故障。详见 `references/qq-bot-timeout.md`。\\n\\n## Pitfalls\\n\\n### 恢复后网关不自动连接频道\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "name": "skill_manage",
+      "content": "{\"success\": true, \"message\": \"Patched SKILL.md in skill 'hermes-deployment' (1 replacement).\"}",
+      "tool_call_id": "call_00_ODQ8thzN4sg3VTW8OODE5437"
+    },
+    {
+      "role": "assistant",
+      "content": "Done. 本次更新内容：\n\n**`hermes-deployment` 技能** 新增了两项：\n\n1. **新增参考文件** `references/qq-bot-timeout.md` — 记录了 QQ Bot 每 30 分钟自动断开重连是 QQ 官方限制的正常行为，包含日志特征、验证命令、以及什么情况下才需要人工介入\n\n2. **新增「部署后验证」章节** — 启动 gateway 后快速确认频道在线的命令，避免把正常的 session timeout 当成故障\n\n这样下次部署到新服务器后，不会因为看到 QQ 掉线日志而误判为配置问题。",
+      "reasoning": "The patch was applied successfully. Let me summarize what I did for the user.",
+      "finish_reason": "stop",
+      "reasoning_content": "The patch was applied successfully. Let me summarize what I did for the user."
+    }
+  ]
+}

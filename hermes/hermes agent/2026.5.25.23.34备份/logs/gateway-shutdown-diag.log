@@ -1,0 +1,1128 @@
+=== shutdown diagnostic @ SIGINT ===
+--- date ---
+2026-05-20T11:44:31Z
+--- ps auxf (top 60 by cpu) ---
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root         1  0.0  0.0   3172  2252 hvc0     Sl+  19:28   0:00 /init
+root         8  0.0  0.0   3172  2044 hvc0     Sl+  19:28   0:00 plan9 --control-socket 6 --log-level 4 --server-fd 7 --pipe-fd 9 --log-truncate
+root        11  0.0  0.0   3176  1104 ?        Ss   19:28   0:00 /init
+root        12  0.0  0.0   3192  1244 ?        S    19:28   0:00  \_ /init
+after_k+    13  0.0  0.0   6180  5372 pts/0    Ss   19:28   0:00      \_ -bash
+after_k+    77  0.9  0.8 492940 134632 pts/0   Sl+  19:41   0:01          \_ /home/after_ket/.local/share/pipx/venvs/hermes-agent/bin/python /home/after_ket/.local/bin/hermes gateway run
+after_k+    87  0.0  0.0   3136  2072 ?        Ss   19:44   0:00              \_ timeout 5 bash -c echo '=== shutdown diagnostic @ SIGINT ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 77 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+after_k+    88  0.0  0.0   4756  3516 ?        S    19:44   0:00                  \_ bash -c echo '=== shutdown diagnostic @ SIGINT ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 77 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+after_k+    90  0.0  0.0   8336  4388 ?        R    19:44   0:00                      \_ ps auxf --sort=-pcpu
+after_k+    91  0.0  0.0   3140  1952 ?        S    19:44   0:00                      \_ head -60
+--- pstree of self ---
+hermes,77,after_ket /home/after_ket/.local/bin/hermes gateway run
+  |-timeout,87 5 bash -c echo '=== shutdown diagnostic @ SIGINT ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 77 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+  |   `-bash,88 -c echo '=== shutdown diagnostic @ SIGINT ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 77 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+  |       |-head,93 -40
+  |       `-pstree,92 -plau 77
+  |-{hermes},79
+  |-{hermes},80
+  `-{hermes},82
+--- /proc/loadavg ---
+0.00 0.00 0.00 1/301 94
+--- recent dmesg (oom/killed) ---
+[Wed May 20 17:40:24 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Wed May 20 17:40:24 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Wed May 20 17:40:24 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -2
+[Wed May 20 18:07:15 2026] mini_init (308): drop_caches: 1
+[Wed May 20 18:48:45 2026] mini_init (308): drop_caches: 1
+[Wed May 20 19:28:34 2026] Exception: 
+[Wed May 20 19:28:34 2026] Operation canceled @p9io.cpp:258 (AcceptAsync)
+
+[Wed May 20 19:28:34 2026] WSL (1 - init()) ERROR: InitEntryUtilityVm:2555: Init has exited. Terminating distribution
+[Wed May 20 19:28:35 2026] EXT4-fs (sdd): unmounting filesystem 0420dbd6-7700-491f-adf5-8e7f28453603.
+[Wed May 20 19:28:36 2026] EXT4-fs (sdd): mounted filesystem 0420dbd6-7700-491f-adf5-8e7f28453603 r/w with ordered data mode. Quota mode: none.
+[Wed May 20 19:28:36 2026] misc dxg: dxgk: dxgkio_is_feature_enabled: Ioctl failed: -22
+[Wed May 20 19:28:36 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Wed May 20 19:28:36 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Wed May 20 19:28:36 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Wed May 20 19:28:36 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -2
+[Wed May 20 19:28:36 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Wed May 20 19:28:36 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Wed May 20 19:28:36 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Wed May 20 19:28:36 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -2
+=== end ===
+=== shutdown diagnostic @ SIGINT ===
+--- date ---
+2026-05-20T11:46:22Z
+--- ps auxf (top 60 by cpu) ---
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root         1  0.0  0.0   3172  2252 hvc0     Sl+  19:28   0:00 /init
+root         8  0.0  0.0   3172  2044 hvc0     Sl+  19:28   0:00 plan9 --control-socket 6 --log-level 4 --server-fd 7 --pipe-fd 9 --log-truncate
+root        11  0.0  0.0   3176  1104 ?        Ss   19:28   0:00 /init
+root        12  0.0  0.0   3192  1244 ?        S    19:28   0:00  \_ /init
+after_k+   100  0.0  0.0   9764  4696 ?        Ss   19:45   0:00      \_ tmux new -d -s hermes-gateway hermes gateway run
+after_k+   101  1.1  0.4 293076 66184 pts/1    Ssl+ 19:45   0:00          \_ /home/after_ket/.local/share/pipx/venvs/hermes-agent/bin/python /home/after_ket/.local/bin/hermes gateway run
+after_k+   109  0.0  0.0   3136  2076 ?        Ss   19:46   0:00              \_ timeout 5 bash -c echo '=== shutdown diagnostic @ SIGINT ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 101 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+after_k+   110  0.0  0.0   4756  3488 ?        S    19:46   0:00                  \_ bash -c echo '=== shutdown diagnostic @ SIGINT ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 101 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+after_k+   112  0.0  0.0   8336  4400 ?        R    19:46   0:00                      \_ ps auxf --sort=-pcpu
+after_k+   113  0.0  0.0   3140  1956 ?        S    19:46   0:00                      \_ head -60
+--- pstree of self ---
+hermes,101,after_ket /home/after_ket/.local/bin/hermes gateway run
+  |-timeout,109 5 bash -c echo '=== shutdown diagnostic @ SIGINT ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 101 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+  |   `-bash,110 -c echo '=== shutdown diagnostic @ SIGINT ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 101 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+  |       |-head,115 -40
+  |       `-pstree,114 -plau 101
+  |-{hermes},104
+  |-{hermes},105
+  `-{hermes},107
+--- /proc/loadavg ---
+0.00 0.00 0.00 1/303 116
+--- recent dmesg (oom/killed) ---
+[Wed May 20 17:40:24 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Wed May 20 17:40:24 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Wed May 20 17:40:24 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -2
+[Wed May 20 18:07:15 2026] mini_init (308): drop_caches: 1
+[Wed May 20 18:48:45 2026] mini_init (308): drop_caches: 1
+[Wed May 20 19:28:34 2026] Exception: 
+[Wed May 20 19:28:34 2026] Operation canceled @p9io.cpp:258 (AcceptAsync)
+
+[Wed May 20 19:28:34 2026] WSL (1 - init()) ERROR: InitEntryUtilityVm:2555: Init has exited. Terminating distribution
+[Wed May 20 19:28:35 2026] EXT4-fs (sdd): unmounting filesystem 0420dbd6-7700-491f-adf5-8e7f28453603.
+[Wed May 20 19:28:36 2026] EXT4-fs (sdd): mounted filesystem 0420dbd6-7700-491f-adf5-8e7f28453603 r/w with ordered data mode. Quota mode: none.
+[Wed May 20 19:28:36 2026] misc dxg: dxgk: dxgkio_is_feature_enabled: Ioctl failed: -22
+[Wed May 20 19:28:36 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Wed May 20 19:28:36 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Wed May 20 19:28:36 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Wed May 20 19:28:36 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -2
+[Wed May 20 19:28:36 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Wed May 20 19:28:36 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Wed May 20 19:28:36 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Wed May 20 19:28:36 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -2
+=== end ===
+=== shutdown diagnostic @ SIGTERM ===
+--- date ---
+2026-05-20T12:30:45Z
+--- ps auxf (top 60 by cpu) ---
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1  0.0  0.0  22184 13264 ?        Ss   19:53   0:00 /sbin/init
+after_k+     538  0.2  0.9 794692 153152 ?       Ssl  19:55   0:05 /home/after_ket/.local/share/pipx/venvs/hermes-agent/bin/python /home/after_ket/.local/bin/hermes gateway run
+after_k+    1651  0.0  0.0   3132  2076 ?        Ss   20:30   0:00  \_ timeout 5 bash -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 538 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+after_k+    1652  0.0  0.0   4752  3508 ?        S    20:30   0:00      \_ bash -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 538 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+after_k+    1654  0.0  0.0   8332  4380 ?        R    20:30   0:00          \_ ps auxf --sort=-pcpu
+after_k+    1655  0.0  0.0   3136  1948 ?        S    20:30   0:00          \_ head -60
+root        1373  0.0  0.1 370096 20816 ?        Ssl  20:30   0:00 /usr/libexec/packagekitd
+--- pstree of self ---
+hermes,538,after_ket /home/after_ket/.local/bin/hermes gateway run
+  |-timeout,1651 5 bash -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 538 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+  |   `-bash,1652 -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 538 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+  |       |-head,1657 -40
+  |       `-pstree,1656 -plau 538
+  |-{hermes},540
+  |-{hermes},543
+  |-{hermes},545
+  |-{hermes},570
+  |-{hermes},683
+  `-{hermes},1140
+--- /proc/loadavg ---
+0.00 0.00 0.00 1/353 1658
+--- recent dmesg (oom/killed) ---
+[Wed May 20 19:53:51 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Wed May 20 19:53:51 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Wed May 20 19:53:51 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -2
+[Wed May 20 19:53:51 2026] systemd-journald[42]: Collecting audit messages is disabled.
+[Wed May 20 19:53:51 2026] systemd-journald[42]: Received client request to flush runtime journal.
+[Wed May 20 19:53:51 2026] systemd-journald[42]: File /var/log/journal/1f0f3238db8c479c877515f8967f3b0b/system.journal corrupted or uncleanly shut down, renaming and replacing.
+[Wed May 20 19:53:51 2026] ACPI: AC: AC Adapter [AC1] (on-line)
+[Wed May 20 19:53:51 2026] ACPI: battery: Slot [BAT1] (battery present)
+[Wed May 20 19:53:52 2026] kvm_amd: TSC scaling supported
+[Wed May 20 19:53:52 2026] kvm_amd: Nested Virtualization enabled
+[Wed May 20 19:53:52 2026] kvm_amd: Nested Paging enabled
+[Wed May 20 19:53:52 2026] kvm_amd: kvm_amd: Hyper-V enlightened NPT TLB flush enabled
+[Wed May 20 19:53:52 2026] kvm_amd: kvm_amd: Hyper-V Direct TLB Flush enabled
+[Wed May 20 19:53:52 2026] kvm_amd: Virtual VMLOAD VMSAVE supported
+[Wed May 20 19:53:52 2026] weston[362]: memfd_create() called without MFD_EXEC or MFD_NOEXEC_SEAL set
+[Wed May 20 19:53:53 2026] systemd-journald[42]: File /var/log/journal/1f0f3238db8c479c877515f8967f3b0b/user-1000.journal corrupted or uncleanly shut down, renaming and replacing.
+[Wed May 20 19:53:55 2026] WSL (327) ERROR: CheckConnection: getaddrinfo() failed: -5
+[Wed May 20 19:54:22 2026] systemd-journald[42]: Time jumped backwards, rotating.
+[Wed May 20 19:54:38 2026] hv_balloon: Max. dynamic memory size: 15982 MB
+[Wed May 20 20:04:31 2026] mini_init (309): drop_caches: 1
+=== end ===
+=== shutdown diagnostic @ SIGTERM ===
+--- date ---
+2026-05-20T12:31:23Z
+--- ps auxf (top 60 by cpu) ---
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1  0.0  0.0  22184 13264 ?        Ss   19:53   0:00 /sbin/init
+root        1683  3.7  0.2  44344 33384 ?        Ss   20:31   0:00 /usr/bin/python3 /usr/lib/ubuntu-advantage/esm_cache.py
+_apt        1693  0.4  0.0  24092 15124 ?        S    20:31   0:00  \_ /usr/lib/apt/methods/https
+after_k+    1663  1.8  0.4 382516 75152 ?        Ssl  20:30   0:00 /home/after_ket/.local/share/pipx/venvs/hermes-agent/bin/python /home/after_ket/.local/bin/hermes gateway run
+after_k+    1905  0.0  0.0   3132  2072 ?        Ss   20:31   0:00  \_ timeout 5 bash -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 1663 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+after_k+    1906  0.0  0.0   4752  3556 ?        S    20:31   0:00      \_ bash -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 1663 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+after_k+    1908  0.0  0.0   8332  4400 ?        R    20:31   0:00          \_ ps auxf --sort=-pcpu
+after_k+    1909  0.0  0.0   3136  1952 ?        S    20:31   0:00          \_ head -60
+--- pstree of self ---
+hermes,1663,after_ket /home/after_ket/.local/bin/hermes gateway run
+  |-timeout,1905 5 bash -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 1663 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+  |   `-bash,1906 -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 1663 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+  |       |-head,1911 -40
+  |       `-pstree,1910 -plau 1663
+  |-{hermes},1665
+  |-{hermes},1668
+  |-{hermes},1669
+  `-{hermes},1670
+--- /proc/loadavg ---
+0.00 0.00 0.00 1/357 1912
+--- recent dmesg (oom/killed) ---
+[Wed May 20 19:53:54 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Wed May 20 19:53:54 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Wed May 20 19:53:54 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -2
+[Wed May 20 19:53:54 2026] systemd-journald[42]: Collecting audit messages is disabled.
+[Wed May 20 19:53:54 2026] systemd-journald[42]: Received client request to flush runtime journal.
+[Wed May 20 19:53:54 2026] systemd-journald[42]: File /var/log/journal/1f0f3238db8c479c877515f8967f3b0b/system.journal corrupted or uncleanly shut down, renaming and replacing.
+[Wed May 20 19:53:54 2026] ACPI: AC: AC Adapter [AC1] (on-line)
+[Wed May 20 19:53:54 2026] ACPI: battery: Slot [BAT1] (battery present)
+[Wed May 20 19:53:55 2026] kvm_amd: TSC scaling supported
+[Wed May 20 19:53:55 2026] kvm_amd: Nested Virtualization enabled
+[Wed May 20 19:53:55 2026] kvm_amd: Nested Paging enabled
+[Wed May 20 19:53:55 2026] kvm_amd: kvm_amd: Hyper-V enlightened NPT TLB flush enabled
+[Wed May 20 19:53:55 2026] kvm_amd: kvm_amd: Hyper-V Direct TLB Flush enabled
+[Wed May 20 19:53:55 2026] kvm_amd: Virtual VMLOAD VMSAVE supported
+[Wed May 20 19:53:55 2026] weston[362]: memfd_create() called without MFD_EXEC or MFD_NOEXEC_SEAL set
+[Wed May 20 19:53:56 2026] systemd-journald[42]: File /var/log/journal/1f0f3238db8c479c877515f8967f3b0b/user-1000.journal corrupted or uncleanly shut down, renaming and replacing.
+[Wed May 20 19:53:58 2026] WSL (327) ERROR: CheckConnection: getaddrinfo() failed: -5
+[Wed May 20 19:54:25 2026] systemd-journald[42]: Time jumped backwards, rotating.
+[Wed May 20 19:54:41 2026] hv_balloon: Max. dynamic memory size: 15982 MB
+[Wed May 20 20:04:34 2026] mini_init (309): drop_caches: 1
+=== end ===
+=== shutdown diagnostic @ SIGTERM ===
+--- date ---
+2026-05-20T12:32:06Z
+--- ps auxf (top 60 by cpu) ---
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1  0.0  0.0  22184 13264 ?        Ss   19:53   0:00 /sbin/init
+after_k+    1953  1.7  0.4 307840 74228 ?        Ssl  20:31   0:00 /home/after_ket/.local/share/pipx/venvs/hermes-agent/bin/python /home/after_ket/.local/bin/hermes gateway run
+after_k+    1983  0.0  0.0   3132  2076 ?        Ss   20:32   0:00  \_ timeout 5 bash -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 1953 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+after_k+    1984  0.0  0.0   4752  3556 ?        S    20:32   0:00      \_ bash -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 1953 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+after_k+    1986  0.0  0.0   8332  4396 ?        R    20:32   0:00          \_ ps auxf --sort=-pcpu
+after_k+    1987  0.0  0.0   3136  1952 ?        S    20:32   0:00          \_ head -60
+--- pstree of self ---
+hermes,1953,after_ket /home/after_ket/.local/bin/hermes gateway run
+  |-timeout,1983 5 bash -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 1953 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+  |   `-bash,1984 -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 1953 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+  |       |-head,1989 -40
+  |       `-pstree,1988 -plau 1953
+  |-{hermes},1955
+  |-{hermes},1958
+  `-{hermes},1959
+--- /proc/loadavg ---
+0.04 0.01 0.00 1/355 1990
+--- recent dmesg (oom/killed) ---
+[Wed May 20 19:54:00 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Wed May 20 19:54:00 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Wed May 20 19:54:00 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -2
+[Wed May 20 19:54:00 2026] systemd-journald[42]: Collecting audit messages is disabled.
+[Wed May 20 19:54:00 2026] systemd-journald[42]: Received client request to flush runtime journal.
+[Wed May 20 19:54:00 2026] systemd-journald[42]: File /var/log/journal/1f0f3238db8c479c877515f8967f3b0b/system.journal corrupted or uncleanly shut down, renaming and replacing.
+[Wed May 20 19:54:00 2026] ACPI: AC: AC Adapter [AC1] (on-line)
+[Wed May 20 19:54:00 2026] ACPI: battery: Slot [BAT1] (battery present)
+[Wed May 20 19:54:00 2026] kvm_amd: TSC scaling supported
+[Wed May 20 19:54:00 2026] kvm_amd: Nested Virtualization enabled
+[Wed May 20 19:54:00 2026] kvm_amd: Nested Paging enabled
+[Wed May 20 19:54:00 2026] kvm_amd: kvm_amd: Hyper-V enlightened NPT TLB flush enabled
+[Wed May 20 19:54:00 2026] kvm_amd: kvm_amd: Hyper-V Direct TLB Flush enabled
+[Wed May 20 19:54:00 2026] kvm_amd: Virtual VMLOAD VMSAVE supported
+[Wed May 20 19:54:00 2026] weston[362]: memfd_create() called without MFD_EXEC or MFD_NOEXEC_SEAL set
+[Wed May 20 19:54:01 2026] systemd-journald[42]: File /var/log/journal/1f0f3238db8c479c877515f8967f3b0b/user-1000.journal corrupted or uncleanly shut down, renaming and replacing.
+[Wed May 20 19:54:04 2026] WSL (327) ERROR: CheckConnection: getaddrinfo() failed: -5
+[Wed May 20 19:54:31 2026] systemd-journald[42]: Time jumped backwards, rotating.
+[Wed May 20 19:54:47 2026] hv_balloon: Max. dynamic memory size: 15982 MB
+[Wed May 20 20:04:40 2026] mini_init (309): drop_caches: 1
+=== end ===
+=== shutdown diagnostic @ SIGTERM ===
+--- date ---
+2026-05-20T12:32:39Z
+--- ps auxf (top 60 by cpu) ---
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1  0.0  0.0  22184 13264 ?        Ss   19:54   0:00 /sbin/init
+after_k+    1995  1.9  0.4 307996 74280 ?        Ssl  20:32   0:00 /home/after_ket/.local/share/pipx/venvs/hermes-agent/bin/python /home/after_ket/.local/bin/hermes gateway run
+after_k+    2007  0.0  0.0   3132  2068 ?        Ss   20:32   0:00  \_ timeout 5 bash -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 1995 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+after_k+    2008  0.0  0.0   4752  3512 ?        S    20:32   0:00      \_ bash -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 1995 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+after_k+    2010  0.0  0.0   8332  4388 ?        R    20:32   0:00          \_ ps auxf --sort=-pcpu
+after_k+    2011  0.0  0.0   3136  1952 ?        S    20:32   0:00          \_ head -60
+--- pstree of self ---
+hermes,1995,after_ket /home/after_ket/.local/bin/hermes gateway run
+  |-timeout,2007 5 bash -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 1995 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+  |   `-bash,2008 -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 1995 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+  |       |-head,2013 -40
+  |       `-pstree,2012 -plau 1995
+  |-{hermes},1997
+  |-{hermes},2000
+  `-{hermes},2001
+--- /proc/loadavg ---
+0.02 0.01 0.00 1/355 2014
+--- recent dmesg (oom/killed) ---
+[Wed May 20 19:54:02 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Wed May 20 19:54:02 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Wed May 20 19:54:02 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -2
+[Wed May 20 19:54:02 2026] systemd-journald[42]: Collecting audit messages is disabled.
+[Wed May 20 19:54:02 2026] systemd-journald[42]: Received client request to flush runtime journal.
+[Wed May 20 19:54:02 2026] systemd-journald[42]: File /var/log/journal/1f0f3238db8c479c877515f8967f3b0b/system.journal corrupted or uncleanly shut down, renaming and replacing.
+[Wed May 20 19:54:03 2026] ACPI: AC: AC Adapter [AC1] (on-line)
+[Wed May 20 19:54:03 2026] ACPI: battery: Slot [BAT1] (battery present)
+[Wed May 20 19:54:03 2026] kvm_amd: TSC scaling supported
+[Wed May 20 19:54:03 2026] kvm_amd: Nested Virtualization enabled
+[Wed May 20 19:54:03 2026] kvm_amd: Nested Paging enabled
+[Wed May 20 19:54:03 2026] kvm_amd: kvm_amd: Hyper-V enlightened NPT TLB flush enabled
+[Wed May 20 19:54:03 2026] kvm_amd: kvm_amd: Hyper-V Direct TLB Flush enabled
+[Wed May 20 19:54:03 2026] kvm_amd: Virtual VMLOAD VMSAVE supported
+[Wed May 20 19:54:03 2026] weston[362]: memfd_create() called without MFD_EXEC or MFD_NOEXEC_SEAL set
+[Wed May 20 19:54:04 2026] systemd-journald[42]: File /var/log/journal/1f0f3238db8c479c877515f8967f3b0b/user-1000.journal corrupted or uncleanly shut down, renaming and replacing.
+[Wed May 20 19:54:07 2026] WSL (327) ERROR: CheckConnection: getaddrinfo() failed: -5
+[Wed May 20 19:54:33 2026] systemd-journald[42]: Time jumped backwards, rotating.
+[Wed May 20 19:54:49 2026] hv_balloon: Max. dynamic memory size: 15982 MB
+[Wed May 20 20:04:42 2026] mini_init (309): drop_caches: 1
+=== end ===
+=== shutdown diagnostic @ SIGTERM ===
+--- date ---
+2026-05-20T13:01:20Z
+--- ps auxf (top 60 by cpu) ---
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1  0.0  0.0  22184 13264 ?        Rs   19:55   0:00 /sbin/init
+after_k+    2019  0.2  0.9 508776 149540 ?       Ssl  20:34   0:03 /home/after_ket/.local/share/pipx/venvs/hermes-agent/bin/python /home/after_ket/.local/bin/hermes gateway run
+after_k+    2077  0.0  0.0   3132  2072 ?        Ss   21:01   0:00  \_ timeout 5 bash -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 2019 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+after_k+    2078  0.0  0.0   4752  3564 ?        S    21:01   0:00      \_ bash -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 2019 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+after_k+    2082  0.0  0.0   8332  4388 ?        R    21:01   0:00          \_ ps auxf --sort=-pcpu
+after_k+    2083  0.0  0.0   3136  1952 ?        S    21:01   0:00          \_ head -60
+--- pstree of self ---
+hermes,2019,after_ket /home/after_ket/.local/bin/hermes gateway run
+  |-timeout,2077 5 bash -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 2019 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+  |   `-bash,2078 -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 2019 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+  |       |-head,2088 -40
+  |       `-pstree,2087 -plau 2019
+  |-{hermes},2021
+  |-{hermes},2024
+  |-{hermes},2025
+  `-{hermes},2028
+--- /proc/loadavg ---
+0.00 0.00 0.00 2/322 2090
+--- recent dmesg (oom/killed) ---
+[Wed May 20 19:56:01 2026] systemd-journald[42]: Collecting audit messages is disabled.
+[Wed May 20 19:56:01 2026] systemd-journald[42]: Received client request to flush runtime journal.
+[Wed May 20 19:56:01 2026] systemd-journald[42]: File /var/log/journal/1f0f3238db8c479c877515f8967f3b0b/system.journal corrupted or uncleanly shut down, renaming and replacing.
+[Wed May 20 19:56:01 2026] ACPI: AC: AC Adapter [AC1] (on-line)
+[Wed May 20 19:56:01 2026] ACPI: battery: Slot [BAT1] (battery present)
+[Wed May 20 19:56:01 2026] kvm_amd: TSC scaling supported
+[Wed May 20 19:56:01 2026] kvm_amd: Nested Virtualization enabled
+[Wed May 20 19:56:01 2026] kvm_amd: Nested Paging enabled
+[Wed May 20 19:56:01 2026] kvm_amd: kvm_amd: Hyper-V enlightened NPT TLB flush enabled
+[Wed May 20 19:56:01 2026] kvm_amd: kvm_amd: Hyper-V Direct TLB Flush enabled
+[Wed May 20 19:56:01 2026] kvm_amd: Virtual VMLOAD VMSAVE supported
+[Wed May 20 19:56:01 2026] weston[362]: memfd_create() called without MFD_EXEC or MFD_NOEXEC_SEAL set
+[Wed May 20 19:56:02 2026] systemd-journald[42]: File /var/log/journal/1f0f3238db8c479c877515f8967f3b0b/user-1000.journal corrupted or uncleanly shut down, renaming and replacing.
+[Wed May 20 19:56:05 2026] WSL (327) ERROR: CheckConnection: getaddrinfo() failed: -5
+[Wed May 20 19:56:32 2026] systemd-journald[42]: Time jumped backwards, rotating.
+[Wed May 20 19:56:48 2026] hv_balloon: Max. dynamic memory size: 15982 MB
+[Wed May 20 20:06:41 2026] mini_init (309): drop_caches: 1
+[Wed May 20 21:06:10 2026] Exception: 
+[Wed May 20 21:06:10 2026] Operation canceled @p9io.cpp:258 (AcceptAsync)
+
+=== end ===
+=== shutdown diagnostic @ SIGTERM ===
+--- date ---
+2026-05-20T18:09:31Z
+--- ps auxf (top 60 by cpu) ---
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1  0.0  0.0  21800 13072 ?        Ss   May20   0:00 /sbin/init
+after_k+     168  1.3  1.4 1467524 234996 ?      Ssl  May20   3:28 /home/after_ket/.local/share/pipx/venvs/hermes-agent/bin/python /home/after_ket/.local/bin/hermes gateway run
+after_k+    4134  0.0  0.0   3132  2072 ?        Ss   02:09   0:00  \_ timeout 5 bash -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 168 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+after_k+    4135  0.0  0.0   4752  3472 ?        S    02:09   0:00      \_ bash -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 168 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+after_k+    4139  0.0  0.0   8332  4364 ?        R    02:09   0:00          \_ ps auxf --sort=-pcpu
+after_k+    4140  0.0  0.0   3136  1948 ?        S    02:09   0:00          \_ head -60
+--- pstree of self ---
+hermes,168,after_ket /home/after_ket/.local/bin/hermes gateway run
+  |-timeout,4134 5 bash -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 168 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+  |   `-bash,4135 -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 168 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+  |       |-head,4146 -40
+  |       `-pstree,4145 -plau 168
+  |-{hermes},288
+  |-{hermes},317
+  |-{hermes},318
+  |-{hermes},397
+  |-{hermes},432
+  |-{hermes},433
+  |-{hermes},454
+  |-{hermes},456
+  |-{hermes},979
+  |-{hermes},2287
+  |-{hermes},3044
+  |-{hermes},4125
+  `-{hermes},4127
+--- /proc/loadavg ---
+0.11 0.03 0.01 1/298 4147
+--- recent dmesg (oom/killed) ---
+[Wed May 20 21:58:57 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -2
+[Wed May 20 21:58:57 2026] systemd-journald[42]: Collecting audit messages is disabled.
+[Wed May 20 21:58:57 2026] systemd-journald[42]: Received client request to flush runtime journal.
+[Wed May 20 21:58:57 2026] systemd-journald[42]: File /var/log/journal/1f0f3238db8c479c877515f8967f3b0b/system.journal corrupted or uncleanly shut down, renaming and replacing.
+[Wed May 20 21:58:57 2026] ACPI: AC: AC Adapter [AC1] (on-line)
+[Wed May 20 21:58:57 2026] ACPI: battery: Slot [BAT1] (battery present)
+[Wed May 20 21:58:58 2026] kvm_amd: TSC scaling supported
+[Wed May 20 21:58:58 2026] kvm_amd: Nested Virtualization enabled
+[Wed May 20 21:58:58 2026] kvm_amd: Nested Paging enabled
+[Wed May 20 21:58:58 2026] kvm_amd: kvm_amd: Hyper-V enlightened NPT TLB flush enabled
+[Wed May 20 21:58:58 2026] kvm_amd: kvm_amd: Hyper-V Direct TLB Flush enabled
+[Wed May 20 21:58:58 2026] kvm_amd: Virtual VMLOAD VMSAVE supported
+[Wed May 20 21:58:58 2026] weston[363]: memfd_create() called without MFD_EXEC or MFD_NOEXEC_SEAL set
+[Wed May 20 21:58:58 2026] systemd-journald[42]: File /var/log/journal/1f0f3238db8c479c877515f8967f3b0b/user-1000.journal corrupted or uncleanly shut down, renaming and replacing.
+[Wed May 20 21:59:02 2026] WSL (326) ERROR: CheckConnection: getaddrinfo() failed: -5
+[Wed May 20 21:59:44 2026] hv_balloon: Max. dynamic memory size: 15982 MB
+[Wed May 20 22:09:31 2026] mini_init (309): drop_caches: 1
+[Thu May 21 02:29:31 2026] Exception: 
+[Thu May 21 02:29:31 2026] Operation canceled @p9io.cpp:258 (AcceptAsync)
+
+=== end ===
+=== shutdown diagnostic @ SIGTERM ===
+--- date ---
+2026-05-21T11:43:44Z
+--- ps auxf (top 60 by cpu) ---
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1  0.0  0.0  22164 13300 ?        Ss   14:52   0:01 /sbin/init
+after_k+     199  0.9  1.9 1684120 317980 ?      Ssl  14:52   2:38 /home/after_ket/.local/share/pipx/venvs/hermes-agent/bin/python /home/after_ket/.local/bin/hermes gateway run
+after_k+    6013  0.0  0.0   3132  2068 ?        Ss   19:43   0:00  \_ timeout 5 bash -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 199 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+after_k+    6014  0.0  0.0   4752  3524 ?        S    19:43   0:00      \_ bash -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 199 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+after_k+    6016  100  0.0   8332  4392 ?        R    19:43   0:00          \_ ps auxf --sort=-pcpu
+--- pstree of self ---
+hermes,199,after_ket /home/after_ket/.local/bin/hermes gateway run
+  |-timeout,6013 5 bash -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 199 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+  |   `-bash,6014 -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 199 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+  |       |-head,6021 -40
+  |       `-pstree,6020 -plau 199
+  |-{hermes},330
+  |-{hermes},362
+  |-{hermes},452
+  |-{hermes},893
+  |-{hermes},894
+  |-{hermes},898
+  |-{hermes},904
+  |-{hermes},1250
+  |-{hermes},1271
+  |-{hermes},1274
+  |-{hermes},1275
+  |-{hermes},1277
+  |-{hermes},1327
+  `-{hermes},1328
+--- /proc/loadavg ---
+0.00 0.00 0.00 2/331 6023
+--- recent dmesg (oom/killed) ---
+[Thu May 21 14:52:57 2026] systemd-journald[45]: Received client request to flush runtime journal.
+[Thu May 21 14:52:57 2026] systemd-journald[45]: File /var/log/journal/1f0f3238db8c479c877515f8967f3b0b/system.journal corrupted or uncleanly shut down, renaming and replacing.
+[Thu May 21 14:52:57 2026] ACPI: battery: Slot [BAT1] (battery present)
+[Thu May 21 14:52:57 2026] ACPI: AC: AC Adapter [AC1] (on-line)
+[Thu May 21 14:52:58 2026] kvm_amd: TSC scaling supported
+[Thu May 21 14:52:58 2026] kvm_amd: Nested Virtualization enabled
+[Thu May 21 14:52:58 2026] kvm_amd: Nested Paging enabled
+[Thu May 21 14:52:58 2026] kvm_amd: kvm_amd: Hyper-V enlightened NPT TLB flush enabled
+[Thu May 21 14:52:58 2026] kvm_amd: kvm_amd: Hyper-V Direct TLB Flush enabled
+[Thu May 21 14:52:58 2026] kvm_amd: Virtual VMLOAD VMSAVE supported
+[Thu May 21 14:52:59 2026] systemd-journald[45]: File /var/log/journal/1f0f3238db8c479c877515f8967f3b0b/user-1000.journal corrupted or uncleanly shut down, renaming and replacing.
+[Thu May 21 14:52:59 2026] WSL (325) ERROR: CheckConnection: getaddrinfo() failed: -5
+[Thu May 21 14:52:59 2026] weston[361]: memfd_create() called without MFD_EXEC or MFD_NOEXEC_SEAL set
+[Thu May 21 14:53:33 2026] systemd-journald[45]: Time jumped backwards, rotating.
+[Thu May 21 14:53:41 2026] hv_balloon: Max. dynamic memory size: 15982 MB
+[Thu May 21 15:03:28 2026] mini_init (308): drop_caches: 1
+[Thu May 21 15:06:09 2026] mini_init (308): drop_caches: 1
+[Thu May 21 20:07:19 2026] Exception: 
+[Thu May 21 20:07:19 2026] Operation canceled @p9io.cpp:258 (AcceptAsync)
+
+=== end ===
+=== shutdown diagnostic @ SIGTERM ===
+--- date ---
+2026-05-21T15:11:07Z
+--- ps auxf (top 60 by cpu) ---
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1  0.0  0.0  21804 12928 ?        Ss   19:53   0:01 /sbin/init
+after_k+     168  0.4  1.8 1922100 299296 ?      Ssl  19:53   0:53 /home/after_ket/.local/share/pipx/venvs/hermes-agent/bin/python /home/after_ket/.local/bin/hermes gateway run
+after_k+    3135  0.0  0.0   3132  2060 ?        Ss   23:11   0:00  \_ timeout 5 bash -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 168 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+after_k+    3136  0.0  0.0   4752  3476 ?        S    23:11   0:00      \_ bash -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 168 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+after_k+    3139  100  0.0   8332  4392 ?        R    23:11   0:00          \_ ps auxf --sort=-pcpu
+--- pstree of self ---
+hermes,168,after_ket /home/after_ket/.local/bin/hermes gateway run
+  |-timeout,3135 5 bash -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 168 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+  |   `-bash,3136 -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 168 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+  |       |-head,3144 -40
+  |       `-pstree,3142 -plau 168
+  |-{hermes},296
+  |-{hermes},328
+  |-{hermes},329
+  |-{hermes},450
+  |-{hermes},501
+  |-{hermes},503
+  |-{hermes},504
+  |-{hermes},556
+  |-{hermes},643
+  |-{hermes},644
+  |-{hermes},740
+  |-{hermes},841
+  |-{hermes},843
+  |-{hermes},872
+  |-{hermes},873
+  |-{hermes},889
+  |-{hermes},2300
+  |-{hermes},2548
+  |-{hermes},2562
+  |-{hermes},2564
+  `-{hermes},2607
+--- /proc/loadavg ---
+0.00 0.00 0.00 1/351 3145
+--- recent dmesg (oom/killed) ---
+[Thu May 21 20:16:44 2026] systemd-journald[45]: Received SIGTERM from PID 1 (systemd-shutdow).
+[Thu May 21 20:16:44 2026] EXT4-fs (sdd): unmounting filesystem 0420dbd6-7700-491f-adf5-8e7f28453603.
+[Thu May 21 20:16:58 2026] EXT4-fs (sdd): mounted filesystem 0420dbd6-7700-491f-adf5-8e7f28453603 r/w with ordered data mode. Quota mode: none.
+[Thu May 21 20:16:59 2026] misc dxg: dxgk: dxgkio_is_feature_enabled: Ioctl failed: -22
+[Thu May 21 20:16:59 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Thu May 21 20:16:59 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Thu May 21 20:16:59 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Thu May 21 20:16:59 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -2
+[Thu May 21 20:16:59 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Thu May 21 20:16:59 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Thu May 21 20:16:59 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Thu May 21 20:16:59 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -2
+[Thu May 21 20:16:59 2026] systemd-journald[45]: Collecting audit messages is disabled.
+[Thu May 21 20:16:59 2026] systemd-journald[45]: Received client request to flush runtime journal.
+[Thu May 21 20:16:59 2026] systemd-journald[45]: File /var/log/journal/1f0f3238db8c479c877515f8967f3b0b/system.journal corrupted or uncleanly shut down, renaming and replacing.
+[Thu May 21 20:17:01 2026] systemd-journald[45]: File /var/log/journal/1f0f3238db8c479c877515f8967f3b0b/user-1000.journal corrupted or uncleanly shut down, renaming and replacing.
+[Thu May 21 20:17:53 2026] mini_init (308): drop_caches: 1
+[Thu May 21 23:44:01 2026] Exception: 
+[Thu May 21 23:44:01 2026] Operation canceled @p9io.cpp:258 (AcceptAsync)
+
+=== end ===
+=== shutdown diagnostic @ SIGTERM ===
+--- date ---
+2026-05-21T17:15:38Z
+--- ps auxf (top 60 by cpu) ---
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1  0.0  0.0  21792 13064 ?        Rs   May21   0:00 /sbin/init
+after_k+     166  0.8  1.5 1409872 253424 ?      Ssl  May21   1:05 /home/after_ket/.local/share/pipx/venvs/hermes-agent/bin/python /home/after_ket/.local/bin/hermes gateway run
+after_k+    4789  0.0  0.0   3132  2072 ?        Ss   01:15   0:00  \_ timeout 5 bash -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 166 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+after_k+    4790  0.0  0.0   4752  3476 ?        S    01:15   0:00      \_ bash -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 166 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+after_k+    4794  0.0  0.0   8332  4388 ?        R    01:15   0:00          \_ ps auxf --sort=-pcpu
+after_k+    4795  0.0  0.0   3136  1952 ?        S    01:15   0:00          \_ head -60
+root          92  0.0  0.0  24872  6308 ?        Ss   May21   0:02 /usr/lib/systemd/systemd-udevd
+root        4783  0.0  0.0  24876  3508 ?        S    01:15   0:00  \_ (udev-worker)
+root        4784  0.0  0.0  24876  3384 ?        S    01:15   0:00  \_ (udev-worker)
+--- pstree of self ---
+hermes,166,after_ket /home/after_ket/.local/bin/hermes gateway run
+  |-timeout,4789 5 bash -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 166 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+  |   `-bash,4790 -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 166 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+  |       |-head,4800 -40
+  |       `-pstree,4799 -plau 166
+  |-{hermes},301
+  |-{hermes},340
+  |-{hermes},409
+  |-{hermes},411
+  |-{hermes},419
+  |-{hermes},617
+  |-{hermes},788
+  |-{hermes},1056
+  |-{hermes},1134
+  |-{hermes},2221
+  |-{hermes},4459
+  |-{hermes},4635
+  |-{hermes},4642
+  |-{hermes},4647
+  |-{hermes},4654
+  `-{hermes},4774
+--- /proc/loadavg ---
+0.00 0.00 0.00 2/297 4802
+--- recent dmesg (oom/killed) ---
+[Thu May 21 23:43:34 2026] EXT4-fs (sdd): unmounting filesystem 0420dbd6-7700-491f-adf5-8e7f28453603.
+[Thu May 21 23:43:46 2026] EXT4-fs (sdd): mounted filesystem 0420dbd6-7700-491f-adf5-8e7f28453603 r/w with ordered data mode. Quota mode: none.
+[Thu May 21 23:43:47 2026] misc dxg: dxgk: dxgkio_is_feature_enabled: Ioctl failed: -22
+[Thu May 21 23:43:47 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Thu May 21 23:43:47 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Thu May 21 23:43:47 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Thu May 21 23:43:47 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -2
+[Thu May 21 23:43:47 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Thu May 21 23:43:47 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Thu May 21 23:43:47 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Thu May 21 23:43:47 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -2
+[Thu May 21 23:43:47 2026] systemd-journald[45]: Collecting audit messages is disabled.
+[Thu May 21 23:43:47 2026] systemd-journald[45]: Received client request to flush runtime journal.
+[Thu May 21 23:43:47 2026] systemd-journald[45]: File /var/log/journal/1f0f3238db8c479c877515f8967f3b0b/system.journal corrupted or uncleanly shut down, renaming and replacing.
+[Thu May 21 23:43:49 2026] systemd-journald[45]: File /var/log/journal/1f0f3238db8c479c877515f8967f3b0b/user-1000.journal corrupted or uncleanly shut down, renaming and replacing.
+[Thu May 21 23:44:36 2026] mini_init (308): drop_caches: 1
+[Fri May 22 01:38:29 2026] systemd-journald[45]: Time jumped backwards, rotating.
+[Fri May 22 01:48:01 2026] Exception: 
+[Fri May 22 01:48:01 2026] Operation canceled @p9io.cpp:258 (AcceptAsync)
+
+=== end ===
+=== shutdown diagnostic @ SIGTERM ===
+--- date ---
+2026-05-22T09:19:52Z
+--- ps auxf (top 60 by cpu) ---
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1  0.0  0.0  21672 12960 ?        Rs   14:38   0:00 /sbin/init
+after_k+    1563  0.3  0.8 639876 132584 ?       Ssl  15:06   0:27 /home/after_ket/.local/share/pipx/venvs/hermes-agent/bin/python /home/after_ket/.local/bin/hermes dashboard --tui --port 9119
+after_k+    1841  0.0  0.5  93408 83652 ?        S    15:22   0:01  \_ /home/after_ket/.local/share/pipx/venvs/hermes-agent/bin/python -m tui_gateway.slash_worker --session-key 20260522_151952_90d2c7 --model deepseek-v4-pro
+after_k+     202  0.2  1.1 1179572 190896 ?      Ssl  14:38   0:20 /home/after_ket/.local/share/pipx/venvs/hermes-agent/bin/python /home/after_ket/.local/bin/hermes gateway run
+after_k+    2625  0.0  0.0   3132  2076 ?        Ss   17:19   0:00  \_ timeout 5 bash -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 202 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+after_k+    2626  0.0  0.0   4752  3512 ?        S    17:19   0:00      \_ bash -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 202 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+after_k+    2630  0.0  0.0   8332  4392 ?        R    17:19   0:00          \_ ps auxf --sort=-pcpu
+after_k+    2631  0.0  0.0   3136  1956 ?        S    17:19   0:00          \_ head -60
+--- pstree of self ---
+hermes,202,after_ket /home/after_ket/.local/bin/hermes gateway run
+  |-timeout,2625 5 bash -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 202 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+  |   `-bash,2626 -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 202 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+  |       |-head,2636 -40
+  |       `-pstree,2635 -plau 202
+  |-{hermes},378
+  |-{hermes},418
+  |-{hermes},471
+  |-{hermes},478
+  |-{hermes},479
+  |-{hermes},482
+  |-{hermes},1382
+  |-{hermes},1386
+  |-{hermes},1387
+  |-{hermes},1388
+  `-{hermes},1389
+--- /proc/loadavg ---
+0.00 0.00 0.00 2/338 2638
+--- recent dmesg (oom/killed) ---
+[Fri May 22 14:38:40 2026] systemd-journald[45]: Collecting audit messages is disabled.
+[Fri May 22 14:38:40 2026] systemd-journald[45]: Received client request to flush runtime journal.
+[Fri May 22 14:38:40 2026] systemd-journald[45]: File /var/log/journal/1f0f3238db8c479c877515f8967f3b0b/system.journal corrupted or uncleanly shut down, renaming and replacing.
+[Fri May 22 14:38:41 2026] ACPI: battery: Slot [BAT1] (battery present)
+[Fri May 22 14:38:41 2026] ACPI: AC: AC Adapter [AC1] (on-line)
+[Fri May 22 14:38:41 2026] weston[356]: memfd_create() called without MFD_EXEC or MFD_NOEXEC_SEAL set
+[Fri May 22 14:38:42 2026] kvm_amd: TSC scaling supported
+[Fri May 22 14:38:42 2026] kvm_amd: Nested Virtualization enabled
+[Fri May 22 14:38:42 2026] kvm_amd: Nested Paging enabled
+[Fri May 22 14:38:42 2026] kvm_amd: kvm_amd: Hyper-V enlightened NPT TLB flush enabled
+[Fri May 22 14:38:42 2026] kvm_amd: kvm_amd: Hyper-V Direct TLB Flush enabled
+[Fri May 22 14:38:42 2026] kvm_amd: Virtual VMLOAD VMSAVE supported
+[Fri May 22 14:38:42 2026] WSL (329) ERROR: CheckConnection: getaddrinfo() failed: -5
+[Fri May 22 14:38:44 2026] systemd-journald[45]: File /var/log/journal/1f0f3238db8c479c877515f8967f3b0b/user-1000.journal corrupted or uncleanly shut down, renaming and replacing.
+[Fri May 22 14:39:22 2026] hv_balloon: Max. dynamic memory size: 15982 MB
+[Fri May 22 14:48:52 2026] mini_init (312): drop_caches: 1
+[Fri May 22 16:40:05 2026] WSL (329) ERROR: CheckConnection: getaddrinfo() failed: -5
+[Fri May 22 17:23:59 2026] Exception: 
+[Fri May 22 17:23:59 2026] Operation canceled @p9io.cpp:258 (AcceptAsync)
+
+=== end ===
+=== shutdown diagnostic @ SIGTERM ===
+--- date ---
+2026-05-22T11:25:50Z
+--- ps auxf (top 60 by cpu) ---
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1  0.0  0.0  21812 12984 ?        Ss   17:21   0:00 /sbin/init
+root         732  0.3  0.0 1830352 13488 ?       Ssl  19:25   0:00 /usr/libexec/wsl-pro-service
+after_k+     166  0.1  0.5 390208 92708 ?        Ssl  17:21   0:07 /home/after_ket/.local/share/pipx/venvs/hermes-agent/bin/python /home/after_ket/.local/bin/hermes gateway run
+after_k+     768  0.0  0.0   3132  2072 ?        Ss   19:25   0:00  \_ timeout 5 bash -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 166 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+after_k+     769  0.0  0.0   4752  3472 ?        S    19:25   0:00      \_ bash -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 166 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+after_k+     771  0.0  0.0   8332  4404 ?        R    19:25   0:00          \_ ps auxf --sort=-pcpu
+after_k+     772  0.0  0.0   3136  1948 ?        S    19:25   0:00          \_ head -60
+--- pstree of self ---
+hermes,166,after_ket /home/after_ket/.local/bin/hermes gateway run
+  |-timeout,768 5 bash -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 166 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+  |   `-bash,769 -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 166 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+  |       |-head,774 -40
+  |       `-pstree,773 -plau 166
+  |-{hermes},317
+  |-{hermes},350
+  |-{hermes},401
+  `-{hermes},438
+--- /proc/loadavg ---
+0.00 0.00 0.00 1/344 775
+--- recent dmesg (oom/killed) ---
+[Fri May 22 17:25:11 2026] Exception: 
+[Fri May 22 17:25:11 2026] Operation canceled @p9io.cpp:258 (AcceptAsync)
+
+[Fri May 22 17:25:14 2026] systemd-journald[45]: Received SIGTERM from PID 1 (systemd-shutdow).
+[Fri May 22 17:25:14 2026] EXT4-fs (sdd): unmounting filesystem 0420dbd6-7700-491f-adf5-8e7f28453603.
+[Fri May 22 17:25:28 2026] EXT4-fs (sdd): mounted filesystem 0420dbd6-7700-491f-adf5-8e7f28453603 r/w with ordered data mode. Quota mode: none.
+[Fri May 22 17:25:29 2026] misc dxg: dxgk: dxgkio_is_feature_enabled: Ioctl failed: -22
+[Fri May 22 17:25:29 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Fri May 22 17:25:29 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Fri May 22 17:25:29 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Fri May 22 17:25:29 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -2
+[Fri May 22 17:25:29 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Fri May 22 17:25:29 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Fri May 22 17:25:29 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Fri May 22 17:25:29 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -2
+[Fri May 22 17:25:29 2026] systemd-journald[45]: Collecting audit messages is disabled.
+[Fri May 22 17:25:29 2026] systemd-journald[45]: Received client request to flush runtime journal.
+[Fri May 22 17:25:29 2026] systemd-journald[45]: File /var/log/journal/1f0f3238db8c479c877515f8967f3b0b/system.journal corrupted or uncleanly shut down, renaming and replacing.
+[Fri May 22 17:25:30 2026] systemd-journald[45]: File /var/log/journal/1f0f3238db8c479c877515f8967f3b0b/user-1000.journal corrupted or uncleanly shut down, renaming and replacing.
+[Fri May 22 17:26:27 2026] mini_init (312): drop_caches: 1
+=== end ===
+=== shutdown diagnostic @ SIGTERM ===
+--- date ---
+2026-05-22T12:26:55Z
+--- ps auxf (top 60 by cpu) ---
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1  0.0  0.0  21812 12984 ?        Ss   17:21   0:00 /sbin/init
+after_k+     786  0.2  1.2 756104 194180 ?       Ssl  19:25   0:10 /home/after_ket/.local/share/pipx/venvs/hermes-agent/bin/python /home/after_ket/.local/bin/hermes gateway run
+after_k+    1097  0.0  0.0   3132  2072 ?        Ss   20:26   0:00  \_ timeout 5 bash -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 786 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+after_k+    1098  0.0  0.0   4752  3476 ?        S    20:26   0:00      \_ bash -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 786 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+after_k+    1100  0.0  0.0   8332  4364 ?        R    20:26   0:00          \_ ps auxf --sort=-pcpu
+after_k+    1102  0.0  0.0   3136  1952 ?        S    20:26   0:00          \_ head -60
+--- pstree of self ---
+hermes,786,after_ket /home/after_ket/.local/bin/hermes gateway run
+  |-timeout,1097 5 bash -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 786 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+  |   `-bash,1098 -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 786 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+  |       |-head,1106 -40
+  |       `-pstree,1105 -plau 786
+  |-{hermes},788
+  |-{hermes},791
+  |-{hermes},792
+  |-{hermes},835
+  |-{hermes},836
+  `-{hermes},922
+--- /proc/loadavg ---
+0.00 0.00 0.00 1/318 1107
+--- recent dmesg (oom/killed) ---
+[Fri May 22 17:25:14 2026] systemd-journald[45]: Received SIGTERM from PID 1 (systemd-shutdow).
+[Fri May 22 17:25:14 2026] EXT4-fs (sdd): unmounting filesystem 0420dbd6-7700-491f-adf5-8e7f28453603.
+[Fri May 22 17:25:28 2026] EXT4-fs (sdd): mounted filesystem 0420dbd6-7700-491f-adf5-8e7f28453603 r/w with ordered data mode. Quota mode: none.
+[Fri May 22 17:25:29 2026] misc dxg: dxgk: dxgkio_is_feature_enabled: Ioctl failed: -22
+[Fri May 22 17:25:29 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Fri May 22 17:25:29 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Fri May 22 17:25:29 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Fri May 22 17:25:29 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -2
+[Fri May 22 17:25:29 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Fri May 22 17:25:29 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Fri May 22 17:25:29 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Fri May 22 17:25:29 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -2
+[Fri May 22 17:25:29 2026] systemd-journald[45]: Collecting audit messages is disabled.
+[Fri May 22 17:25:29 2026] systemd-journald[45]: Received client request to flush runtime journal.
+[Fri May 22 17:25:29 2026] systemd-journald[45]: File /var/log/journal/1f0f3238db8c479c877515f8967f3b0b/system.journal corrupted or uncleanly shut down, renaming and replacing.
+[Fri May 22 17:25:30 2026] systemd-journald[45]: File /var/log/journal/1f0f3238db8c479c877515f8967f3b0b/user-1000.journal corrupted or uncleanly shut down, renaming and replacing.
+[Fri May 22 17:26:27 2026] mini_init (312): drop_caches: 1
+[Fri May 22 20:32:15 2026] Exception: 
+[Fri May 22 20:32:15 2026] Operation canceled @p9io.cpp:258 (AcceptAsync)
+
+=== end ===
+=== shutdown diagnostic @ SIGTERM ===
+--- date ---
+2026-05-25T07:53:41Z
+--- ps auxf (top 60 by cpu) ---
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1  0.1  0.0  21712 13000 ?        Rs   15:45   0:00 /sbin/init
+after_k+     185  1.8  1.0 807312 161248 ?       Ssl  15:45   0:08 /home/after_ket/.local/share/pipx/venvs/hermes-agent/bin/python /home/after_ket/.local/bin/hermes gateway run
+after_k+     967  0.0  0.0   3132  2068 ?        Ss   15:53   0:00  \_ timeout 5 bash -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 185 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+after_k+     969  0.0  0.0   4752  3548 ?        S    15:53   0:00      \_ bash -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 185 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+after_k+     973  0.0  0.0   8332  4388 ?        R    15:53   0:00          \_ ps auxf --sort=-pcpu
+after_k+     974  0.0  0.0   3136  1948 ?        S    15:53   0:00          \_ head -60
+--- pstree of self ---
+hermes,185,after_ket /home/after_ket/.local/bin/hermes gateway run
+  |-timeout,967 5 bash -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 185 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+  |   `-bash,969 -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 185 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+  |       |-head,979 -40
+  |       `-pstree,978 -plau 185
+  |-{hermes},350
+  |-{hermes},386
+  |-{hermes},497
+  |-{hermes},522
+  |-{hermes},524
+  `-{hermes},962
+--- /proc/loadavg ---
+0.03 0.03 0.00 1/331 981
+--- recent dmesg (oom/killed) ---
+[Mon May 25 15:45:26 2026] systemd-journald[42]: Collecting audit messages is disabled.
+[Mon May 25 15:45:26 2026] systemd-journald[42]: Received client request to flush runtime journal.
+[Mon May 25 15:45:26 2026] systemd-journald[42]: File /var/log/journal/1f0f3238db8c479c877515f8967f3b0b/system.journal corrupted or uncleanly shut down, renaming and replacing.
+[Mon May 25 15:45:26 2026] ACPI: AC: AC Adapter [AC1] (on-line)
+[Mon May 25 15:45:26 2026] ACPI: battery: Slot [BAT1] (battery present)
+[Mon May 25 15:45:26 2026] kvm_amd: TSC scaling supported
+[Mon May 25 15:45:26 2026] kvm_amd: Nested Virtualization enabled
+[Mon May 25 15:45:26 2026] kvm_amd: Nested Paging enabled
+[Mon May 25 15:45:26 2026] kvm_amd: kvm_amd: Hyper-V enlightened NPT TLB flush enabled
+[Mon May 25 15:45:26 2026] kvm_amd: kvm_amd: Hyper-V Direct TLB Flush enabled
+[Mon May 25 15:45:26 2026] kvm_amd: Virtual VMLOAD VMSAVE supported
+[Mon May 25 15:45:27 2026] WSL (328) ERROR: CheckConnection: getaddrinfo() failed: -5
+[Mon May 25 15:45:27 2026] systemd-journald[42]: File /var/log/journal/1f0f3238db8c479c877515f8967f3b0b/user-1000.journal corrupted or uncleanly shut down, renaming and replacing.
+[Mon May 25 15:45:28 2026] weston[362]: memfd_create() called without MFD_EXEC or MFD_NOEXEC_SEAL set
+[Mon May 25 15:46:08 2026] hv_balloon: Max. dynamic memory size: 15982 MB
+[Mon May 25 15:46:32 2026] systemd-journald[42]: Time jumped backwards, rotating.
+[Mon May 25 15:48:09 2026] systemd-journald[42]: Time jumped backwards, rotating.
+[Mon May 25 15:54:06 2026] Exception: 
+[Mon May 25 15:54:06 2026] Operation canceled @p9io.cpp:258 (AcceptAsync)
+
+=== end ===
+=== shutdown diagnostic @ SIGTERM ===
+--- date ---
+2026-05-25T08:50:32Z
+--- ps auxf (top 60 by cpu) ---
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1  0.1  0.0  21832 13028 ?        Ss   16:46   0:00 /sbin/init
+after_k+     168  1.6  1.0 956984 160576 ?       Ssl  16:46   0:04 /home/after_ket/.local/share/pipx/venvs/hermes-agent/bin/python /home/after_ket/.local/bin/hermes gateway run
+after_k+     552  0.0  0.0      0     0 ?        Zs   16:50   0:00  \_ [bash] <defunct>
+after_k+     555  0.0  0.0   3132  2072 ?        Ss   16:50   0:00  \_ timeout 5 bash -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 168 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+after_k+     556  0.0  0.0   4752  3520 ?        S    16:50   0:00      \_ bash -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 168 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+after_k+     558  0.0  0.0   8332  4380 ?        R    16:50   0:00          \_ ps auxf --sort=-pcpu
+after_k+     559  0.0  0.0   3136  1948 ?        S    16:50   0:00          \_ head -60
+--- pstree of self ---
+hermes,168,after_ket /home/after_ket/.local/bin/hermes gateway run
+  |-(bash,552)
+  |-timeout,555 5 bash -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 168 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+  |   `-bash,556 -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 168 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+  |       |-head,561 -40
+  |       `-pstree,560 -plau 168
+  |-{hermes},318
+  |-{hermes},378
+  |-{hermes},409
+  |-{hermes},413
+  |-{hermes},414
+  |-{hermes},415
+  |-{hermes},416
+  `-{hermes},516
+--- /proc/loadavg ---
+0.04 0.03 0.00 1/391 562
+--- recent dmesg (oom/killed) ---
+[Mon May 25 16:46:21 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Mon May 25 16:46:21 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Mon May 25 16:46:21 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -2
+[Mon May 25 16:46:21 2026] systemd-journald[42]: Collecting audit messages is disabled.
+[Mon May 25 16:46:21 2026] systemd-journald[42]: Received client request to flush runtime journal.
+[Mon May 25 16:46:21 2026] systemd-journald[42]: File /var/log/journal/1f0f3238db8c479c877515f8967f3b0b/system.journal corrupted or uncleanly shut down, renaming and replacing.
+[Mon May 25 16:46:21 2026] ACPI: AC: AC Adapter [AC1] (on-line)
+[Mon May 25 16:46:21 2026] ACPI: battery: Slot [BAT1] (battery present)
+[Mon May 25 16:46:22 2026] kvm_amd: TSC scaling supported
+[Mon May 25 16:46:22 2026] kvm_amd: Nested Virtualization enabled
+[Mon May 25 16:46:22 2026] kvm_amd: Nested Paging enabled
+[Mon May 25 16:46:22 2026] kvm_amd: kvm_amd: Hyper-V enlightened NPT TLB flush enabled
+[Mon May 25 16:46:22 2026] kvm_amd: kvm_amd: Hyper-V Direct TLB Flush enabled
+[Mon May 25 16:46:22 2026] kvm_amd: Virtual VMLOAD VMSAVE supported
+[Mon May 25 16:46:22 2026] weston[363]: memfd_create() called without MFD_EXEC or MFD_NOEXEC_SEAL set
+[Mon May 25 16:46:23 2026] systemd-journald[42]: File /var/log/journal/1f0f3238db8c479c877515f8967f3b0b/user-1000.journal corrupted or uncleanly shut down, renaming and replacing.
+[Mon May 25 16:46:26 2026] WSL (328) ERROR: CheckConnection: getaddrinfo() failed: -5
+[Mon May 25 16:47:07 2026] hv_balloon: Max. dynamic memory size: 15982 MB
+[Mon May 25 16:47:15 2026] systemd-journald[42]: Time jumped backwards, rotating.
+[Mon May 25 16:47:39 2026] systemd-journald[42]: Time jumped backwards, rotating.
+=== end ===
+=== shutdown diagnostic @ SIGTERM ===
+--- date ---
+2026-05-25T08:51:25Z
+--- ps auxf (top 60 by cpu) ---
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1  0.1  0.0  21832 13028 ?        Ss   16:46   0:00 /sbin/init
+after_k+     168  1.5  1.0 957000 161872 ?       Ssl  16:46   0:04 /home/after_ket/.local/share/pipx/venvs/hermes-agent/bin/python /home/after_ket/.local/bin/hermes gateway run
+after_k+     598  0.0  0.0   4752  3556 ?        Ss   16:51   0:00  \_ /usr/bin/bash -c source /tmp/hermes-snap-5ab63dfd53a5.sh >/dev/null 2>&1 || true builtin cd -- /home/after_ket || exit 126 eval '# Kill gateway first kill 168 2>/dev/null; sleep 1  # Merge cloud state files to local, KEEPING local config/auth cd /tmp/hermes-cloud-merge/.hermes/  # State DB cp state.db state.db-shm state.db-wal /home/after_ket/.hermes/  # Skills and memories cp -r skills/* /home/after_ket/.hermes/skills/ cp -r memories/* /home/after_ket/.hermes/memories/  # Cron jobs cp -r cron/* /home/after_ket/.hermes/cron/  # SOUL.md cp SOUL.md /home/after_ket/.hermes/  # Sessions cp -r sessions/* /home/after_ket/.hermes/sessions/ 2>/dev/null  # Fix ownership chown -R after_ket:after_ket /home/after_ket/.hermes/  echo "✅ Merge complete" ls -lh /home/after_ket/.hermes/state.db' __hermes_ec=$? export -p > /tmp/hermes-snap-5ab63dfd53a5.sh 2>/dev/null || true pwd -P > /tmp/hermes-cwd-5ab63dfd53a5.txt 2>/dev/null || true printf '\n__HERMES_CWD_5ab63dfd53a5__%s__HERMES_CWD_5ab63dfd53a5__\n' "$(pwd -P)" exit $__hermes_ec
+after_k+     600  0.0  0.0   3124  1996 ?        S    16:51   0:00      \_ sleep 1
+--- pstree of self ---
+hermes,168,after_ket /home/after_ket/.local/bin/hermes gateway run
+  |-bash,598 -c source /tmp/hermes-snap-5ab63dfd53a5.sh >/dev/null 2>&1 || true\012builtin cd -- /home/after_ket || exit 126\012eval '# Kill gateway first\012kill 168 2>/dev/null; sleep 1\012\012# Merge cloud state files to local, KEEPING local config/auth\012cd /tmp/hermes-cloud-merge/.hermes/\012\012# State DB\012cp state.db state.db-shm state.db-wal /home/after_ket/.hermes/\012\012# Skills and memories\012cp -r skills/* /home/after_ket/.hermes/skills/\012cp -r memories/* /home/after_ket/.hermes/memories/\012\012# Cron jobs\012cp -r cron/* /home/after_ket/.hermes/cron/\012\012# SOUL.md\012cp SOUL.md /home/after_ket/.hermes/\012\012# Sessions\012cp -r sessions/* /home/after_ket/.hermes/sessions/ 2>/dev/null\012\012# Fix ownership\012chown -R after_ket:after_ket /home/after_ket/.hermes/\012\012echo "\342\234\205 Merge complete"\012ls -lh /home/after_ket/.hermes/state.db'\012__hermes_ec=$?\012export -p > /tmp/hermes-snap-5ab63dfd53a5.sh 2>/dev/null || true\012pwd -P > /tmp/hermes-cwd-5ab63dfd53a5.txt 2>/dev/null || true\012printf '\\n__HERMES_CWD_5ab63dfd53a5__%s__HERMES_CWD_5ab63dfd53a5__\\n' "$(pwd -P)"\012exit $__hermes_ec
+  |   `-sleep,600 1
+  |-timeout,601 5 bash -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 168 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+  |   `-bash,602 -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 168 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+  |       |-head,607 -40
+  |       `-pstree,606 -plau 168
+  |-{hermes},318
+  |-{hermes},378
+  |-{hermes},409
+  |-{hermes},413
+  |-{hermes},414
+  |-{hermes},415
+  |-{hermes},416
+  |-{hermes},516
+  `-{hermes},599
+--- /proc/loadavg ---
+0.02 0.02 0.00 1/395 608
+--- recent dmesg (oom/killed) ---
+[Mon May 25 16:46:25 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Mon May 25 16:46:25 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Mon May 25 16:46:25 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -2
+[Mon May 25 16:46:25 2026] systemd-journald[42]: Collecting audit messages is disabled.
+[Mon May 25 16:46:25 2026] systemd-journald[42]: Received client request to flush runtime journal.
+[Mon May 25 16:46:25 2026] systemd-journald[42]: File /var/log/journal/1f0f3238db8c479c877515f8967f3b0b/system.journal corrupted or uncleanly shut down, renaming and replacing.
+[Mon May 25 16:46:25 2026] ACPI: AC: AC Adapter [AC1] (on-line)
+[Mon May 25 16:46:25 2026] ACPI: battery: Slot [BAT1] (battery present)
+[Mon May 25 16:46:25 2026] kvm_amd: TSC scaling supported
+[Mon May 25 16:46:25 2026] kvm_amd: Nested Virtualization enabled
+[Mon May 25 16:46:25 2026] kvm_amd: Nested Paging enabled
+[Mon May 25 16:46:25 2026] kvm_amd: kvm_amd: Hyper-V enlightened NPT TLB flush enabled
+[Mon May 25 16:46:25 2026] kvm_amd: kvm_amd: Hyper-V Direct TLB Flush enabled
+[Mon May 25 16:46:25 2026] kvm_amd: Virtual VMLOAD VMSAVE supported
+[Mon May 25 16:46:26 2026] weston[363]: memfd_create() called without MFD_EXEC or MFD_NOEXEC_SEAL set
+[Mon May 25 16:46:26 2026] systemd-journald[42]: File /var/log/journal/1f0f3238db8c479c877515f8967f3b0b/user-1000.journal corrupted or uncleanly shut down, renaming and replacing.
+[Mon May 25 16:46:30 2026] WSL (328) ERROR: CheckConnection: getaddrinfo() failed: -5
+[Mon May 25 16:47:11 2026] hv_balloon: Max. dynamic memory size: 15982 MB
+[Mon May 25 16:47:19 2026] systemd-journald[42]: Time jumped backwards, rotating.
+[Mon May 25 16:47:43 2026] systemd-journald[42]: Time jumped backwards, rotating.
+=== end ===
+=== shutdown diagnostic @ SIGTERM ===
+--- date ---
+2026-05-25T08:52:30Z
+--- ps auxf (top 60 by cpu) ---
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1  0.0  0.0  21832 13028 ?        Ss   16:46   0:00 /sbin/init
+after_k+     168  1.4  1.0 957000 166756 ?       Ssl  16:46   0:05 /home/after_ket/.local/share/pipx/venvs/hermes-agent/bin/python /home/after_ket/.local/bin/hermes gateway run
+after_k+     661  0.0  0.0   4752  3536 ?        Ss   16:52   0:00  \_ /usr/bin/bash -c source /tmp/hermes-snap-5ab63dfd53a5.sh >/dev/null 2>&1 || true builtin cd -- /home/after_ket || exit 126 eval 'kill 168 2>/dev/null; sleep 3; echo "Old gateway killed"' __hermes_ec=$? export -p > /tmp/hermes-snap-5ab63dfd53a5.sh 2>/dev/null || true pwd -P > /tmp/hermes-cwd-5ab63dfd53a5.txt 2>/dev/null || true printf '\n__HERMES_CWD_5ab63dfd53a5__%s__HERMES_CWD_5ab63dfd53a5__\n' "$(pwd -P)" exit $__hermes_ec
+after_k+     663  0.0  0.0   3124  1992 ?        S    16:52   0:00      \_ sleep 3
+--- pstree of self ---
+hermes,168,after_ket /home/after_ket/.local/bin/hermes gateway run
+  |-bash,661 -c source /tmp/hermes-snap-5ab63dfd53a5.sh >/dev/null 2>&1 || true\012builtin cd -- /home/after_ket || exit 126\012eval 'kill 168 2>/dev/null; sleep 3; echo "Old gateway killed"'\012__hermes_ec=$?\012export -p > /tmp/hermes-snap-5ab63dfd53a5.sh 2>/dev/null || true\012pwd -P > /tmp/hermes-cwd-5ab63dfd53a5.txt 2>/dev/null || true\012printf '\\n__HERMES_CWD_5ab63dfd53a5__%s__HERMES_CWD_5ab63dfd53a5__\\n' "$(pwd -P)"\012exit $__hermes_ec
+  |   `-sleep,663 3
+  |-timeout,664 5 bash -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 168 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+  |   `-bash,665 -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 168 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+  |       |-head,670 -40
+  |       `-pstree,669 -plau 168
+  |-{hermes},318
+  |-{hermes},378
+  |-{hermes},409
+  |-{hermes},413
+  |-{hermes},414
+  |-{hermes},415
+  |-{hermes},416
+  |-{hermes},516
+  `-{hermes},662
+--- /proc/loadavg ---
+0.00 0.01 0.00 1/359 671
+--- recent dmesg (oom/killed) ---
+[Mon May 25 16:46:31 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Mon May 25 16:46:31 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Mon May 25 16:46:31 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -2
+[Mon May 25 16:46:31 2026] systemd-journald[42]: Collecting audit messages is disabled.
+[Mon May 25 16:46:31 2026] systemd-journald[42]: Received client request to flush runtime journal.
+[Mon May 25 16:46:31 2026] systemd-journald[42]: File /var/log/journal/1f0f3238db8c479c877515f8967f3b0b/system.journal corrupted or uncleanly shut down, renaming and replacing.
+[Mon May 25 16:46:31 2026] ACPI: AC: AC Adapter [AC1] (on-line)
+[Mon May 25 16:46:31 2026] ACPI: battery: Slot [BAT1] (battery present)
+[Mon May 25 16:46:31 2026] kvm_amd: TSC scaling supported
+[Mon May 25 16:46:31 2026] kvm_amd: Nested Virtualization enabled
+[Mon May 25 16:46:31 2026] kvm_amd: Nested Paging enabled
+[Mon May 25 16:46:31 2026] kvm_amd: kvm_amd: Hyper-V enlightened NPT TLB flush enabled
+[Mon May 25 16:46:31 2026] kvm_amd: kvm_amd: Hyper-V Direct TLB Flush enabled
+[Mon May 25 16:46:31 2026] kvm_amd: Virtual VMLOAD VMSAVE supported
+[Mon May 25 16:46:32 2026] weston[363]: memfd_create() called without MFD_EXEC or MFD_NOEXEC_SEAL set
+[Mon May 25 16:46:32 2026] systemd-journald[42]: File /var/log/journal/1f0f3238db8c479c877515f8967f3b0b/user-1000.journal corrupted or uncleanly shut down, renaming and replacing.
+[Mon May 25 16:46:35 2026] WSL (328) ERROR: CheckConnection: getaddrinfo() failed: -5
+[Mon May 25 16:47:17 2026] hv_balloon: Max. dynamic memory size: 15982 MB
+[Mon May 25 16:47:25 2026] systemd-journald[42]: Time jumped backwards, rotating.
+[Mon May 25 16:47:49 2026] systemd-journald[42]: Time jumped backwards, rotating.
+=== end ===
+=== shutdown diagnostic @ SIGTERM ===
+--- date ---
+2026-05-25T08:52:46Z
+--- ps auxf (top 60 by cpu) ---
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1  0.0  0.0  21832 13028 ?        Rs   16:46   0:00 /sbin/init
+after_k+     168  1.3  1.0 957000 167752 ?       Ssl  16:46   0:05 /home/after_ket/.local/share/pipx/venvs/hermes-agent/bin/python /home/after_ket/.local/bin/hermes gateway run
+after_k+     704  0.0  0.0   3132  2076 ?        Ss   16:52   0:00  \_ timeout 5 bash -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 168 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+after_k+     705  0.0  0.0   4752  3476 ?        S    16:52   0:00      \_ bash -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 168 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+after_k+     709  0.0  0.0   8332  4364 ?        R    16:52   0:00          \_ ps auxf --sort=-pcpu
+after_k+     710  0.0  0.0   3136  1956 ?        S    16:52   0:00          \_ head -60
+--- pstree of self ---
+hermes,168,after_ket /home/after_ket/.local/bin/hermes gateway run
+  |-timeout,704 5 bash -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 168 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+  |   `-bash,705 -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 168 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+  |       |-head,715 -40
+  |       `-pstree,714 -plau 168
+  |-{hermes},318
+  |-{hermes},378
+  |-{hermes},409
+  |-{hermes},413
+  |-{hermes},414
+  |-{hermes},415
+  |-{hermes},416
+  |-{hermes},516
+  `-{hermes},693
+--- /proc/loadavg ---
+0.00 0.01 0.00 2/330 717
+--- recent dmesg (oom/killed) ---
+[Mon May 25 16:46:31 2026] systemd-journald[42]: Collecting audit messages is disabled.
+[Mon May 25 16:46:31 2026] systemd-journald[42]: Received client request to flush runtime journal.
+[Mon May 25 16:46:31 2026] systemd-journald[42]: File /var/log/journal/1f0f3238db8c479c877515f8967f3b0b/system.journal corrupted or uncleanly shut down, renaming and replacing.
+[Mon May 25 16:46:31 2026] ACPI: AC: AC Adapter [AC1] (on-line)
+[Mon May 25 16:46:31 2026] ACPI: battery: Slot [BAT1] (battery present)
+[Mon May 25 16:46:31 2026] kvm_amd: TSC scaling supported
+[Mon May 25 16:46:31 2026] kvm_amd: Nested Virtualization enabled
+[Mon May 25 16:46:31 2026] kvm_amd: Nested Paging enabled
+[Mon May 25 16:46:31 2026] kvm_amd: kvm_amd: Hyper-V enlightened NPT TLB flush enabled
+[Mon May 25 16:46:31 2026] kvm_amd: kvm_amd: Hyper-V Direct TLB Flush enabled
+[Mon May 25 16:46:31 2026] kvm_amd: Virtual VMLOAD VMSAVE supported
+[Mon May 25 16:46:32 2026] weston[363]: memfd_create() called without MFD_EXEC or MFD_NOEXEC_SEAL set
+[Mon May 25 16:46:32 2026] systemd-journald[42]: File /var/log/journal/1f0f3238db8c479c877515f8967f3b0b/user-1000.journal corrupted or uncleanly shut down, renaming and replacing.
+[Mon May 25 16:46:35 2026] WSL (328) ERROR: CheckConnection: getaddrinfo() failed: -5
+[Mon May 25 16:47:17 2026] hv_balloon: Max. dynamic memory size: 15982 MB
+[Mon May 25 16:47:25 2026] systemd-journald[42]: Time jumped backwards, rotating.
+[Mon May 25 16:47:49 2026] systemd-journald[42]: Time jumped backwards, rotating.
+[Mon May 25 16:53:09 2026] Exception: 
+[Mon May 25 16:53:09 2026] Operation canceled @p9io.cpp:258 (AcceptAsync)
+
+=== end ===
+=== shutdown diagnostic @ SIGTERM ===
+--- date ---
+2026-05-25T09:08:57Z
+--- ps auxf (top 60 by cpu) ---
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1  0.0  0.0  21836 12924 ?        Ss   16:55   0:00 /sbin/init
+after_k+     167  1.6  1.5 1312296 254808 ?      Ssl  16:55   0:13 /home/after_ket/.local/share/pipx/venvs/hermes-agent/bin/python /home/after_ket/.local/bin/hermes gateway run
+after_k+    1147  0.0  0.0   3132  2072 ?        Ss   17:08   0:00  \_ timeout 5 bash -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 167 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+after_k+    1148  0.0  0.0   4752  3524 ?        S    17:08   0:00      \_ bash -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 167 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+after_k+    1150  0.0  0.0   8332  4384 ?        R    17:08   0:00          \_ ps auxf --sort=-pcpu
+after_k+    1151  0.0  0.0   3136  1948 ?        S    17:08   0:00          \_ head -60
+--- pstree of self ---
+hermes,167,after_ket /home/after_ket/.local/bin/hermes gateway run
+  |-timeout,1147 5 bash -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 167 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+  |   `-bash,1148 -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 167 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+  |       |-head,1153 -40
+  |       `-pstree,1152 -plau 167
+  |-{hermes},319
+  |-{hermes},352
+  |-{hermes},353
+  |-{hermes},406
+  |-{hermes},408
+  |-{hermes},425
+  |-{hermes},427
+  |-{hermes},428
+  |-{hermes},435
+  |-{hermes},515
+  |-{hermes},1114
+  `-{hermes},1125
+--- /proc/loadavg ---
+0.11 0.06 0.02 2/333 1154
+--- recent dmesg (oom/killed) ---
+[Mon May 25 16:55:19 2026] systemd-journald[42]: Received client request to flush runtime journal.
+[Mon May 25 16:55:19 2026] systemd-journald[42]: File /var/log/journal/1f0f3238db8c479c877515f8967f3b0b/system.journal corrupted or uncleanly shut down, renaming and replacing.
+[Mon May 25 16:55:19 2026] ACPI: AC: AC Adapter [AC1] (on-line)
+[Mon May 25 16:55:19 2026] ACPI: battery: Slot [BAT1] (battery present)
+[Mon May 25 16:55:19 2026] kvm_amd: TSC scaling supported
+[Mon May 25 16:55:19 2026] kvm_amd: Nested Virtualization enabled
+[Mon May 25 16:55:19 2026] kvm_amd: Nested Paging enabled
+[Mon May 25 16:55:19 2026] kvm_amd: kvm_amd: Hyper-V enlightened NPT TLB flush enabled
+[Mon May 25 16:55:19 2026] kvm_amd: kvm_amd: Hyper-V Direct TLB Flush enabled
+[Mon May 25 16:55:19 2026] kvm_amd: Virtual VMLOAD VMSAVE supported
+[Mon May 25 16:55:19 2026] weston[354]: memfd_create() called without MFD_EXEC or MFD_NOEXEC_SEAL set
+[Mon May 25 16:55:20 2026] systemd-journald[42]: File /var/log/journal/1f0f3238db8c479c877515f8967f3b0b/user-1000.journal corrupted or uncleanly shut down, renaming and replacing.
+[Mon May 25 16:55:23 2026] WSL (317) ERROR: CheckConnection: getaddrinfo() failed: -5
+[Mon May 25 16:55:42 2026] systemd-journald[42]: Time jumped backwards, rotating.
+[Mon May 25 16:56:06 2026] hv_balloon: Max. dynamic memory size: 15982 MB
+[Mon May 25 16:56:30 2026] systemd-journald[42]: Time jumped backwards, rotating.
+[Mon May 25 17:06:04 2026] mini_init (298): drop_caches: 1
+[Mon May 25 17:10:02 2026] Exception: 
+[Mon May 25 17:10:02 2026] Operation canceled @p9io.cpp:258 (AcceptAsync)
+
+=== end ===
+=== shutdown diagnostic @ SIGTERM ===
+--- date ---
+2026-05-25T09:34:59Z
+--- ps auxf (top 60 by cpu) ---
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1  0.1  0.0  21716 12928 ?        Ss   17:31   0:00 /sbin/init
+after_k+     196  2.6  1.2 885004 199084 ?       Rsl  17:31   0:05 /home/after_ket/.local/share/pipx/venvs/hermes-agent/bin/python /home/after_ket/.local/bin/hermes gateway run
+after_k+     535  0.0  0.0   4752  3516 ?        Ss   17:34   0:00  \_ /usr/bin/bash -c source /tmp/hermes-snap-6eda23413586.sh >/dev/null 2>&1 || true builtin cd -- /home/after_ket || exit 126 eval '# 关掉本地网关 kill 196 2>/dev/null && echo "本地网关已关" || echo "关失败" sleep 1 # 确认 ps aux | grep "hermes gateway" | grep -v grep || echo "本地已干净"' __hermes_ec=$? export -p > /tmp/hermes-snap-6eda23413586.sh 2>/dev/null || true pwd -P > /tmp/hermes-cwd-6eda23413586.txt 2>/dev/null || true printf '\n__HERMES_CWD_6eda23413586__%s__HERMES_CWD_6eda23413586__\n' "$(pwd -P)" exit $__hermes_ec
+after_k+     537  0.0  0.0   3124  1992 ?        S    17:34   0:00      \_ sleep 1
+--- pstree of self ---
+hermes,196,after_ket /home/after_ket/.local/bin/hermes gateway run
+  |-bash,535 -c source /tmp/hermes-snap-6eda23413586.sh >/dev/null 2>&1 || true\012builtin cd -- /home/after_ket || exit 126\012eval '# \345\205\263\346\216\211\346\234\254\345\234\260\347\275\221\345\205\263\012kill 196 2>/dev/null && echo "\346\234\254\345\234\260\347\275\221\345\205\263\345\267\262\345\205\263" || echo "\345\205\263\345\244\261\350\264\245"\012sleep 1\012# \347\241\256\350\256\244\012ps aux | grep "hermes gateway" | grep -v grep || echo "\346\234\254\345\234\260\345\267\262\345\271\262\345\207\200"'\012__hermes_ec=$?\012export -p > /tmp/hermes-snap-6eda23413586.sh 2>/dev/null || true\012pwd -P > /tmp/hermes-cwd-6eda23413586.txt 2>/dev/null || true\012printf '\\n__HERMES_CWD_6eda23413586__%s__HERMES_CWD_6eda23413586__\\n' "$(pwd -P)"\012exit $__hermes_ec
+  |   `-sleep,537 1
+  |-timeout,538 5 bash -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 196 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+  |   `-bash,539 -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 196 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+  |       |-head,544 -40
+  |       `-pstree,543 -plau 196
+  |-{hermes},329
+  |-{hermes},379
+  |-{hermes},438
+  |-{hermes},442
+  |-{hermes},446
+  |-{hermes},447
+  |-{hermes},450
+  |-{hermes},494
+  |-{hermes},495
+  `-{hermes},536
+--- /proc/loadavg ---
+0.06 0.01 0.00 1/390 545
+--- recent dmesg (oom/killed) ---
+[Mon May 25 17:31:28 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Mon May 25 17:31:28 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Mon May 25 17:31:28 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -2
+[Mon May 25 17:31:28 2026] systemd-journald[45]: Collecting audit messages is disabled.
+[Mon May 25 17:31:28 2026] systemd-journald[45]: Received client request to flush runtime journal.
+[Mon May 25 17:31:28 2026] systemd-journald[45]: File /var/log/journal/1f0f3238db8c479c877515f8967f3b0b/system.journal corrupted or uncleanly shut down, renaming and replacing.
+[Mon May 25 17:31:28 2026] ACPI: battery: Slot [BAT1] (battery present)
+[Mon May 25 17:31:28 2026] ACPI: AC: AC Adapter [AC1] (on-line)
+[Mon May 25 17:31:29 2026] kvm_amd: TSC scaling supported
+[Mon May 25 17:31:29 2026] kvm_amd: Nested Virtualization enabled
+[Mon May 25 17:31:29 2026] kvm_amd: Nested Paging enabled
+[Mon May 25 17:31:29 2026] kvm_amd: kvm_amd: Hyper-V enlightened NPT TLB flush enabled
+[Mon May 25 17:31:29 2026] kvm_amd: kvm_amd: Hyper-V Direct TLB Flush enabled
+[Mon May 25 17:31:29 2026] kvm_amd: Virtual VMLOAD VMSAVE supported
+[Mon May 25 17:31:29 2026] weston[361]: memfd_create() called without MFD_EXEC or MFD_NOEXEC_SEAL set
+[Mon May 25 17:31:29 2026] systemd-journald[45]: File /var/log/journal/1f0f3238db8c479c877515f8967f3b0b/user-1000.journal corrupted or uncleanly shut down, renaming and replacing.
+[Mon May 25 17:31:32 2026] WSL (326) ERROR: CheckConnection: getaddrinfo() failed: -5
+[Mon May 25 17:31:50 2026] systemd-journald[45]: Time jumped backwards, rotating.
+[Mon May 25 17:32:14 2026] hv_balloon: Max. dynamic memory size: 15982 MB
+[Mon May 25 17:32:38 2026] systemd-journald[45]: Time jumped backwards, rotating.
+=== end ===
+=== shutdown diagnostic @ SIGTERM ===
+--- date ---
+2026-05-25T10:03:22Z
+--- ps auxf (top 60 by cpu) ---
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1  0.0  0.0  21716 12932 ?        Ss   17:33   0:00 /sbin/init
+after_k+     558  1.5  1.5 1244304 243752 ?      Ssl  17:37   0:23 /home/after_ket/.local/share/pipx/venvs/hermes-agent/bin/python /home/after_ket/.local/bin/hermes gateway run
+after_k+    1056 50.0  0.0   6080  5040 ?        Ss   18:03   0:00  \_ /usr/bin/bash -lic set +m; kill 558 && sleep 2 && hermes gateway run 2>&1
+after_k+    1071  0.0  0.0   3124  1988 ?        S    18:03   0:00      \_ sleep 2
+--- pstree of self ---
+hermes,558,after_ket /home/after_ket/.local/bin/hermes gateway run
+  |-bash,1056 -lic set +m; kill 558 && sleep 2 && hermes gateway run 2>&1
+  |   `-sleep,1071 2
+  |-timeout,1072 5 bash -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 558 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+  |   `-bash,1073 -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 558 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+  |       |-head,1078 -40
+  |       `-pstree,1077 -plau 558
+  |-{hermes},560
+  |-{hermes},563
+  |-{hermes},564
+  |-{hermes},568
+  |-{hermes},570
+  |-{hermes},630
+  |-{hermes},688
+  |-{hermes},796
+  |-{hermes},887
+  |-{hermes},1057
+  `-{hermes},1070
+--- /proc/loadavg ---
+0.01 0.02 0.00 2/344 1079
+--- recent dmesg (oom/killed) ---
+[Mon May 25 17:33:46 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[Mon May 25 17:33:46 2026] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -2
+[Mon May 25 17:33:46 2026] systemd-journald[45]: Collecting audit messages is disabled.
+[Mon May 25 17:33:46 2026] systemd-journald[45]: Received client request to flush runtime journal.
+[Mon May 25 17:33:46 2026] systemd-journald[45]: File /var/log/journal/1f0f3238db8c479c877515f8967f3b0b/system.journal corrupted or uncleanly shut down, renaming and replacing.
+[Mon May 25 17:33:47 2026] ACPI: battery: Slot [BAT1] (battery present)
+[Mon May 25 17:33:47 2026] ACPI: AC: AC Adapter [AC1] (on-line)
+[Mon May 25 17:33:47 2026] kvm_amd: TSC scaling supported
+[Mon May 25 17:33:47 2026] kvm_amd: Nested Virtualization enabled
+[Mon May 25 17:33:47 2026] kvm_amd: Nested Paging enabled
+[Mon May 25 17:33:47 2026] kvm_amd: kvm_amd: Hyper-V enlightened NPT TLB flush enabled
+[Mon May 25 17:33:47 2026] kvm_amd: kvm_amd: Hyper-V Direct TLB Flush enabled
+[Mon May 25 17:33:47 2026] kvm_amd: Virtual VMLOAD VMSAVE supported
+[Mon May 25 17:33:47 2026] weston[361]: memfd_create() called without MFD_EXEC or MFD_NOEXEC_SEAL set
+[Mon May 25 17:33:48 2026] systemd-journald[45]: File /var/log/journal/1f0f3238db8c479c877515f8967f3b0b/user-1000.journal corrupted or uncleanly shut down, renaming and replacing.
+[Mon May 25 17:33:51 2026] WSL (326) ERROR: CheckConnection: getaddrinfo() failed: -5
+[Mon May 25 17:34:08 2026] systemd-journald[45]: Time jumped backwards, rotating.
+[Mon May 25 17:34:33 2026] hv_balloon: Max. dynamic memory size: 15982 MB
+[Mon May 25 17:34:56 2026] systemd-journald[45]: Time jumped backwards, rotating.
+[Mon May 25 17:44:30 2026] mini_init (310): drop_caches: 1
+=== end ===
+=== shutdown diagnostic @ SIGTERM ===
+--- date ---
+2026-05-25T11:43:07Z
+--- ps auxf (top 60 by cpu) ---
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           2  0.0  0.0      0     0 ?        S    18:22   0:00 [kthreadd]
+root          17  0.0  0.0      0     0 ?        I    18:22   0:01  \_ [rcu_preempt]
+root           1  0.3  0.8  22692 13824 ?        Ss   18:22   0:18 /usr/lib/systemd/systemd --system --deserialize=34 noibrs
+root        1614  2.3  3.0 161220 51028 ?        Ssl  18:23   1:50 /usr/local/aegis/aegis_client/aegis_12_61/AliYunDunMonitor
+--- pstree of self ---
+hermes,50657,admin /usr/local/bin/hermes gateway run --replace
+  |-timeout,50709 5 bash -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 50657 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+  |   `-bash,50710 -c echo '=== shutdown diagnostic @ SIGTERM ==='; echo '--- date ---'; date -u +%Y-%m-%dT%H:%M:%SZ; echo '--- ps auxf (top 60 by cpu) ---'; ps auxf --sort=-pcpu 2>/dev/null | head -60; echo '--- pstree of self ---'; pstree -plau 50657 2>/dev/null | head -40 || true; echo '--- /proc/loadavg ---'; cat /proc/loadavg 2>/dev/null || true; echo '--- recent dmesg (oom/killed) ---'; dmesg -T 2>/dev/null | tail -20 || journalctl --user -n 20 --no-pager 2>/dev/null | tail -20 || true; echo '=== end ==='
+  |       |-head,50715 -40
+  |       `-pstree,50714 -plau 50657
+  |-{hermes},50665
+  |-{hermes},50666
+  |-{hermes},50667
+  |-{hermes},50669
+  `-{hermes},50701
+--- /proc/loadavg ---
+0.34 0.13 0.05 1/252 50716
+--- recent dmesg (oom/killed) ---
+=== end ===
