@@ -204,16 +204,11 @@ export DEEPSEEK_API_BASE="http://localhost:8848/v1"
 
 ---
 
-## 第八步：GitHub 每日备份（推荐）
+## 第八步：GitHub 每日增量备份（推荐）
 
-将 Hermes 配置和 API 中转站每日自动推送到 GitHub 仓库，按日期分文件夹（`hermes/2026-05-25/`、`中转站/2026-05-25/`）。
+将 阿罗娜角色、Skills、Hermes 核心配置、API 中转站每日增量推送到 GitHub 仓库，按精确时间戳分文件夹（`2026.5.26.3.0备份`）。仅备份当天变动文件，无变更自动跳过。
 
-完整脚本和设置步骤见 `references/github-backup.md`。
-
-核心要点：
-- 用 `git clone "https://USER:TOKEN@github.com/..."` 免交互
-- Token 需 `repo` scope
-- 配合 cron 每日凌晨自动执行
+完整脚本、仓库结构和 Pitfalls 见 `references/github-backup.md`。
 
 ---
 
