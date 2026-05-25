@@ -1,0 +1,60 @@
+# Mihomo Config Template (vmess)
+
+Minimal config that avoids GeoIP download deadlock.
+Save to `~/.config/mihomo/config.yaml`.
+
+```yaml
+mode: global
+mixed-port: 7897
+allow-lan: false
+log-level: info
+ipv6: true
+geodata-mode: false
+geox-url:
+  mmdb: ""
+  geoip: ""
+  geosite: ""
+dns:
+  enable: false
+tun:
+  enable: false
+
+proxies:
+- name: NodeName
+  type: vmess
+  server: node.example.com
+  port: 443
+  uuid: <uuid-here>
+  alterId: 0
+  cipher: auto
+  udp: true
+  tls: true
+  skip-cert-verify: true
+  servername: gw.alicdn.com
+
+proxy-groups:
+- name: Proxy
+  type: select
+  proxies:
+  - Auto
+  - NodeName
+- name: Auto
+  type: url-test
+  proxies:
+  - NodeName
+  url: http://www.gstatic.com/generate_204
+  interval: 300
+
+rules:
+- MATCH,Proxy
+```
+
+## Environment Variables
+
+```bash
+export HTTP_PROXY=http://127.0.0.1:7897
+export HTTPS_PROXY=http://127.0.0.1:7897
+export http_proxy=http://127.0.0.1:7897
+export https_proxy=http://127.0.0.1:7897
+export NO_PROXY=localhost,127.0.0.1,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,.local,.internal
+```
