@@ -1,0 +1,18 @@
+{
+  "server": {"host": "127.0.0.1", "port": 8848, "debug": false},
+  "auth": {"local_token": "sk-local-apirelay-2026", "require_auth": true},
+  "models": [
+    {"id": "deepseek-chat", "name": "DeepSeek V4-Flash", "provider": "deepseek", "base_url": "https://api.deepseek.com/v1", "model": "deepseek-chat", "enabled": true},
+    {"id": "deepseek-reasoner", "name": "DeepSeek V4-Pro", "provider": "deepseek", "base_url": "https://api.deepseek.com/v1", "model": "deepseek-reasoner", "enabled": true},
+    {"id": "siliconflow-deepseek", "name": "SiliconFlow DeepSeek-V3", "provider": "siliconflow", "base_url": "https://api.siliconflow.cn/v1", "model": "deepseek-ai/DeepSeek-V3", "enabled": true},
+    {"id": "qwen/*", "name": "百炼通配（所有模型）", "provider": "dashscope", "base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1", "model": "_passthrough", "enabled": true, "_wildcard": true},
+    {"id": "sensenova-6.7-flash-lite", "name": "SenseNova Flash-Lite", "provider": "sensenova", "base_url": "https://token.sensenova.cn/v1", "model": "sensenova-6.7-flash-lite", "enabled": true},
+    {"id": "sensenova-deepseek", "name": "SenseNova DeepSeek-V4", "provider": "sensenova", "base_url": "https://token.sensenova.cn/v1", "model": "deepseek-v4-flash", "enabled": true}
+  ],
+  "api_keys": {
+    "deepseek": "DEEPSEEK_API_KEY",
+    "siliconflow": "SILICONFLOW_API_KEY",
+    "dashscope": "DASHSCOPE_API_KEY",
+    "sensenova": "SENSENOVA_API_KEY"
+  }
+}
