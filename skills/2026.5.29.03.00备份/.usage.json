@@ -1,0 +1,93 @@
+{
+  "api-relay": {
+    "archived_at": null,
+    "created_at": "2026-05-27T14:28:40.881885+00:00",
+    "created_by": null,
+    "last_patched_at": "2026-05-27T14:29:30.407211+00:00",
+    "last_used_at": "2026-05-28T12:00:15.990280+00:00",
+    "last_viewed_at": "2026-05-28T12:00:15.988293+00:00",
+    "patch_count": 3,
+    "pinned": false,
+    "state": "active",
+    "use_count": 4,
+    "view_count": 4
+  },
+  "character-switch": {
+    "archived_at": null,
+    "created_at": "2026-05-27T14:12:13.600119+00:00",
+    "created_by": null,
+    "last_patched_at": "2026-05-27T15:10:37.419642+00:00",
+    "last_used_at": "2026-05-27T14:12:13.602315+00:00",
+    "last_viewed_at": "2026-05-27T14:12:13.600142+00:00",
+    "patch_count": 2,
+    "pinned": false,
+    "state": "active",
+    "use_count": 1,
+    "view_count": 1
+  },
+  "cloud-proxy-setup": {
+    "archived_at": null,
+    "created_at": "2026-05-28T09:59:09.691804+00:00",
+    "created_by": null,
+    "last_patched_at": null,
+    "last_used_at": "2026-05-28T09:59:09.699132+00:00",
+    "last_viewed_at": "2026-05-28T09:59:09.691825+00:00",
+    "patch_count": 0,
+    "pinned": false,
+    "state": "active",
+    "use_count": 1,
+    "view_count": 1
+  },
+  "hermes-deployment": {
+    "archived_at": null,
+    "created_at": "2026-05-27T12:42:31.508822+00:00",
+    "created_by": "agent",
+    "last_patched_at": "2026-05-27T15:57:19.440892+00:00",
+    "last_used_at": "2026-05-27T15:57:02.467244+00:00",
+    "last_viewed_at": "2026-05-27T15:57:02.464897+00:00",
+    "patch_count": 22,
+    "pinned": false,
+    "state": "active",
+    "use_count": 20,
+    "view_count": 20
+  },
+  "hermes-restore": {
+    "archived_at": null,
+    "created_at": "2026-05-27T14:12:51.255568+00:00",
+    "created_by": "agent",
+    "last_patched_at": "2026-05-27T14:13:08.726806+00:00",
+    "last_used_at": null,
+    "last_viewed_at": null,
+    "patch_count": 2,
+    "pinned": false,
+    "state": "active",
+    "use_count": 0,
+    "view_count": 0
+  },
+  "lightnovel-tracker": {
+    "archived_at": null,
+    "created_at": "2026-05-28T03:16:39.004327+00:00",
+    "created_by": "agent",
+    "last_patched_at": "2026-05-28T03:17:18.135907+00:00",
+    "last_used_at": null,
+    "last_viewed_at": null,
+    "patch_count": 2,
+    "pinned": false,
+    "state": "active",
+    "use_count": 0,
+    "view_count": 0
+  },
+  "server-proxy-mihomo": {
+    "archived_at": null,
+    "created_at": "2026-05-28T09:59:09.707427+00:00",
+    "created_by": null,
+    "last_patched_at": "2026-05-28T09:59:50.412129+00:00",
+    "last_used_at": "2026-05-28T09:59:09.710186+00:00",
+    "last_viewed_at": "2026-05-28T09:59:09.707476+00:00",
+    "patch_count": 1,
+    "pinned": false,
+    "state": "active",
+    "use_count": 1,
+    "view_count": 1
+  }
+}
