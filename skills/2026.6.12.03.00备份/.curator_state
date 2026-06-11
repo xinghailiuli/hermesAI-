@@ -1,0 +1,9 @@
+{
+  "last_report_path": "/home/admin/.hermes/logs/curator/20260610-125027",
+  "last_run_at": "2026-06-10T12:50:27.205511+00:00",
+  "last_run_duration_seconds": 100.290555,
+  "last_run_summary": "auto: no changes; llm: Now I have a complete picture. Let me analyze the landscape:\n\n## Landscape Analysis\n\n**3 agent-created skills, across 2 categories:**\n\n| Skill | Category | Type | Characterization |\n|-------|----------|------|-----------------|\n| `galgame-t…",
+  "last_run_summary_shown_at": null,
+  "paused": false,
+  "run_count": 2
+}
