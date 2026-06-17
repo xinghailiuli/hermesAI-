@@ -1,0 +1,14 @@
+[Unit]
+Description=API Relay Server
+After=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/admin/api-relay
+EnvironmentFile=/home/admin/.hermes/.env
+ExecStart=/usr/bin/python3 /home/admin/api-relay/server.py
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
