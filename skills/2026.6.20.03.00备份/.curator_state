@@ -1,0 +1,9 @@
+{
+  "last_report_path": "/home/admin/.hermes/logs/curator/20260617-132332",
+  "last_run_at": "2026-06-17T13:23:32.534745+00:00",
+  "last_run_duration_seconds": 84.675925,
+  "last_run_summary": "auto: no changes; llm: The consolidation is complete. Here's the summary of what happened and why.\n\n---\n\n## Consolidation Report\n\n### Skills analyzed: 6 agent-created skills\n\n**Cluster found: `image-ocr` + `ocr-image`** — Near-duplicates. Both use tesseract + pyt…\narchived 1 skill(s):\n  • ocr-image → image-ocr\nfull report: hermes curator status\nkeep an umbrella stable: hermes curator pin image-ocr",
+  "last_run_summary_shown_at": null,
+  "paused": false,
+  "run_count": 3
+}
