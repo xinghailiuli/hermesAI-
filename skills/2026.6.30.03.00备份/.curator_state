@@ -1,0 +1,9 @@
+{
+  "last_report_path": "/home/admin/.hermes/logs/curator/20260624-142709",
+  "last_run_at": "2026-06-24T14:27:09.111401+00:00",
+  "last_run_duration_seconds": 53.110251,
+  "last_run_summary": "auto: no changes; llm: ---\n\n## Curator Summary\n\n**Input**: 6 agent-created skills across 3 categories (infra: 3, tracking: 2, tools: 1)\n\n**Cluster analysis & decisions:**\n\n### Cluster identified: Infra ops (3 skills)\n\n| Skill | Activities | Decision |\n|---|---|--…\narchived 1 skill(s):\n  • server-health-check → hermes-deployment\nfull report: hermes curator status\nkeep an umbrella stable: hermes curator pin hermes-deployment",
+  "last_run_summary_shown_at": null,
+  "paused": false,
+  "run_count": 4
+}
