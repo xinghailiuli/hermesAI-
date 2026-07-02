@@ -1,0 +1,9 @@
+{
+  "last_report_path": "/home/admin/.hermes/logs/curator/20260701-152130",
+  "last_run_at": "2026-07-01T15:21:30.791943+00:00",
+  "last_run_duration_seconds": 105.765096,
+  "last_run_summary": "auto: no changes; llm: No remaining references to the old skill anywhere. Clean consolidation. Here's the summary:\n\n---\n\n## 整理结果 Summary\n\n### 处理过的集群\n\n**集群：`chinese-comic-retrieval` + `cloudflare-scraper`**\n\n这两个技能重叠严重——都覆盖 禁漫天堂/jmcomic/18comic 的 API 访问、Cloudflare …\narchived 1 skill(s):\n  • chinese-comic-retrieval → cloudflare-scraper\nfull report: hermes curator status\nkeep an umbrella stable: hermes curator pin cloudflare-scraper",
+  "last_run_summary_shown_at": null,
+  "paused": false,
+  "run_count": 5
+}
