@@ -1,0 +1,29 @@
+# Reasonix — DeepSeek via local API relay
+# 缓存优化 + 极致性价比
+# 复制到 ~/.reasonix/config.toml 或项目目录 ./reasonix.toml
+
+default_model = "deepseek"
+language = "zh"
+
+[agent]
+max_steps         = 0          # 0 = 无限制
+planner_max_steps = 12
+temperature       = 0.0        # 保持 0.0 以稳定 prefix cache
+auto_plan         = "off"
+soft_compact_ratio  = 0.5      # 上下文 50% 时开始软压缩
+compact_ratio       = 0.8      # 80% 时主动压缩
+compact_force_ratio = 0.9      # 90% 时强制压缩
+output_style        = "concise"
+
+[ui]
+theme = "auto"
+
+[[providers]]
+name           = "deepseek"
+kind           = "openai"
+base_url       = "http://127.0.0.1:8847/v1"       # Flask relay（非 WS 桥 8848）
+models         = ["deepseek-reasoner"]              # V4-Pro；V4-Flash 用 "deepseek-chat"
+default        = "deepseek-reasoner"
+api_key_env    = "RELAY_TOKEN"                     # 中转站 local_token，非上游 API Key
+context_window = 1000000
+effort         = "high"
