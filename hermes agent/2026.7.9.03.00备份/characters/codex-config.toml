@@ -1,0 +1,15 @@
+# Codex config - DeepSeek via local API relay
+openai_base_url = "http://127.0.0.1:8848/v1"
+
+[network]
+proxy_url = "http://127.0.0.1:7897"
+
+[features]
+responses_websockets = false
+responses_websockets_v2 = false
+
+[projects."/tmp"]
+trust_level = "trusted"
+
+[projects."/home/admin"]
+trust_level = "trusted"
