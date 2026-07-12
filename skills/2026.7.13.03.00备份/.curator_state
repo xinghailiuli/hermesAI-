@@ -1,0 +1,9 @@
+{
+  "last_report_path": "/home/admin/.hermes/logs/curator/20260708-161404",
+  "last_run_at": "2026-07-08T16:14:04.958829+00:00",
+  "last_run_duration_seconds": 108.820179,
+  "last_run_summary": "auto: no changes; llm: Memory unavailable but that's fine. Let me write the final structured summary.\n\n## Consolidation Summary\n\n### Cluster 1: QQ Attachment Processing (`image-ocr` + `qq-document-processor`)\n\n**What**: Two narrow skills both about processing inc…\narchived 2 skill(s):\n  • image-ocr — pruned (stale)\n  • qq-document-processor — pruned (stale)\nfull report: hermes curator status",
+  "last_run_summary_shown_at": null,
+  "paused": false,
+  "run_count": 6
+}
