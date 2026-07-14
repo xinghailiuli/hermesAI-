@@ -1,0 +1,299 @@
+{
+  "jobs": [
+    {
+      "id": "f40412366387",
+      "name": "\u4e2d\u8f6c\u7ad9\u6bcf\u65e5\u5907\u4efd",
+      "prompt": "\u5907\u4efdAPI\u4e2d\u8f6c\u7ad9\u3002\u6e90\u76ee\u5f55/home/admin/api-relay/\uff0c\u5907\u4efd\u5230/home/admin/api-relay-backups/\u3002\u65f6\u95f4\u6233YYYY.M.D.HH.MM\u683c\u5f0f\uff0ccp -r\u590d\u5236\uff0c\u4fdd\u7559\u6700\u8fd130\u4efd\uff0c\u8f93\u51fa\u5907\u4efd\u6587\u4ef6\u5217\u8868\u548c\u603b\u5927\u5c0f\u3002",
+      "skills": [],
+      "skill": null,
+      "model": null,
+      "provider": null,
+      "base_url": null,
+      "script": null,
+      "no_agent": false,
+      "context_from": null,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 3 * * *",
+        "display": "0 3 * * *"
+      },
+      "schedule_display": "0 3 * * *",
+      "repeat": {
+        "times": null,
+        "completed": 42
+      },
+      "enabled": true,
+      "state": "scheduled",
+      "paused_at": null,
+      "paused_reason": null,
+      "created_at": "2026-05-27T21:55:59.816353+08:00",
+      "next_run_at": "2026-07-09T03:00:00+08:00",
+      "last_run_at": "2026-07-08T03:07:19.360539+08:00",
+      "last_status": "ok",
+      "last_error": null,
+      "last_delivery_error": null,
+      "deliver": "local",
+      "origin": {
+        "platform": "qqbot",
+        "chat_id": "C46BE663F5EBCB8663C00D329C1551CF",
+        "chat_name": null,
+        "thread_id": null
+      },
+      "enabled_toolsets": null,
+      "workdir": null
+    },
+    {
+      "id": "b497b457b3a4",
+      "name": "\u670d\u52a1\u5668\u95ee\u9898\u544a\u8b66",
+      "prompt": "\u68c0\u67e5\u670d\u52a1\u5668\u5065\u5eb7\u72b6\u6001\uff1a\u78c1\u76d8\u4f7f\u7528\u7387(df -h /)\u3001\u5185\u5b58(free -h)\u3001CPU\u8d1f\u8f7d(uptime)\u3001hermes\u7f51\u5173\u72b6\u6001\u3001\u4e2d\u8f6c\u7ad9\u5065\u5eb7(curl 127.0.0.1:8848/health)\u3002\n\n\u53ea\u62a5\u544a\u95ee\u9898\uff0c\u4e00\u5207\u6b63\u5e38\u5219\u8f93\u51fa\"\u4eca\u65e5\u670d\u52a1\u5668\u64ad\u62a5\uff1a\u826f\u597d\"\u3002\n\n\u5f02\u5e38\u5224\u65ad\u6807\u51c6\uff1a\n- \u78c1\u76d8\u4f7f\u7528\u7387 > 85%\n- \u5185\u5b58\u53ef\u7528 < 500MB\n- CPU\u8d1f\u8f7d(1min) > \u6838\u6570*2\n- \u4e2d\u8f6c\u7ad9 /health \u975e200\u6216\u8d85\u65f6\n- hermes\u7f51\u5173\u5f02\u5e38\n\n\u6709\u95ee\u9898\u65f6\u683c\u5f0f\uff1a\"\u4eca\u65e5\u670d\u52a1\u5668\u64ad\u62a5\uff1a[\u5177\u4f53\u95ee\u9898]\"",
+      "skills": [],
+      "skill": null,
+      "model": null,
+      "provider": null,
+      "base_url": null,
+      "script": null,
+      "no_agent": false,
+      "context_from": null,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 9 * * *",
+        "display": "0 9 * * *"
+      },
+      "schedule_display": "0 9 * * *",
+      "repeat": {
+        "times": null,
+        "completed": 42
+      },
+      "enabled": true,
+      "state": "scheduled",
+      "paused_at": null,
+      "paused_reason": null,
+      "created_at": "2026-05-27T21:56:00.826429+08:00",
+      "next_run_at": "2026-07-09T09:00:00+08:00",
+      "last_run_at": "2026-07-08T09:11:28.761120+08:00",
+      "last_status": "ok",
+      "last_error": null,
+      "last_delivery_error": null,
+      "deliver": "local",
+      "origin": {
+        "platform": "qqbot",
+        "chat_id": "C46BE663F5EBCB8663C00D329C1551CF",
+        "chat_name": null,
+        "thread_id": null
+      },
+      "enabled_toolsets": null,
+      "workdir": null
+    },
+    {
+      "id": "91c43920f6e2",
+      "name": "\u4e2d\u8f6c\u7ad9\u5065\u5eb7\u76d1\u63a7",
+      "prompt": "\u68c0\u67e5API\u4e2d\u8f6c\u7ad9\u5065\u5eb7\uff1acurl -s 127.0.0.1:8848/health\u3002\u5982\u679c\u8fd4\u56de\u975eok\u6216\u8d85\u65f6\uff0c\u62a5\u544a\u5f02\u5e38\uff1b\u6b63\u5e38\u5219\u65e0\u9700\u8f93\u51fa\u3002",
+      "skills": [],
+      "skill": null,
+      "model": null,
+      "provider": null,
+      "base_url": null,
+      "script": null,
+      "no_agent": false,
+      "context_from": null,
+      "schedule": {
+        "kind": "cron",
+        "expr": "*/30 * * * *",
+        "display": "*/30 * * * *"
+      },
+      "schedule_display": "*/30 * * * *",
+      "repeat": {
+        "times": null,
+        "completed": 1997
+      },
+      "enabled": true,
+      "state": "scheduled",
+      "paused_at": null,
+      "paused_reason": null,
+      "created_at": "2026-05-27T21:56:01.832098+08:00",
+      "next_run_at": "2026-07-09T00:30:00+08:00",
+      "last_run_at": "2026-07-09T00:14:04.946443+08:00",
+      "last_status": "ok",
+      "last_error": null,
+      "last_delivery_error": null,
+      "deliver": "local",
+      "origin": {
+        "platform": "qqbot",
+        "chat_id": "C46BE663F5EBCB8663C00D329C1551CF",
+        "chat_name": null,
+        "thread_id": null
+      },
+      "enabled_toolsets": null,
+      "workdir": null
+    },
+    {
+      "id": "1ceadfdf74eb",
+      "name": "Hermes\u6bcf\u65e5\u5907\u4efd",
+      "prompt": "\u5907\u4efdHermes\u6570\u636e\uff1a\u7528hermes backup -o /home/admin/hermes-backups/hermes-$(date +%Y%m%d).zip\u3002\u4fdd\u7559\u6700\u8fd17\u4efd\u5907\u4efd\u3002\u8f93\u51fa\u5907\u4efd\u7ed3\u679c\u3002",
+      "skills": [],
+      "skill": null,
+      "model": null,
+      "provider": null,
+      "base_url": null,
+      "script": null,
+      "no_agent": false,
+      "context_from": null,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 4 * * *",
+        "display": "0 4 * * *"
+      },
+      "schedule_display": "0 4 * * *",
+      "repeat": {
+        "times": null,
+        "completed": 42
+      },
+      "enabled": true,
+      "state": "scheduled",
+      "paused_at": null,
+      "paused_reason": null,
+      "created_at": "2026-05-27T21:56:12.240023+08:00",
+      "next_run_at": "2026-07-09T04:00:00+08:00",
+      "last_run_at": "2026-07-08T04:07:47.036508+08:00",
+      "last_status": "ok",
+      "last_error": null,
+      "last_delivery_error": null,
+      "deliver": "local",
+      "origin": {
+        "platform": "qqbot",
+        "chat_id": "C46BE663F5EBCB8663C00D329C1551CF",
+        "chat_name": null,
+        "thread_id": null
+      },
+      "enabled_toolsets": null,
+      "workdir": null
+    },
+    {
+      "id": "4b0f1192d625",
+      "name": "Galgame\u65b0\u4f5c\u901f\u62a5",
+      "prompt": "\u6293\u53d6Galgame\u65b0\u4f5c\u60c5\u62a5\u3002\u4f18\u5148\u7528VNDB API(api.vndb.org/kana/vn)\u67e5\u6700\u8fd1\u53d1\u5e03\u7684\u65b0\u6e38\u620f\uff0c\u7b5b\u9009\u4e2d/\u82f1\u6587\u7248\u672c\u3002\u53c2\u8003\u7ad9\uff1a\u9752\u6854\u7f51\u3001Hikarinagi\u3001NekoGAL\u3001TouchGal\u3002\u8f93\u51fa\u683c\u5f0f\uff1a\u6e38\u620f\u540d+\u53d1\u552e\u65e5+\u7b80\u4ecb+\u5c01\u9762\u56fe\u94fe\u63a5\uff0c\u6bcf\u6b215-8\u6b3e\u3002\u7528\u4e2d\u6587\u8f93\u51fa\u3002",
+      "skills": [],
+      "skill": null,
+      "model": null,
+      "provider": null,
+      "base_url": null,
+      "script": null,
+      "no_agent": false,
+      "context_from": null,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 10 * * *",
+        "display": "0 10 * * *"
+      },
+      "schedule_display": "0 10 * * *",
+      "repeat": {
+        "times": null,
+        "completed": 42
+      },
+      "enabled": true,
+      "state": "scheduled",
+      "paused_at": null,
+      "paused_reason": null,
+      "created_at": "2026-05-27T21:56:13.245112+08:00",
+      "next_run_at": "2026-07-09T10:00:00+08:00",
+      "last_run_at": "2026-07-08T10:12:00.321181+08:00",
+      "last_status": "ok",
+      "last_error": null,
+      "last_delivery_error": null,
+      "deliver": "local",
+      "origin": {
+        "platform": "qqbot",
+        "chat_id": "C46BE663F5EBCB8663C00D329C1551CF",
+        "chat_name": null,
+        "thread_id": null
+      },
+      "enabled_toolsets": null,
+      "workdir": null
+    },
+    {
+      "id": "eb5b4f42cba2",
+      "name": "\u8f7b\u5c0f\u8bf4\u66f4\u65b0\u901f\u62a5",
+      "prompt": "\u67e5\u8f7b\u4e4b\u56fd\u5ea6(lightnovel.cn/category/3/106)\u6700\u65b0\u65e5\u8f7b/\u97e9\u8f7b\u7ffb\u8bd1\u66f4\u65b0\u3002\u7b5b\u9009\u6700\u8fd13\u5929\u7684\u65b0\u589e/\u66f4\u65b0\uff0c\u8f93\u51fa\u4e66\u540d+\u4f5c\u8005+\u5377\u6570+\u7b80\u4ecb+\u94fe\u63a5\u3002\u6ce8\u610f\uff1a\u53ea\u63a8\u65e5\u8f7b\u97e9\u8f7b\uff0c\u4e0d\u63a8\u56fd\u4ea7\u7f51\u6587\u3002\u7528\u4e2d\u6587\u8f93\u51fa\u3002",
+      "skills": [],
+      "skill": null,
+      "model": null,
+      "provider": null,
+      "base_url": null,
+      "script": null,
+      "no_agent": false,
+      "context_from": null,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 11 * * *",
+        "display": "0 11 * * *"
+      },
+      "schedule_display": "0 11 * * *",
+      "repeat": {
+        "times": null,
+        "completed": 42
+      },
+      "enabled": true,
+      "state": "scheduled",
+      "paused_at": null,
+      "paused_reason": null,
+      "created_at": "2026-05-27T21:56:14.251836+08:00",
+      "next_run_at": "2026-07-09T11:00:00+08:00",
+      "last_run_at": "2026-07-08T11:10:31.274844+08:00",
+      "last_status": "ok",
+      "last_error": null,
+      "last_delivery_error": null,
+      "deliver": "local",
+      "origin": {
+        "platform": "qqbot",
+        "chat_id": "C46BE663F5EBCB8663C00D329C1551CF",
+        "chat_name": null,
+        "thread_id": null
+      },
+      "enabled_toolsets": null,
+      "workdir": null
+    },
+    {
+      "id": "bc1a7be4671d",
+      "name": "GitHub\u6bcf\u65e5\u5907\u4efd",
+      "prompt": "",
+      "skills": [],
+      "skill": null,
+      "model": null,
+      "provider": null,
+      "base_url": null,
+      "script": "github-daily-backup.py",
+      "no_agent": true,
+      "context_from": null,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 3 * * *",
+        "display": "0 3 * * *"
+      },
+      "schedule_display": "0 3 * * *",
+      "repeat": {
+        "times": null,
+        "completed": 42
+      },
+      "enabled": true,
+      "state": "scheduled",
+      "paused_at": null,
+      "paused_reason": null,
+      "created_at": "2026-05-27T23:03:48.089220+08:00",
+      "next_run_at": "2026-07-09T03:00:00+08:00",
+      "last_run_at": "2026-07-08T03:01:33.937590+08:00",
+      "last_status": "ok",
+      "last_error": null,
+      "last_delivery_error": null,
+      "deliver": "local",
+      "origin": {
+        "platform": "qqbot",
+        "chat_id": "C46BE663F5EBCB8663C00D329C1551CF",
+        "chat_name": null,
+        "thread_id": null
+      },
+      "enabled_toolsets": null,
+      "workdir": null
+    }
+  ],
+  "updated_at": "2026-07-09T00:14:04.947225+08:00"
+}
