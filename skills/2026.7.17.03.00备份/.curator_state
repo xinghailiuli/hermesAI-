@@ -1,0 +1,9 @@
+{
+  "last_report_path": "/home/admin/.hermes/logs/curator/20260715-164838",
+  "last_run_at": "2026-07-15T16:48:38.279010+00:00",
+  "last_run_duration_seconds": 253.688099,
+  "last_run_summary": "auto: no changes; llm: ## consolidation summary\n\n### Clusters processed\n\n**Cluster 1: Hermes Deployment (4→1)**\n- **Umbrella**: `hermes-deployment` — already the class-level deployment skill\n- **Absorbed**: `hermes-cloud-deploy`, `hermes-cloud-migration`, `cloud-…",
+  "last_run_summary_shown_at": null,
+  "paused": false,
+  "run_count": 7
+}
